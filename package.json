@@ -1,0 +1,21 @@
+{
+  "name": "gettogather",
+  "version": "1.0.0",
+  "description": "## Database Schema Design",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dbinit": "npx dotenv sequelize db:migrate && npx dotenv sequelize db:seed:all",
+    "dbundo": "npx dotenv sequelize db:migrate:undo:all && npx dotenv sequelize db:seed:undo:all",
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ansorokey/GetToGather.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ansorokey/GetToGather/issues"
+  },
+  "homepage": "https://github.com/ansorokey/GetToGather#readme"
+}

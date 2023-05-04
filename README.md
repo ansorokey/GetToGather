@@ -2,7 +2,8 @@
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+[Link to schema](https://dbdiagram.io/d/6452e74bdca9fb07c476cbe7)
+![Image](./GetToGatherSchema.png)
 
 ## API Documentation
 

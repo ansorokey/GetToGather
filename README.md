@@ -3,7 +3,7 @@
 ## Database Schema Design
 
 [Link to schema](https://dbdiagram.io/d/6452e74bdca9fb07c476cbe7)
-![Image](./GetToGatherSchema.png)
+![Image](./GetToGather-5-8-23.png)
 
 ## API Documentation
 

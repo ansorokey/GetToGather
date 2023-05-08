@@ -3,7 +3,7 @@
 ## Database Schema Design
 
 [Link to schema](https://dbdiagram.io/d/6452e74bdca9fb07c476cbe7)
-![Image](./GetToGather-5-8-23.png)
+![Image](./gettogather-schema-5-8-23.png)
 
 ## API Documentation
 
@@ -51,7 +51,7 @@ Returns the information about the current user that is logged in.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /users/:userId
+  * URL: /users/current
   * Body: none
 
 * Successful Response when there is a logged in user
@@ -92,7 +92,7 @@ information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: /login
+  * URL: /users/login
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -158,7 +158,7 @@ user's information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: /sign-up
+  * URL: /users/sign-up
   * Headers:
     * Content-Type: application/json
   * Body:

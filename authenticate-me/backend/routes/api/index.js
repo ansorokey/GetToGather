@@ -1,19 +1,28 @@
+// Import Routers
 const router = require('express').Router();
+const sessionRouter = require('./session.js');
+const usersRouter = require('./users.js');
+
+// Import Database Models
 const { User } = require('../../db/models');
+
+// Import Authentication Helper Functions
 const {
     setTokenCookie,
     restoreUser,
     requireAuth
 } = require('../../utils/auth.js');
 
+// Connect Middleware
 // -- must be first router middleware --
 router.use(restoreUser);
+router.use('/session', sessionRouter);
+router.use('/users', usersRouter);
 
-router.get('/', (req, res) => {
-    res.json({
-        message: 'api/index.js router running'
-    });
-})
+// Posts
+router.post('/test', (req, res) => {
+    res.json({ requestBody: req.body });
+});
 
-// -- nothing below this line --
+// Export Router
 module.exports = router;

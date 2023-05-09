@@ -10,6 +10,11 @@ if (process.env.NODE_ENV === 'production') {
 
 const demoUsers = [
   {
+    email: 'demoemail@email.com',
+    username: 'demouser',
+    hashedPassword: bcrypt.hashSync('password')
+  },
+  {
     email: 'demoemail1@email.com',
     username: 'demoUserIchi',
     hashedPassword: bcrypt.hashSync('1password1')

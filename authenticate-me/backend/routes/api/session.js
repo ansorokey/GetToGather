@@ -55,5 +55,14 @@ router.post('/', async (req, res, next) => {
     return res.json({ user: safeUser });
 });
 
+// Logging out
+router.delete('/', async (_req, res) => {
+    // deletes 'token' cookie from browser
+    res.clearCookie('token');
+    return res.json({
+        message: 'success'
+    });
+});
+
 // -- nothing below this line --
 module.exports = router;

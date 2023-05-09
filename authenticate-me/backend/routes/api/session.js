@@ -7,7 +7,7 @@ const { User } = require('../../db/models');
 
 const router = express.Router();
 
-// Posts - /api/session
+// Router route - /api/session
 
 // TEST GET
 router.get('/', async (req, res) => {

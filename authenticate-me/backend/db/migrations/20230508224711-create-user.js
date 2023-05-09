@@ -19,13 +19,12 @@ module.exports = {
       username: {
         type: Sequelize.STRING(30),
         allowNull: false,
-        unqiue: true
+        unique: true
       },
       email: {
         type: Sequelize.STRING(256),
         allowNull: false,
         unique: true
-
       },
       hashedPassword: {
         type: Sequelize.STRING.BINARY,

@@ -4,8 +4,21 @@ const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize');
 const { setTokenCookie, restoreUser } = require('../../utils/auth.js');
 const { User } = require('../../db/models');
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation.js');
 
 const router = express.Router();
+
+const validateLogin = [
+    check('credential')
+        .exists({ checkFalsy: true })
+        .notEmpty()
+        .withMessage('Please provide a valid email or username.'),
+    check('password')
+        .exists({ checkFalsy: true})
+        .withMessage('Please provide a password.'),
+    handleValidationErrors
+]
 
 // Router route - /api/session
 
@@ -29,7 +42,9 @@ router.get('/', async (req, res) => {
 });
 
 //Logging in
-router.post('/', async (req, res, next) => {
+// Post method requires a valid body
+// ValidateLogin runs middleware to make sure the following values exist are not empty
+router.post('/', validateLogin, async (req, res, next) => {
     const { credential, password } = req.body;
 
     //find user with all attributes included

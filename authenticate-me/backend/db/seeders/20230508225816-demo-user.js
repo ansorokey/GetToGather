@@ -10,34 +10,46 @@ if (process.env.NODE_ENV === 'production') {
 
 const demoUsers = [
   {
-    email: 'demoemail@email.com',
-    username: 'demouser',
-    hashedPassword: bcrypt.hashSync('password')
-  },
-  {
     email: 'demoemail1@email.com',
-    username: 'demoUserIchi',
-    hashedPassword: bcrypt.hashSync('1password1')
+    username: 'demouser1',
+    hashedPassword: bcrypt.hashSync('1password1'),
+    firstName: 'first1',
+    lastName: 'last1'
   },
   {
     email: 'demoemail2@email.com',
-    username: 'UserTwoser',
-    hashedPassword: bcrypt.hashSync('2password2')
+    username: 'demouser2',
+    hashedPassword: bcrypt.hashSync('2password2'),
+    firstName: 'first2',
+    lastName: 'last2'
   },
   {
     email: 'demoemail3@email.com',
-    username: 'Number3LookAtMEEEE',
-    hashedPassword: bcrypt.hashSync('3password3')
+    username: 'demouser3',
+    hashedPassword: bcrypt.hashSync('3password3'),
+    firstName: 'first3',
+    lastName: 'last3'
   },
   {
     email: 'demoemail4@email.com',
-    username: 'QuatCat',
-    hashedPassword: bcrypt.hashSync('4password4')
+    username: 'demouser4',
+    hashedPassword: bcrypt.hashSync('4password4'),
+    firstName: 'first4',
+    lastName: 'last4'
   },
   {
     email: 'demoemail5@email.com',
-    username: 'Alive200&Five',
-    hashedPassword: bcrypt.hashSync('5password5')
+    username: 'demouser5',
+    hashedPassword: bcrypt.hashSync('5password5'),
+    firstName: 'first5',
+    lastName: 'last5'
+  },
+  {
+    email: 'demoemail6@email.com',
+    username: 'demouser6',
+    hashedPassword: bcrypt.hashSync('6password6'),
+    firstName: 'first6',
+    lastName: 'last6'
   }
 ]
 

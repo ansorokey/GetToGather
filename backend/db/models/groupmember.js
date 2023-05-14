@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: 'pending',
       validate: {
-        isIn: ['co-host', 'member', 'pending']
+        isIn: [['co-host', 'member', 'pending']]
       }
     }
   }, {

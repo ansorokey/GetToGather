@@ -20,9 +20,7 @@ router.get('/', async (req, res) => {
         }
     });
 
-    // optional test query to show all members
-    const { includeMembers } = req.query;
-    let members;
+    if(req.query.a === 'true') return res.json({groups: allGroups});
 
     // I could not for the life of me figure out how to eager load each group's aggregate count
     // I could use instance.count() but this saves some network traffic
@@ -30,7 +28,6 @@ router.get('/', async (req, res) => {
     for(let i = 0; i < allGroups.length; i++){
         let group = allGroups[i];
         let numMembers = group.Members.length;
-        if(includeMembers === 'true') members = group.Members;
         payload.push({
             id: group.id,
             organizerId: group.organizerId,
@@ -44,7 +41,6 @@ router.get('/', async (req, res) => {
             updatedAt: group.updatedAt,
             numMembers,
             previewImage: group.previewImage,
-            members
         });
     }
 

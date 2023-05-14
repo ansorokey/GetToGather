@@ -62,7 +62,7 @@ router.post('/', validateSignup, async (req, res) => {
 
     return res.json({
         user: safeUser
-    })
+    });
 });
 -
 //Get all groups organized by or joined by current user
@@ -72,18 +72,27 @@ router.get('/current/groups', async (req, res) => {
     if(!user) res.json({message: 'Forbidden'});
 
     const userId = user.id;
-    const currentUser = await User.findByPk(userId);
-    const organizedGroups = await Group.findAll({
-        where: {
-            organizerId: userId
-        }
+
+    const groups = await User.findByPk(userId, {
+        include:
+        [
+            {
+                model: Group,
+                as: 'Memberships',
+                through: {
+                    attributes: []
+                }
+            },
+            {
+                model: Group,
+                as: 'Organizer'
+            }
+        ]
     });
-    const joinedGroups = await currentUser.getGroups();
 
     res.json({
         User: user,
-        organizedGroups,
-        joinedGroups
+        Groups: [...groups.Organizer, ...groups.Memberships]
     });
 });
 

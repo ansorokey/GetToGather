@@ -43,7 +43,7 @@ module.exports = {
       },
       city: {
         type: Sequelize.STRING,
-        allowNUll: false
+        allowNull: false
       },
       state: {
         type: Sequelize.STRING,
@@ -53,13 +53,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE,
+        allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       }
     }, options);
   },

@@ -65,5 +65,11 @@ router.post('/', validateSignup, async (req, res) => {
     })
 });
 
+router.get('/', async (req, res) => {
+    const allUsers = await User.findAll();
+
+    res.json(allUsers);
+});
+
 // Export Router
 module.exports = router;

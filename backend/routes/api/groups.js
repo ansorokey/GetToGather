@@ -9,22 +9,28 @@ const router = express.Router();
 //Router route - /api/groups
 
 router.get('/', async (req, res) => {
+
     const allGroups = await Group.findAll({
         include: {
             model: User,
-            as: 'members',
+            as: 'Members',
             through: {
                 attributes: []
             },
         }
     });
 
+    // optional test query to show all members
+    const { includeMembers } = req.query;
+    let members;
+
     // I could not for the life of me figure out how to eager load each group's aggregate count
     // I could use instance.count() but this saves some network traffic
     const payload = [];
     for(let i = 0; i < allGroups.length; i++){
         let group = allGroups[i];
-        let numMembers = group.members.length;
+        let numMembers = group.Members.length;
+        if(includeMembers === 'true') members = group.Members;
         payload.push({
             id: group.id,
             organizerId: group.organizerId,
@@ -37,7 +43,8 @@ router.get('/', async (req, res) => {
             createdAt: group.createdAt,
             updatedAt: group.updatedAt,
             numMembers,
-            previewImage: group.previewImage
+            previewImage: group.previewImage,
+            members
         });
     }
 

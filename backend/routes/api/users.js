@@ -2,7 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth.js');
-const { User } = require('../../db/models');
+const { User, Group } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation.js');
 
@@ -63,6 +63,28 @@ router.post('/', validateSignup, async (req, res) => {
     return res.json({
         user: safeUser
     })
+});
+-
+//Get all groups organized by or joined by current user
+// REQUIRES AUTHENTICATION
+router.get('/current/groups', async (req, res) => {
+    const { user } = req;
+    if(!user) res.json({message: 'Forbidden'});
+
+    const userId = user.id;
+    const currentUser = await User.findByPk(userId);
+    const organizedGroups = await Group.findAll({
+        where: {
+            organizerId: userId
+        }
+    });
+    const joinedGroups = await currentUser.getGroups();
+
+    res.json({
+        User: user,
+        organizedGroups,
+        joinedGroups
+    });
 });
 
 router.get('/', async (req, res) => {

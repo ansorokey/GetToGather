@@ -5,6 +5,11 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       User.hasMany(models.Group, {foreignKey: 'organizerId'});
+      User.belongsToMany(models.Group, {
+        through: models.GroupMember,
+        foreignKey: 'memberId',
+        otherKey: 'groupId'
+      });
     }
   }
   User.init({

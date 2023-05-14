@@ -14,9 +14,32 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   GroupMember.init({
-    groupId: DataTypes.INTEGER,
-    memberId: DataTypes.INTEGER,
-    status: DataTypes.STRING
+    groupId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        modelL: 'Groups',
+        key: 'id'
+      },
+      onDelete: 'CASCADE'
+    },
+    memberId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id'
+      },
+      onDelete: 'CASCADE'
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'pending',
+      validate: {
+        isIn: ['co-host', 'member', 'pending']
+      }
+    }
   }, {
     sequelize,
     modelName: 'GroupMember',

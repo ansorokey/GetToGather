@@ -31,12 +31,12 @@ module.exports = {
           model: 'Users',
           key: 'id'
         },
-        onDelet: 'CASCADE'
+        onDelete: 'CASCADE'
       },
       status: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: 'Pending'
+        defaultValue: 'pending'
       },
       createdAt: {
         type: Sequelize.DATE,

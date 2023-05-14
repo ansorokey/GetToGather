@@ -247,7 +247,7 @@ Returns all the groups.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /groups
+  * URL: /api/groups
   * Body: none
 
 * Successful Response
@@ -284,7 +284,7 @@ Returns all the groups.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /users/:userId/groups
+  * URL: api/users/:userId/groups
   * Body: none
 
 * Successful Response

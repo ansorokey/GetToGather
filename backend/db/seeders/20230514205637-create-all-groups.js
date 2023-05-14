@@ -18,7 +18,7 @@ module.exports = {
     });
     for(let i = 0; i < fiveUsers.length; i++){
       let organizer = fiveUsers[i];
-      await organizer.createGroup(groups[i]);
+      await organizer.createOrganizer(groups[i]);
     }
   },
 

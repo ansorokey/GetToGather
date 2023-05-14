@@ -76,10 +76,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     previewImage: {
       type: DataTypes.STRING
+    },
+    numMembers: {
+      type: DataTypes.INTEGER
     }
   }, {
     sequelize,
-    modelName: 'Group',
+    modelName: 'Group'
   });
   return Group;
 };

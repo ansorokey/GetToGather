@@ -52,6 +52,9 @@ module.exports = {
       previewImage: {
         type: Sequelize.STRING
       },
+      numMembers: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,

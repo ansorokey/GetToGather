@@ -2,7 +2,7 @@
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  // define your schema in options object
+  options.schema = process.env.SCHEMA;
 }
 
 /** @type {import('sequelize-cli').Migration} */
@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          modelL: 'Groups',
+          model: 'Groups',
           key: 'id'
         },
         onDelete: 'CASCADE'
@@ -35,7 +35,6 @@ module.exports = {
       },
       status: {
         type: Sequelize.STRING,
-        allowNull: false,
         defaultValue: 'pending'
       },
       createdAt: {

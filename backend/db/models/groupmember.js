@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        modelL: 'Groups',
+        model: 'Groups',
         key: 'id'
       },
       onDelete: 'CASCADE'
@@ -34,7 +34,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.STRING,
-      allowNull: false,
       defaultValue: 'pending',
       validate: {
         isIn: ['co-host', 'member', 'pending']

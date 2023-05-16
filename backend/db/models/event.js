@@ -14,17 +14,56 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Event.init({
-    groupId: DataTypes.INTEGER,
-    venueId: DataTypes.INTEGER,
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    type: DataTypes.STRING,
-    startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE,
-    numAttending: DataTypes.INTEGER,
-    previewImage: DataTypes.STRING,
-    capacity: DataTypes.INTEGER,
-    price: DataTypes.FLOAT
+    groupId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Groups',
+        key: 'id'
+      },
+      onDelete: 'CASCADE'
+    },
+    venueId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Venues',
+        key: 'id'
+      },
+      onDelete: 'CASCADE'
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    startDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    endDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    numAttending: {
+      type: DataTypes.INTEGER
+    },
+    previewImage: {
+      type: DataTypes.STRING
+    },
+    capacity: {
+      type: DataTypes.INTEGER
+    },
+    price: {
+      type: DataTypes.FLOAT
+    }
   }, {
     sequelize,
     modelName: 'Event',

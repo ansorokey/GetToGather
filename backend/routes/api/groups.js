@@ -1,39 +1,26 @@
+//Router route - /api/groups
 const express = require('express');
-const sequelize = require('sequelize');
 
-const { Group, User, GroupMember } = require('../../db/models');
-const group = require('../../db/models/group');
+const { Group } = require('../../db/models');
 
 const router = express.Router();
 
-//Router route - /api/groups
+// Return a specific group
+router.get('/:groupId', async (req, res) => {
+    const groupId = req.params.groupId;
 
+    const group = await Group.findByPk(groupId);
+
+    res.json({ group });
+})
+
+// Return all groups
 router.get('/', async (req, res) => {
 
-    const allGroups = await Group.findAll({
-        include: {
-            model: User,
-            as: 'Members',
-            through: {
-                attributes: []
-            }
-        },
-        attributes: {
-            include: []
-        }
-    });
-
-    const payload = [];
-    for(let i = 0; i < allGroups.length; i++){
-        let group = allGroups[i];
-        group.numMembers = group.Members.length;
-        payload.push(
-            group
-        );
-    }
+    const allGroups = await Group.findAll();
 
     res.json({
-        Groups: payload
+        Groups: allGroups
     });
 });
 

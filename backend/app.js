@@ -41,6 +41,7 @@ app.use(csurf({
     }
 }));
 
+// Uses ever router listed in the routes index file
 app.use(routes);
 
 // Catch unhandled requests and forward to error handler.
@@ -77,18 +78,6 @@ app.use((err, _req, res, _next) => {
       stack: isProduction ? null : err.stack
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 // -- nothing below this line --
 module.exports = app;

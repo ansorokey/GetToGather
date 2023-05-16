@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Group.belongsTo(models.User, {
-        as: 'Organizers',
+        as: 'organizers',
         foreignKey: 'organizerId'
       });
       Group.belongsToMany(models.User, {
         through: models.GroupMember,
-        as: 'Members',
+        as: 'members',
         foreignKey: 'groupId',
         otherKey: 'memberId'
       });
@@ -76,13 +76,28 @@ module.exports = (sequelize, DataTypes) => {
     },
     previewImage: {
       type: DataTypes.STRING
-    },
-    numMembers: {
-      type: DataTypes.INTEGER
     }
   }, {
     sequelize,
-    modelName: 'Group'
+    modelName: 'Group',
+    defaultScope: {
+      include: {
+        association: 'members',
+        attributes: [],
+        through: {
+          attributes: []
+        }
+      },
+      attributes: {
+        include: [
+          [
+            sequelize.fn("COUNT", sequelize.col("members.id")),
+            "numMembers"
+          ]
+        ],
+      },
+      group: [sequelize.col('Group.id')]
+      }
   });
   return Group;
 };

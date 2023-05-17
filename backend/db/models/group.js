@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Group.belongsTo(models.User, {
-        as: 'organizers',
+        as: 'Organizer',
         foreignKey: 'organizerId'
       });
       Group.belongsToMany(models.User, {
@@ -20,6 +20,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'groupId',
         otherKey: 'memberId'
       });
+      Group.hasMany(models.Image, {foreignKey: 'imageableId', as: 'GroupImages', constraints: false, scope: {imageType: 'groupImage'}});
+      Group.hasMany(models.Venue, { foreignKey: 'groupId' });
     }
   }
   Group.init({
@@ -36,7 +38,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [1, 60],
+        len: {
+          args: [1, 60],
+          msg: 'Name must be 60 characters or less'
+        },
         notEmpty: true
       }
     },
@@ -44,7 +49,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [50, 256],
+        len: {
+          args: [50, 256],
+          msg: 'About must be 50 characters or more'
+        },
         notEmpty: true
       }
     },
@@ -52,26 +60,43 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isIn: [['Online', 'In person']]
+        isIn: {
+          args: [['Online', 'In person']],
+          msg: "Type must be 'Online' or 'In person'"
+        }
       }
     },
     private: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false
+      validate: {
+        isBoolean(value) {
+          if(value !== true && value !== false) throw new Error('Private must be a boolean');
+        }
+      }
     },
     city: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true
+        notEmpty: {
+          msg: 'City is required'
+        },
+        isAlpha: {
+          msg: 'State is required'
+        }
       }
     },
     state: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notEmpty: true
+        notEmpty: {
+          msg: 'State is required'
+        },
+        isAlpha: {
+          msg: 'State is required'
+        }
       }
     },
     previewImage: {
@@ -97,6 +122,16 @@ module.exports = (sequelize, DataTypes) => {
         ],
       },
       group: [sequelize.col('Group.id')]
+      },
+      scopes: {
+        venues: {
+          include: [
+            {
+              association: 'Venues',
+            },
+          ]
+
+        }
       }
   });
   return Group;

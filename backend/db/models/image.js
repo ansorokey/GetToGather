@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Image.belongsTo(models.Group, {foreignKey: 'imageableId', constraints: false});
     }
   }
   Image.init({
@@ -31,6 +31,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Image',
+    defaultScope: {
+      attributes: ['id', 'url', 'preview']
+    }
   });
   return Image;
 };

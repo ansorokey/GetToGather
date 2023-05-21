@@ -458,7 +458,7 @@ Create and return a new image for a group specified by id.
 * Require proper authorization: Current User must be the organizer for the group
 * Request
 * Method: POST
-  * URL: /groups/:groupId/images
+  * URL: api/groups/:groupId/images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -504,7 +504,7 @@ Updates and returns an existing group.
 * Require proper authorization: Group must belong to the current user
 * Request
   * Method: PUT
-  * URL: /groups/:groupId
+  * URL: api/groups/:groupId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1441,7 +1441,7 @@ Change the status of a membership for a group specified by id.
     * Current User must already be the organizer
 * Request
   * Method: PUT
-  * URL: /groups/:groupId/members/:memberId
+  * URL: /groups/:groupId/members/
   * Headers:
     * Content-Type: application/json
   * Body:

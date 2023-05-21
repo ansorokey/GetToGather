@@ -26,7 +26,6 @@ module.exports = {
       },
       venueId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: 'Venues',
           key: 'id'

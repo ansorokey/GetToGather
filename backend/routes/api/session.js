@@ -1,3 +1,4 @@
+// Router route - /api/session
 const express = require('express');
 const bcrypt = require('bcryptjs');
 
@@ -9,6 +10,7 @@ const { handleValidationErrors } = require('../../utils/validation.js');
 
 const router = express.Router();
 
+// Validate login credentials
 const validateLogin = [
     check('credential')
         .exists({ checkFalsy: true })
@@ -20,11 +22,7 @@ const validateLogin = [
     handleValidationErrors
 ]
 
-// Router route - /api/session
-
-// Restore session user (Log in automatically)
-// The restoreUser middleware creates a user property on the req
-// The req.user property is accessible in further middleware
+// Return the current user
 router.get('/', async (req, res) => {
     const { user } = req;
     if(user) {
@@ -44,8 +42,6 @@ router.get('/', async (req, res) => {
 });
 
 //Logging in
-// Post method requires a valid body
-// ValidateLogin runs middleware to make sure the following values exist are not empty
 router.post('/', validateLogin, async (req, res, next) => {
     const { credential, password } = req.body;
 
@@ -64,7 +60,7 @@ router.post('/', validateLogin, async (req, res, next) => {
         const err = new Error('Login failed');
         err.status = 401;
         err.title = 'Login Failed';
-        err.errors = { credential: 'The provided credentials were invalid.' }
+        err.errors = { message: 'Invalid credentials' }
         return next(err);
     }
 

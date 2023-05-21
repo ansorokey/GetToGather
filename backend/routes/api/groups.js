@@ -1,7 +1,9 @@
 //Router route - /api/groups
 const express = require('express');
 
-const { Group, User, Image, Venue, sequelize } = require('../../db/models');
+const { Group, User, Image, Venue, Event, GroupMember, sequelize } = require('../../db/models');
+const { Op } = require('sequelize');
+const { requireAuth } = require('../../utils/auth.js');
 
 const router = express.Router();
 
@@ -40,25 +42,155 @@ router.post('/:groupId/venues', async (req, res) => {
 
     const newVenue = await group.createVenue({
         address, city, state,
-        lat, long: lng
+        lat, lng: lng
     });
 
     res.json(newVenue);
+});
+
+// Get all a group's events
+router.get('/:groupId/events', async (req, res) => {
+    const { groupId } = req.params;
+
+    const group = await Group.findByPk(groupId);
+    const events = await group.getEvents({
+        include: [
+            {
+                association: 'Group',
+                attributes: ['id', 'name', 'city', 'state']
+            },
+            {
+                association: 'Venue',
+                attributes: ['id', 'city', 'state']
+            }
+        ]
+    });
+
+    res.json(events);
+});
+
+// Create a new event from a group
+router.post('/:groupId/events',async (req, res) => {
+    const { groupId } = req.params;
+    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
+
+    const group = await Group.findByPk(groupId);
+    const newEvent = await group.createEvent({
+        venueId, name, type, capacity, price, description, startDate, endDate
+    });
+
+    res.json({
+        id: newEvent.id,
+        groupId: newEvent.groupId,
+        venueId: newEvent.venueId,
+        name,
+        type,
+        capacity,
+        price,
+        description,
+        startDate,
+        endDate
+    });
+
+});
+
+// Get all group members
+router.get('/:groupId/members', async (req, res) => {
+    const { groupId } = req.params;
+    const { user } = req;
+    let hasPermission = false;
+    const statusArr = ['co-host', 'member']
+
+    // Return the join table of all users in the matching groupId
+    const groupUsers = await GroupMember.findAll({
+        include: {
+            model: Group,
+            attributes: ['organizerId']
+        },
+        where: {
+            groupId
+        }
+    });
+
+    // Join table will be an array, grab the organizerId of index 0
+    let organizerId;
+    if(groupUsers.length){
+        organizerId = groupUsers[0].Group.organizerId;
+        // check is current user is group owner
+        if(user.id === organizerId)hasPermission = true;
+    }
+
+    // iterate through array to check if current user is a co-host
+    for(let i = 0; i < groupUsers.length; i++){
+        let member = groupUsers[i];
+        if(user.id === member.memberId && member.status === 'co-host') hasPermission = true;
+    }
+
+    if(hasPermission) statusArr.push('pending');
+
+    const group = await Group.findByPk(groupId, {
+        include: {
+            association: 'Members',
+            through: {
+                as: 'Membership', // The name of a through table can be changed using as
+                attributes: ['status'],
+                where: {
+                    status: statusArr
+
+                }
+            }
+        },
+        attributes: [] // No attributes, only need the members association
+    });
+
+    // res.json({Members: group});
+    res.json({Members: group.Members});
+});
+
+// Request to join a group by id
+router.post('/:groupId/members', async (req, res, next) => {
+    const { groupId } = req.params;
+    const { user } = req;
+
+    const group = await Group.findByPk(groupId);
+    if(user) await group.addMember(user);
+
+    res.json({ group });
+
+});
+
+// Edit a memebrship
+router.put('/:groupId/members', requireAuth, async (req, res) => {
+    const { user } = req;
+    const { groupId } = req.params;
+    const { memberId, status } = req.body;
+    let hasPermission = false;
+
+    const membership = await GroupMember.findOne({
+        where: {
+            memberId: user.id,
+            groupId
+        },
+        attributes: ['id', 'groupId', 'memberId', 'status']
+    });
+
+    membership.status = status;
+
+    await membership.save();
+
+    res.json({ membership });
 });
 
 // Return a specific group
 router.get('/:groupId', async (req, res) => {
     const { groupId } = req.params;
 
-    const group = await Group.unscoped().findByPk(groupId, {
+    // Including the other models breaks the numMembers count????
+    // UGGGHHH JUst accept defeat and make a second query for the rest of the data
+
+    const group = await Group.scope('memberScope').findByPk(groupId);
+    const otherAssociations = await Group.unscoped().findByPk(groupId, {
         include: [
-            {
-                association: 'members',
-                attributes: [],
-                through: {
-                    attributes: []
-                }
-            },
             {
                 model: Image,
                 as: 'GroupImages',
@@ -70,21 +202,18 @@ router.get('/:groupId', async (req, res) => {
             },
             {
                 model: Venue,
-                attributes: ['id', 'groupId', 'address', 'city', 'state', 'lat', 'long']
+                attributes: ['id', 'groupId', 'address', 'city', 'state', 'lat', 'lng']
             }
-        ],
-        attributes: {
-            include: [
-                [
-                    sequelize.fn("COUNT", sequelize.col("members.id")),
-                    "numMembers"
-                ],
-            ]
-        },
-        group: [sequelize.col('Group.id')]
+        ]
     });
+    let jsonGroup = group.toJSON();
 
-    res.json({ group });
+    res.json({
+        ...jsonGroup,
+        GroupImages: otherAssociations.GroupImages,
+        Organizer: otherAssociations.Organizer,
+        Venues: otherAssociations.Venues
+     });
 });
 
 // Edit a group by Id
@@ -102,7 +231,7 @@ router.put('/:groupId', async (req, res, next) => {
     try {
         //the validate method doesnt work the way I thought it did
         //crashes the server, valiadtion errors are returned without it
-        //group.validate();
+        // group.validate();
         await group.save();
     } catch (e) {
         return next(e);
@@ -150,7 +279,7 @@ router.delete('/:groupId', async (req, res, next) => {
 // Return all groups
 router.get('/', async (req, res) => {
 
-    const allGroups = await Group.findAll();
+    const allGroups = await Group.scope(['defaultScope','memberScope']).findAll();
 
     res.json({
         Groups: allGroups

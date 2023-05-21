@@ -40,7 +40,7 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false
       },
-      long: {
+      lng: {
         type: Sequelize.FLOAT,
         allowNull: false
       },

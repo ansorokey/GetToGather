@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Event.belongsTo(models.Group, { as: 'Group', foreignKey: 'groupId'});
+      Event.belongsTo(models.Venue, { as: 'Venue', foreignKey: 'venueId'});
+      Event.hasMany(models.Image, { as: 'EventImages', foreignKey: 'imageableId', constraints: false, scope: {imageType: 'eventImage'}});
     }
   }
   Event.init({
@@ -25,7 +27,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     venueId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       references: {
         model: 'Venues',
         key: 'id'
@@ -46,7 +47,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     startDate: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isDate: {
+          msg: 'Start date must be a valid datetime'
+        }
+      }
     },
     endDate: {
       type: DataTypes.DATE,
@@ -67,6 +73,23 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Event',
+    defaultScope: {
+      attributes: {
+        exclude: ['createdAt', 'updatedAt']
+      }
+    },
+    scopes: {
+      everything: {
+        include: [
+          {
+            association: 'Group',
+          },
+          {
+            association: 'Venue'
+          }
+        ]
+      }
+    }
   });
   return Event;
 };

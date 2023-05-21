@@ -16,12 +16,13 @@ module.exports = (sequelize, DataTypes) => {
       });
       Group.belongsToMany(models.User, {
         through: models.GroupMember,
-        as: 'members',
+        as: 'Members',
         foreignKey: 'groupId',
         otherKey: 'memberId'
       });
       Group.hasMany(models.Image, {foreignKey: 'imageableId', as: 'GroupImages', constraints: false, scope: {imageType: 'groupImage'}});
       Group.hasMany(models.Venue, { foreignKey: 'groupId' });
+      Group.hasMany(models.Event, { foreignKey: 'groupId'});
     }
   }
   Group.init({
@@ -106,33 +107,38 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Group',
     defaultScope: {
-      include: {
-        association: 'members',
-        attributes: [],
-        through: {
-          attributes: []
-        }
-      },
       attributes: {
-        include: [
-          [
-            sequelize.fn("COUNT", sequelize.col("members.id")),
-            "numMembers"
-          ]
-        ],
-      },
-      group: [sequelize.col('Group.id')]
-      },
-      scopes: {
-        venues: {
-          include: [
-            {
-              association: 'Venues',
-            },
-          ]
-
-        }
+        exclude: ['createdAt', 'updatedAt']
       }
+    },
+    scopes: {
+      venues: {
+        include: [
+          {
+            association: 'Venues',
+          },
+        ]
+
+      },
+      memberScope: {
+        include: {
+          association: 'Members',
+          attributes: [],
+          through: {
+            attributes: []
+          }
+        },
+        attributes: {
+          include: [
+            [
+              sequelize.fn("COUNT", sequelize.col("Members.id")),
+              "numMembers"
+            ]
+          ],
+        },
+        group: [sequelize.col('Group.id')]
+        },
+    }
   });
   return Group;
 };

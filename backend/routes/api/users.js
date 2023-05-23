@@ -100,16 +100,13 @@ router.post('/', validateSignup, alreadyExists, async (req, res) => {
 });
 
 //Get all groups organized by or joined by current user
+// LOOKS GOOD!
 router.get('/current/groups', requireAuth, async (req, res) => {
-    const { user } = req;
-    if(!user) res.json({message: 'Forbidden'});
-
-    const userId = user.id;
 
     // Query the join table to see where user is a member
     const joinedGroups = await GroupMember.findAll({
         where: {
-            memberId: userId
+            memberId: req.user.id
         },
         //Only need the id of the group they are a member in
         attributes: ['groupId']
@@ -119,9 +116,9 @@ router.get('/current/groups', requireAuth, async (req, res) => {
     const groupArr = joinedGroups.map(el => el.groupId);
 
     //get all groups they organized and are a member of
-    const groups = await Group.findAll({
+    const groups = await Group.scope(null).findAll({
         where: {
-            [Op.or]: [ { organizerId: userId }, { id: groupArr } ]
+            [Op.or]: [ { organizerId: req.user.id }, { id: groupArr } ]
         }
     });
 

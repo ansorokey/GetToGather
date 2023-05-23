@@ -1,6 +1,5 @@
 'use strict';
 
-const bcrypt = require('bcryptjs');
 const { groups } = require('../../utils/generated-groups.js');
 const { User, Group } = require('../models');
 
@@ -13,11 +12,13 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const fiveUsers = await User.findAll({
-      limit: 10
+    let organizer = await User.findOne({
+      where: {
+        firstName: 'Demo',
+        lastName: 'User'
+      }
     });
-    for(let i = 0; i < fiveUsers.length; i++){
-      let organizer = fiveUsers[i];
+    for(let i = 1; i < 10; i++){
       await organizer.createOwnedGroup(groups[i]);
     }
   },

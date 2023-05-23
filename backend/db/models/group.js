@@ -43,7 +43,9 @@ module.exports = (sequelize, DataTypes) => {
           args: [1, 60],
           msg: 'Name must be 60 characters or less'
         },
-        notEmpty: true
+        notEmpty: {
+          msg: 'Name must be 60 characters or less'
+        }
       }
     },
     about: {
@@ -54,7 +56,9 @@ module.exports = (sequelize, DataTypes) => {
           args: [50, 256],
           msg: 'About must be 50 characters or more'
         },
-        notEmpty: true
+        notEmpty: {
+          msg: 'About must be 50 characters or more'
+        }
       }
     },
     type: {
@@ -82,9 +86,6 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           msg: 'City is required'
-        },
-        isAlpha: {
-          msg: 'State is required'
         }
       }
     },
@@ -93,9 +94,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'State is required'
-        },
-        isAlpha: {
           msg: 'State is required'
         }
       }

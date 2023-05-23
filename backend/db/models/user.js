@@ -4,13 +4,23 @@ const { Model, Validator } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      // define association here
+      User.hasMany(models.Group, {
+        as: 'ownedGroup',
+        foreignKey: 'organizerId'
+      });
+      User.belongsToMany(models.Group, {
+        as: 'memberships',
+        through: models.GroupMember,
+        foreignKey: 'memberId',
+        otherKey: 'groupId'
+      });
     }
   }
   User.init({
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         len: [4, 30],
         isNotEmail(value) {
@@ -25,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         len: [3, 256],
-        isEmail: true
+        isEmail: true,
       }
     },
     hashedPassword: {

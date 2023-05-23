@@ -13,4 +13,5 @@ router.get("/api/csrf/restore", (req, res) => {
   });
 });
 
+// Exports self and all routes in the index of api folder
 module.exports = router;

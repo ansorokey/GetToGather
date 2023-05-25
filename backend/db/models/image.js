@@ -16,11 +16,20 @@ module.exports = (sequelize, DataTypes) => {
   Image.init({
     url: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Image requires a url'
+        }
+      }
     },
     preview: {
       type: DataTypes.BOOLEAN,
+      allowNull: false,
       validate: {
+        notNull: {
+          msg: 'Preview must be a boolean'
+        },
         isIn: {
           args: [[true, false]],
           msg: 'Preview must be a boolean'

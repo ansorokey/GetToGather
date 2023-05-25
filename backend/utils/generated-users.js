@@ -113,7 +113,7 @@ for(let i = 0; i < firstNamesArray.length; i++){
     const last = lastNamesArray[i];
 
     users.push({
-        email: `${first + last}@email.com`,
+        email: `${first.toLocaleLowerCase() + last.toLocaleLowerCase()}@email.com`,
         username: `${first.toLowerCase() + last.toLowerCase()}`,
         firstName: first,
         lastName: last

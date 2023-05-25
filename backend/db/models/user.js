@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       User.belongsToMany(models.Event, {
         through: models.EventAttendees,
+        as: 'attending',
         foreignKey: 'userId',
         otherKey: 'eventId'
       });
@@ -31,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         len: [4, 30],
         isNotEmail(value) {
           if (Validator.isEmail(value)) {
-            throw new Error('Cannot be an email');
+            throw new Error('Username cannot be an email');
           }
         }
       }

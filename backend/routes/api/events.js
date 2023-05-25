@@ -1,6 +1,6 @@
 const express = require('express');
 const { Op } = require('sequelize');
-const { User, Image, Event, Group, GroupMember, EventAttendees } = require('../../db/models');
+const { User, Image, Event, Group, GroupMember, EventAttendees, sequelize } = require('../../db/models');
 const { body } = require('express-validator');
 const { query } = require('express-validator');
 const { requireAuth } = require('../../utils/auth.js');
@@ -415,7 +415,7 @@ router.delete('/:eventId', async (req, res, next) => {
     return res.json({ message: 'Successfully deleted' });
 });
 
-// Return all events
+// #Get all Events
 router.get('/', validateQuery, async (req, res, next) => {
     const page = req.query.page || 1;
     const size = req.query.size || 20;
@@ -441,6 +441,13 @@ router.get('/', validateQuery, async (req, res, next) => {
             {
                 association: 'Venue',
                 attributes: ['id', 'city', 'state']
+            },
+            {
+                model: User,
+                as: 'Attendance',
+                through: {
+                    atributes: []
+                }
             }
         ],
         attributes: {

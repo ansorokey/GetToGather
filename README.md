@@ -1,5 +1,8 @@
 # GetToGather
 
+## Link to render deployment
+https://get-to-gather.onrender.com/
+
 ## Database Schema Design
 
 [Link to schema](https://dbdiagram.io/d/6452e74bdca9fb07c476cbe7)
@@ -393,7 +396,7 @@ Creates and returns a new group.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: /groups
+  * URL: api/groups
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -581,7 +584,7 @@ Deletes an existing group.
 * Require proper authorization: Group must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /groups/:groupId
+  * URL: api/groups/:groupId
   * Body: none
 
 * Successful Response
@@ -619,7 +622,7 @@ Returns all venues for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: GET
-  * URL: /groups/:groupId/venues
+  * URL: api/groups/:groupId/venues
   * Headers:
     * Content-Type: application/json
   * Body: none
@@ -668,7 +671,7 @@ Creates and returns a new venue for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: POST
-  * URL: /groups/:groupId/venues
+  * URL: api/groups/:groupId/venues
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -741,7 +744,7 @@ Edit a new venue specified by its id
   the group with a status of "co-host"
 * Request
   * Method: PUT
-  * URL: /venues/:venueId
+  * URL: api/groups/:groupId/venues/:venueId
   * Headers:
     * Content-Type: application/json
   * Body:

@@ -3,7 +3,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth.js');
-const { User, Group, GroupMember } = require('../../db/models');
+const { User, Group, GroupMember, sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation.js');
 const { Op } = require('sequelize');
@@ -16,18 +16,6 @@ const validateSignup = [
         .exists({ checkFalsy: true })
         .isEmail()
         .withMessage('Invalid email'),
-    check('username')
-        .exists({ checkFalsy: true })
-        .isLength({ min: 4 })
-        .withMessage('Please provide a username with at least 4 characters.'),
-    check('username')
-        .not()
-        .isEmail()
-        .withMessage('Username cannot be an email.'),
-    check('password')
-        .exists({ checkFalsy: true })
-        .isLength({ min: 6 })
-        .withMessage('Password must be 6 characters or more.'),
     check('firstName')
         .exists({ checkFalsy: true })
         .withMessage('First Name is required'),
@@ -40,19 +28,19 @@ const validateSignup = [
 // Check db for existing email or username
 const alreadyExists = async (req, res, next) => {
     const { email, username } = req.body;
+
+    const err = new Error('User already exists');
+    err.errors = {};
+    err.status = 500;
+    err.title = 'User already exists';
+
     const existingEmail = await User.findOne({
         where: {
             email
         }
     });
 
-    if(existingEmail){
-        const err = new Error('User already exists');
-        err.status = 500;
-        err.title = 'User already exists';
-        err.errors = { email: 'User with that email already exists' }
-        return next(err);
-    }
+    if(existingEmail) err.errors.email = 'User with that email already exists';
 
     const existingUsername = await User.findOne({
         where: {
@@ -60,18 +48,14 @@ const alreadyExists = async (req, res, next) => {
         }
     });
 
-    if(existingUsername){
-        const err = new Error('User already exists');
-        err.status = 500;
-        err.title = 'User already exists';
-        err.errors = { username: 'User with that username already exists' }
-        return next(err);
-    }
+    if(existingUsername) err.errors.username = 'User with that username already exists';
+
+    if(err.errors.email || err.errors.username) return next(err);
 
     next();
 }
 
-// Sign up a new user
+// #Sign up a new user
 router.post('/', validateSignup, alreadyExists, async (req, res) => {
     const { email, password, username, firstName, lastName } = req.body;
 
@@ -95,12 +79,11 @@ router.post('/', validateSignup, alreadyExists, async (req, res) => {
     setTokenCookie(res, safeUser);
 
     return res.json({
-        user
+        safeUser
     });
 });
 
-//Get all groups organized by or joined by current user
-// LOOKS GOOD!
+// #Get all Groups joined or organized by the Current User
 router.get('/current/groups', requireAuth, async (req, res) => {
 
     // Query the join table to see where user is a member
@@ -116,7 +99,7 @@ router.get('/current/groups', requireAuth, async (req, res) => {
     const groupArr = joinedGroups.map(el => el.groupId);
 
     //get all groups they organized and are a member of
-    const groups = await Group.scope(null).findAll({
+    const groups = await Group.scope('memberScope').findAll({
         where: {
             [Op.or]: [ { organizerId: req.user.id }, { id: groupArr } ]
         }
@@ -125,11 +108,50 @@ router.get('/current/groups', requireAuth, async (req, res) => {
     res.json({
         groups
     });
+
+    // const { user } = req;
+    // const ownedGroups = await user.getOwnedGroup({
+    //     include: {
+    //         association: 'Members',
+    //         attributes: [],
+    //         through: {
+    //           attributes: []
+    //         }
+    //       },
+    //     attributes: {
+    //         include: ['createdAt', 'updatedAt',             [
+    //             sequelize.fn("COUNT", sequelize.col("Members.id")),
+    //             "numMembers"
+    //           ]]
+    //     },
+    //     group: [sequelize.col('Group.id')]
+    // });
+
+    // const joinedGroups = await user.getMemberships({
+    //     through: {
+    //         attributes: []
+    //     }
+    // });
+
+    // res.json({ Groups: [...ownedGroups, ...joinedGroups] });
 });
 
 // Return all users
+// Dev route
 router.get('/', async (req, res) => {
-    const allUsers = await User.findAll();
+    const allUsers = await User.scope(null).findAll({
+        include: [
+            {
+                association: 'ownedGroup'
+            },
+            {
+                association: 'memberships'
+            },
+            {
+                association: 'attending'
+            }
+        ]
+    });
     res.json(allUsers);
 });
 

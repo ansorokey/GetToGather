@@ -12,17 +12,18 @@ const router = express.Router();
 
 // Validate login credentials
 const validateLogin = [
-    check('credential')
+    check('email')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .withMessage('Please provide a valid email or username.'),
+        .isEmail()
+        .withMessage('Email is required'),
     check('password')
         .exists({ checkFalsy: true})
-        .withMessage('Please provide a password.'),
+        .withMessage('Password is required'),
     handleValidationErrors
 ]
 
-// Return the current user
+// #Get the Current User
 router.get('/', async (req, res) => {
     const { user } = req;
     if(user) {
@@ -41,17 +42,15 @@ router.get('/', async (req, res) => {
     }
 });
 
-//Logging in
+// #Log In a User
 router.post('/', validateLogin, async (req, res, next) => {
-    const { credential, password } = req.body;
+    let { email, password } = req.body;
+    email = email.toLowerCase();
 
     //find user with all attributes included
     const user = await User.unscoped().findOne({
         where: {
-            [Op.or]: {
-                username: credential,
-                email: credential
-            }
+            email
         }
     });
 

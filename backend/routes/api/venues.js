@@ -47,49 +47,60 @@ const checkForVenue = async (req, res, next) => {
 
 const router = express.Router();
 
-// Edit a venue by its id
-// ALMOST GOOD
-// Change validation middleware into custom functions
-router.put('/:venueId', requireAuth, checkForVenue, async (req, res, next) => {
+// #Edit a Venue specified by its id
+router.put('/:venueId', requireAuth, async (req, res, next) => {
     const { venueId } = req.params;
     const { address, city, state, lat, lng } = req.body;
     let hasPermission = false;
 
-    const venue = await Venue.findByPk(venueId);
-    const group = await Group.findByPk(venue.groupId);
+    try {
+        const venue = await Venue.findByPk(venueId);
+        if(!venue){
+            res.status(404);
+            return res.json({ message: 'Venue couldn\'t be found'});
+        }
 
-    if(req.user.id === group.organizerId) hasPermission = true;
+        const group = await Group.findByPk(venue.groupId);
+        if(!group){
+            res.status(404);
+            return res.json({ message: 'Group couldn\'t be found'});
+        }
 
-    if(!hasPermission) {
-        try {
+        if(req.user.id === group.organizerId) hasPermission = true;
+
+        if(!hasPermission) {
             const membership = await GroupMember.findOne({
                 where: { memberId: req.user.id, groupId: group.id }
             });
 
             if(membership && membership.status === 'co-host') hasPermission = true;
-        } catch (e) {
-            return next(e);
         }
-    }
 
-    if( hasPermission ) {
-        if(address) venue.address = address;
-        if(city) venue.city = city;
-        if(state) venue.state = state;
-        if(lat) venue.lat = lat;
-        if(lng) venue.lng = lng;
+        if( hasPermission ) {
+            if(address) venue.address = address;
+            if(city) venue.city = city;
+            if(state) venue.state = state;
+            if(lat) venue.lat = lat;
+            if(lng) venue.lng = lng;
 
-        try {
-            await venue.save();
-            res.json({venue});
-        } catch (e) {
-            return next(e);
+                await venue.save();
+                res.json(venue);
+        } else {
+            res.status(403);
+            return res.json({ message: 'Forbidden'});
         }
-    } else {
-        res.status(403);
-        return res.json({ message: 'Forbidden'});
+
+    } catch (e) {
+        return next(e);
     }
 });
+
+// Get a venue (dev test)
+router.get('/:venueId', async (req, res) => {
+    const venues = await Venue.findByPk(req.params.venueId);
+
+    res.json({venues})
+})
 
 // Get all venues (dev test)
 router.get('/', async (req, res) => {

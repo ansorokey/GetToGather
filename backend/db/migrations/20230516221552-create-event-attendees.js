@@ -4,6 +4,7 @@ let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
+options.tableName = 'EventAttendees'
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -50,7 +51,6 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = 'EventAttendees'
-    await queryInterface.dropTable();
+    await queryInterface.dropTable(options);
   }
 };

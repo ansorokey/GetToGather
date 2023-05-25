@@ -1695,7 +1695,7 @@ Request attendance for an event specified by id.
 * Require Authorization: Current User must be a member of the group
 * Request
   * Method: POST
-  * URL: /events/:eventId
+  * URL: /events/:eventId/attendance
   * Headers:
     * Content-Type: application/json
   * Body: none

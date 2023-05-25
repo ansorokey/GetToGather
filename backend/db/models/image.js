@@ -19,7 +19,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     preview: {
-      type: DataTypes.BOOLEAN
+      type: DataTypes.BOOLEAN,
+      validate: {
+        isIn: {
+          args: [[true, false]],
+          msg: 'Preview must be a boolean'
+        }
+      }
     },
     imageType: {
       type: DataTypes.STRING

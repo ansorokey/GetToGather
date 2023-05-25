@@ -13,6 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       Event.belongsTo(models.Group, { as: 'Group', foreignKey: 'groupId'});
       Event.belongsTo(models.Venue, { as: 'Venue', foreignKey: 'venueId'});
       Event.hasMany(models.Image, { as: 'EventImages', foreignKey: 'imageableId', constraints: false, scope: {imageType: 'eventImage'}});
+      Event.belongsToMany(models.User, {
+        through: models.EventAttendees,
+        as: 'Atendance',
+        foreignKey: 'eventId',
+        otherKey: 'userId'
+      });
     }
   }
   Event.init({
@@ -35,15 +41,32 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        len: {
+          args: [5],
+          msg: 'Name must be at least 5 characters'
+        }
+      }
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Description is required'
+        }
+      }
     },
     type: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isIn: {
+          args: [['In person', 'Online']],
+          msg: 'Type must be Online or In person'
+        }
+      }
     },
     startDate: {
       type: DataTypes.DATE,
@@ -56,19 +79,37 @@ module.exports = (sequelize, DataTypes) => {
     },
     endDate: {
       type: DataTypes.DATE,
-      allowNull: false
-    },
-    numAttending: {
-      type: DataTypes.INTEGER
+      allowNull: false,
+      validate: {
+        isDate: {
+          msg: 'Start date must be a valid datetime'
+        }
+      }
     },
     previewImage: {
       type: DataTypes.STRING
     },
     capacity: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        isInt: {
+          msg: 'Capacity must be an integer'
+        }
+      }
     },
     price: {
-      type: DataTypes.FLOAT
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      validate: {
+        isFloat: {
+          msg: 'Price is invalid'
+        },
+        min: {
+          args: [0],
+          msg: 'Price is invalid'
+        }
+      }
     }
   }, {
     sequelize,

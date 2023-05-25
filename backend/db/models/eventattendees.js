@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      EventAttendees.belongsTo(models.Event, { foreignKey: 'eventId'} );
+      EventAttendees.belongsTo(models.User, { foreignKey: 'userId'} );
     }
   }
   EventAttendees.init({
@@ -34,7 +35,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.STRING,
-      allowNull: false
+      defaultValue: 'pending',
+      validate: {
+        isIn: [['attending', 'waitlist', 'pending']]
+      }
     }
   }, {
     sequelize,

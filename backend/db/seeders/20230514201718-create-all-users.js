@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 options.tableName = 'Users';
 
-users.forEach(user => user.hashedPassword = bcrypt.hashSync(user.username));
+users.forEach(user => user.hashedPassword = bcrypt.hashSync('password'));
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {

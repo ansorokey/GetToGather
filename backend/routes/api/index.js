@@ -5,6 +5,9 @@ const usersRouter = require('./users.js');
 const groupsRouter = require('./groups.js');
 const groupMembersRouter = require('./groupmembers.js');
 const eventsRouter = require('./events.js');
+const venuesRouter = require('./venues.js');
+const imagesRouter = require('./images.js');
+const attendanceRouter = require('./attendance.js');
 
 // Import Database Models
 const { User } = require('../../db/models');
@@ -20,6 +23,9 @@ router.use('/users', usersRouter);
 router.use('/groups', groupsRouter);
 router.use('/groupmembers', groupMembersRouter);
 router.use('/events', eventsRouter);
+router.use('/venues', venuesRouter);
+router.use('/images', imagesRouter);
+router.use('/attendance', attendanceRouter);
 
 // Posts
 router.post('/test', (req, res) => {

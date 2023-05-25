@@ -52,9 +52,6 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       },
-      numAttending: {
-        type: Sequelize.INTEGER
-      },
       previewImage: {
         type: Sequelize.STRING
       },

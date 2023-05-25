@@ -26,6 +26,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notNull:{
+          msg: 'Street address is required'
+        },
         notEmpty: {
           msg:'Street address is required'
         }
@@ -35,6 +38,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notNull:{
+          msg: 'City is required'
+        },
         notEmpty: {
           msg: 'City is required'
         }
@@ -44,6 +50,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notNull:{
+          msg: 'State is required'
+        },
         notEmpty: {
           msg: 'State is required'
         }
@@ -53,6 +62,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT(8, 6),
       allowNull: false,
       validate: {
+        notNull:{
+          msg: 'Lattitude is not valid'
+        },
         isFloat: {
           msg: 'Latitude is not valid'
         },
@@ -70,6 +82,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT(9, 6),
       allowNull: false,
       validate: {
+        notNull:{
+          msg: 'Longitude is not valid'
+        },
         isFloat: {
           msg: 'Longitude is not valid'
         },

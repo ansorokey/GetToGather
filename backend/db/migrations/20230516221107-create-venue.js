@@ -4,6 +4,7 @@ let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
+options.tableName = 'Venues';
 
 
 /** @type {import('sequelize-cli').Migration} */
@@ -18,6 +19,7 @@ module.exports = {
       },
       groupId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Groups',
           key: 'id'
@@ -57,7 +59,6 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tablename = 'Venues';
     await queryInterface.dropTable(options);
   }
 };

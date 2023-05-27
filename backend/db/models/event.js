@@ -4,17 +4,14 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Event extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
     static associate(models) {
       Event.belongsTo(models.Group, { foreignKey: 'groupId'});
       Event.belongsTo(models.Venue, { as: 'Venue', foreignKey: 'venueId'});
       Event.hasMany(models.Image, { as: 'EventImages', foreignKey: 'imageableId', constraints: false, scope: {imageType: 'eventImage'}});
+      Event.hasMany(models.EventAttendee, { foreignKey: 'eventId', as: 'attendingCount'})
       Event.belongsToMany(models.User, {
-        through: models.EventAttendees,
+        through: models.EventAttendee,
         as: 'Attendance',
         foreignKey: 'eventId',
         otherKey: 'userId'
@@ -43,6 +40,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notNull: {
+          msg: 'Name must be at least 5 characters'
+        },
         len: {
           args: [5],
           msg: 'Name must be at least 5 characters'
@@ -55,6 +55,9 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {
           msg: 'Description is required'
+        },
+        notEmpty: {
+          msg: 'Description is required'
         }
       }
     },
@@ -62,6 +65,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notNull: {
+          msg: 'Type must be Onlione or In person'
+        },
         isIn: {
           args: [['In person', 'Online']],
           msg: 'Type must be Online or In person'
@@ -72,6 +78,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
+        // isBefore: {
+        //   args: [(this.endDate)],
+        //   msg: 'End date is less than start date'
+        // },
+        isAfter: {
+          args: [Date()],
+          msg: 'End date is less than start date'
+        },
+        notNull: {
+          msg: 'Start date must be a valid datetime'
+        },
         isDate: {
           msg: 'Start date must be a valid datetime'
         }
@@ -81,8 +98,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
+        isAfter: {
+          args: [this.startDate],
+          msg: 'End date is less than start date'
+        },
+        notNull: {
+          msg: 'End date must be a valid datetime'
+        },
         isDate: {
-          msg: 'Start date must be a valid datetime'
+          msg: 'End date must be a valid datetime'
         }
       }
     },
@@ -93,6 +117,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
+        notNull: {
+          msg: 'Capacity must be an integer'
+        },
         isInt: {
           msg: 'Capacity must be an integer'
         }
@@ -102,6 +129,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       allowNull: false,
       validate: {
+        notNull: {
+          msg: 'Price is invalid'
+        },
         isFloat: {
           msg: 'Price is invalid'
         },
@@ -114,22 +144,31 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Event',
-    defaultScope: {
-      attributes: {
-        exclude: ['createdAt', 'updatedAt']
-      }
-    },
     scopes: {
-      everything: {
+      allMembers: {
         include: [
           {
-            association: 'Group',
+            association: 'Attendance',
+            attributes: [],
+            through: {
+              attributes: [],
+              where: { status: 'attending' }
+            }
           },
           {
-            association: 'Venue'
+            association: 'Group',
+            attributes: ['id', 'name', 'city', 'state']
+          },
+          {
+            association: 'Venue',
+            attributes: ['id', 'city', 'state']
           }
-        ]
-      }
+        ],
+        attributes: {
+          include: [[sequelize.fn('COUNT', sequelize.col('Attendance.id')), 'numAttending']],
+          exclude: ['createdAt', 'updatedAt']
+        }
+      },
     }
   });
   return Event;

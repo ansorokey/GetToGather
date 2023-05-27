@@ -1,10 +1,11 @@
 const express = require('express');
+
 const { Op } = require('sequelize');
-const { User, Image, Event, Group, GroupMember, EventAttendees, sequelize } = require('../../db/models');
 const { body } = require('express-validator');
 const { query } = require('express-validator');
 const { requireAuth } = require('../../utils/auth.js');
 const { handleValidationErrors } = require('../../utils/validation');
+const { User, Image, Event, Venue, Group, GroupMember, EventAttendee, sequelize } = require('../../db/models');
 
 // Middleware to Validate Query params
 const validateQuery = [
@@ -47,38 +48,56 @@ const validateQuery = [
     .custom( val => {
         if(!val) return true;
 
-        console.log('\n\n reached \n\n');
         if(Number.isNaN(Date.parse(val))) throw new Error('Start date must be a valid datetime');
 
-        console.log('\n\n aslo reached \n\n');
-        // if(val !== 7) throw new Error('Start date must be a valid datetime');
         return true;
     }),
     handleValidationErrors
 ];
 
-const validateImage = [
-    body('url')
-        .exists({ checkFalsy: true })
-        .withMessage('Image requires a url'),
-    body('preview')
-        // .exists({ checkFalsy: false }) // need to be able to give a false value
-        .custom( val => {
-            console.log(val);
-            if(typeof val !== 'boolean') throw new Error('Preview must be a boolean');
-            return true;
-        })
-        .withMessage('Preview must be a boolean'),
-    handleValidationErrors
+const validateEventEdit = [
+    body('venueId')
+        .custom( async val => {
+            if(val === undefined) return true;
+            try {
+                const venue = await Venue.findByPk(val);
+                if(!venue) {
+                    throw new Error('Venue does not exist');
+                }
+            } catch (e) {
+                throw new Error('Venue does not exist');
+            }
+        }),
+    // body('name')
+    //     .isLength({ min: 5})
+    //     .withMessage('Name must be at least 5 characters'),
+    // body('type')
+    //     .isIn(['In person', 'Online'])
+    //     .withMessage('Type must be Online or In person'),
+    // body('capacity')
+    //     .isInt({ min: 1 })
+    //     .withMessage('Capacity must be an integer'),
+    // body('price')
+    //     .isFloat({ min: 0.0 })
+    //     .withMessage('Price is invalid'),
+    // // body('description')
+    // //     .withMessage('Description is required'),
+    // body('startDate')
+    //     .isAfter({ comparisonDate: Date().toString()})
+    //     .withMessage('Start date must be in the future'),
+    // body('endDate')
+    //     .isAfter(body.startDate)
+    //     .withMessage('End date is less than start date'),
+        handleValidationErrors
 ];
 
 const router = express.Router();
 
-// Delete an Image for an event
-// LOOKS GOOD!
+// Delete an Image for an Event
 router.delete('/:eventId/images/:imageId', requireAuth, async (req, res, next) => {
     const { eventId, imageId } = req.params;
     let hasPermission = false;
+    let replace = false;
 
     try {
         // Grab Event
@@ -90,12 +109,6 @@ router.delete('/:eventId/images/:imageId', requireAuth, async (req, res, next) =
 
         // Grab group
         const group = await Group.findByPk(event.groupId);
-        if(!group){
-            res.status(404);
-            return res.json({ message: 'Event Image couldn\'t be found'});
-        }
-
-        // Check if organizer
         if(req.user.id === group.organizerId) hasPermission = true;
 
         // If not organizer
@@ -104,13 +117,9 @@ router.delete('/:eventId/images/:imageId', requireAuth, async (req, res, next) =
             const membership = await GroupMember.findOne({
                 where: { groupId: group.id, memberId: req.user.id}
             });
-            if(!membership){
-                res.status(403);
-                return res.json({ message: 'Forbidden'});
-            }
 
             // check if a co-host
-            if(membership.status === 'co-host') hasPermission = true;
+            if(membership && membership.status === 'co-host') hasPermission = true;
         }
 
         if(hasPermission){
@@ -125,19 +134,28 @@ router.delete('/:eventId/images/:imageId', requireAuth, async (req, res, next) =
                 return res.json({ message: 'Event Image couldn\'t be found'});
             }
 
+            if(eventImage.preview) replace = true;
             await eventImage.destroy();
+            if(replace){
+                const replacementImage = await Image.findOne({
+                    where: {
+                        imageableId: eventId, imageType: 'eventImage', preview: true
+                    }
+                });
+                event.set({ previewImage: replacementImage ? replacementImage.url : null });
+                await event.save();
+            }
             return res.json({ message: 'Successfully deleted' });
+        } else {
+            res.status(403);
+            return res.json({ message: 'Forbidden' });
         }
-
-        res.status(403);
-        return res.json({ message: 'Forbidden' });
-
     } catch (e) {
         return next(e);
     }
 });
 
-// Add image to an event by Id
+// #Add an Image to a Event based on the Event's id
 router.post('/:eventId/images', requireAuth, async (req, res, next) => {
     const { eventId } = req.params;
     const { url, preview } = req.body;
@@ -167,26 +185,41 @@ router.post('/:eventId/images', requireAuth, async (req, res, next) => {
             if(membership.status === 'co-host') hasPermission = true;
         }
 
+        if(!hasPermission){
+            const attendance = await EventAttendee.findOne({
+                where: { eventId, userId: req.user.id }
+            });
+            if(!attendance) {
+                res.status(404);
+                return res.json({ message: 'Forbidden'});
+            }
+            if(attendance.status === 'attending') hasPermission = true;
+        }
+
         if(hasPermission){
             const newEventImage = await event.createEventImage({
                 url, preview
             });
 
+            if(preview) {
+                event.previewImage = url;
+                await event.save();
+            }
+
             return res.json({
                 id: newEventImage.id,
                 url, preview
             });
+        } else {
+            res.status(404);
+            return res.json({ message: 'Forbidden'});
         }
-
-        res.status(404);
-        return res.json({ message: 'Forbidden'});
-
     } catch (e) {
         return next(e);
     }
 });
 
-// Get all Attendees of an Event specified by its id
+// #Get all Attendees of an Event specified by its id
 router.get('/:eventId/attendance', async (req, res, next) => {
     const { eventId } = req.params;
     let status = ['attending', 'waitlist'];
@@ -218,11 +251,14 @@ router.get('/:eventId/attendance', async (req, res, next) => {
 
         // Grab attendees
         const attendingUsers = await User.findAll({
+            attributes: {
+                exclude: ['username']
+            },
             include: {
                 association: 'Attendance',
                 attributes: ['status'],
                 required: true,
-                where: { status }
+                where: { eventId, status }
             }
         });
 
@@ -232,7 +268,7 @@ router.get('/:eventId/attendance', async (req, res, next) => {
     }
 });
 
-// Request to Attend an Event based on the Event's id
+// #Request to Attend an Event based on the Event's id
 router.post('/:eventId/attendance', requireAuth, async (req, res, next) => {
     const { eventId } = req.params;
 
@@ -254,9 +290,8 @@ router.post('/:eventId/attendance', requireAuth, async (req, res, next) => {
         }
 
         // Check if they've already requested attendance
-        const attendance = await EventAttendees.findOne({
-            where: { userId: req.user.id, eventId
-            }
+        const attendance = await EventAttendee.findOne({
+            where: { userId: req.user.id, eventId }
         });
         if(attendance){
             if(attendance.status === 'pending' || attendance.status === 'waitlist'){
@@ -270,19 +305,19 @@ router.post('/:eventId/attendance', requireAuth, async (req, res, next) => {
         }
 
         // Add attendance as pending
-        await event.addAttending(req.user);
+        await event.addAttendance(req.user);
 
         return res.json({
             userId: req.user.id,
-            status: attendance.status
+            status: 'pending'
         });
     } catch (e) {
         return next(e);
     }
 });
 
-// Change the status of an attendance for an event specified by id
-router.put('/:eventId/attendance', requireAuth, async (res, req, next) => {
+// #Change the status of an attendance for an event specified by id
+router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
     const { eventId } = req.params;
     const { userId, status } = req.body;
     let hasPermission = false;
@@ -293,10 +328,12 @@ router.put('/:eventId/attendance', requireAuth, async (res, req, next) => {
     }
 
     try {
-
         //Check attendance
-        const attendance = await EventAttendees.findOne({
-            where: { eventId, userId }
+        const attendance = await EventAttendee.findOne({
+            where: { eventId, userId },
+            attributes: {
+                include: ['id']
+            }
         });
         if(!attendance){
             res.status(404);
@@ -317,7 +354,7 @@ router.put('/:eventId/attendance', requireAuth, async (res, req, next) => {
         if(!hasPermission){
             // Grab membership
             const membership = await GroupMember.findOne({
-                where: { groupId: group.id, memebrId: req.user.id }
+                where: { groupId: group.id, memberId: req.user.id }
             });
             if(membership && membership.status === 'co-host') hasPermission = true;
         }
@@ -325,94 +362,193 @@ router.put('/:eventId/attendance', requireAuth, async (res, req, next) => {
         if(hasPermission){
             attendance.status = status;
             await attendance.save();
-            res.json(attendance);
+            res.json({
+                id: +attendance.id,
+                eventId: +eventId,
+                userId,
+                status
+            });
+        } else {
+            res.status(403);
+            return res.json({ message: 'Forbidden' });
         }
-
-        res.status(403);
-        return res.json({ message: 'Forbidden' });
-
     } catch (e) {
         return next(e);
     }
 });
 
-// Return event by id
+router.delete('/:eventId/attendance', requireAuth, async (req, res, next) => {
+    const { eventId } = req.params;
+    const { userId } = req.body;
+    let hasPermission = false;
+
+    try {
+        const event = await Event.findByPk(eventId);
+        if(!event) {
+            res.status(404);
+            return res.json({ message: 'Event couldn\'t be found' });
+        }
+
+        const attendance = await EventAttendee.findOne({
+            where: { eventId, userId}
+        });
+        if(!attendance){
+            res.status(404);
+            return res.json({ message: 'Attendance does not exist for this User' });
+        }
+
+        let group = await Group.findByPk(event.groupId);
+        if(req.user.id === group.organizerId) hasPermission = true;
+
+        if(!hasPermission){
+            if(+req.user.id === +userId) hasPermission = true;
+        }
+
+        if(hasPermission){
+            const user = await User.findByPk(userId);
+            await event.removeAttendance(user);
+            return res.json({ message: 'Successfully deleted attendance from event' });
+        } else {
+            res.status(404);
+            return res.json({ message: 'Only the User or organizer may delete an Attendance' });
+        }
+    } catch (e) {
+        return next(e);
+    }
+});
+
+// #Get details of an Event specified by its id
 router.get('/:eventId', async (req, res, next) => {
     const { eventId } = req.params;
 
-    let event;
     try{
-        event = await Event.findByPk(eventId, {
+        const event = await Event.scope(null).findByPk(eventId, {
             include: [
                 {
-                    association: 'Group',
-                    attributes: ['id', 'name', 'private', 'city', 'state']
+                  association: 'Group',
+                  attributes: ['id', 'name', 'city', 'state', 'private']
                 },
                 {
-                    association: 'Venue',
-                    attributes: ['id', 'address', 'city', 'state', 'lat', 'lng']
+                  association: 'Venue',
+                  attributes: ['id', 'city', 'state', 'address', 'lat', 'lng']
                 },
                 {
-                    association: 'EventImages'
+                    model: Image,
+                    as: 'EventImages',
+                    attributes: ['id', 'url', 'preview']
                 }
-            ]
+              ],
+              attributes: {
+                include: [
+                    [sequelize.col('Event.id'), 'numAttending']
+                ],
+                exclude: ['createdAt', 'updatedAt', 'previewImage']
+              }
         });
 
-        if(!event) {
-            return res.json({message: "Event couldn't be found"});
-        }
+        if(!event) return res.json({message: "Event couldn't be found"});
+
+        const numAttending = await event.countAttendingCount({
+            where: { status: 'attending' }
+        });
+
+        event.dataValues.numAttending = numAttending;
+
+        res.json(event);
     } catch(e){
         return next(e);
     }
-
-    res.json(event);
 });
 
-// Edit an event by Id
-router.put('/:eventId', async (req, res, next) => {
+// #Edit an Event specified by its id
+router.put('/:eventId', validateEventEdit, async (req, res, next) => {
     const { eventId } = req.params;
     const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
+    let hasPermission = false;
 
-    const event = await Event.findByPk(eventId);
-
-    if(venueId) event.venueId = venueId;
-    if(name) event.name = name;
-    if(type) event.type = type;
-    if(capacity) event.capacity = capacity;
-    if(price) event.price = price;
-    if(description) event.description = description;
-    if(startDate) event.startDate = startDate;
-    if(endDate) event.endDate = endDate;
     try {
-        await event.save();
-    } catch (e) {
-        return next(e);
-    }
+        const event = await Event.findByPk(eventId, {
+            attributes: {
+                exclude: ['createdAt', 'updatedAt']
+            }
+        });
+        if(!event){
+            res.status(404);
+            return res.json({ message: 'Event couldn\'t be found' });
+        }
 
-    res.json(event);
-});
+        const group = await Group.findByPk(event.groupId);
+        if(req.user.id === group.organizerId) hasPermission = true;
 
-// Delete an Event by Id
-router.delete('/:eventId', async (req, res, next) => {
-    const { user } = req;
-    const { eventId } = req.params;
+        if(!hasPermission){
+            const membership = await GroupMember.findOne({
+                where: { memberId: req.user.id, groupId: group.id}
+            })
+            if(membership && membership.status == 'co-host') hasPermission = true;
+        }
 
-    if(!user) {
-        res.json({message: 'Event couldn\'t be found'});
-    }
+        if(hasPermission){
+            // Does venue belong to current group?
 
-    let event;
-    try {
-        event = await Event.findByPk(eventId);
-        if(!event) {
-            return res.json({message: 'forbidden'});
+
+            if(venueId) {
+                const venue = await Venue.findByPk(venueId);
+                if(group.id !== venue.groupId){
+                    res.status(403);
+                    return res.json({ message: 'Forbidden' });
+                }
+                event.venueId = venueId;
+            }
+            if(name) event.name = name;
+            if(type) event.type = type;
+            if(capacity) event.capacity = capacity;
+            if(price) event.price = price;
+            if(description) event.description = description;
+            if(startDate) event.startDate = startDate;
+            if(endDate) event.endDate = endDate;
+            await event.save();
+            res.json(event);
+        } else {
+            res.status(403);
+            return res.json({ message: 'Forbiden' });
         }
     } catch (e) {
         return next(e);
     }
+});
 
-    await event.destroy();
-    return res.json({ message: 'Successfully deleted' });
+// #Delete an Event specified by its id
+router.delete('/:eventId', requireAuth, async (req, res, next) => {
+    const { eventId } = req.params;
+    let hasPermission = false;
+
+    try {
+        const event = await Event.findByPk(eventId);
+        if(!event) {
+            res.status(404);
+            return res.json({message: 'Event couldn\'t be found'});
+        }
+
+        const group = await Group.findByPk(event.groupId);
+        if(req.user.id === group.organizerId) hasPermission = true;
+
+        if(!hasPermission) {
+            const membership = await GroupMember.findOne({
+                where: { memberId: req.user.id, groupId: group.id}
+            });
+            if(membership && membership.status === 'co-host') hasPermission = true;
+        }
+
+        if(hasPermission){
+            await event.destroy();
+            return res.json({ message: 'Successfully deleted' });
+        } else {
+            res.status(403);
+            return res.json({ message: 'Forbidden' });
+        }
+    } catch (e) {
+        return next(e);
+    }
 });
 
 // #Get all Events
@@ -428,34 +564,20 @@ router.get('/', validateQuery, async (req, res, next) => {
     let offset = size * (page - 1);
 
     const where = {};
-    if(name) where.name = { [Op.like]: name};
+    if(name) where.name = { [Op.like]: `%${name}%`};
     if(type) where.type = type;
-    if(startDate) where.startDate = startDate;
+    if(startDate) where.startDate = { [Op.gte]: startDate};
 
-    const allEvents = await Event.scope(['defaultScope','everything']).findAll({
-        include: [
-            {
-                association: 'Group',
-                attributes: ['id', 'name', 'city', 'state']
-            },
-            {
-                association: 'Venue',
-                attributes: ['id', 'city', 'state']
-            },
-            {
-                model: User,
-                as: 'Attendance',
-                through: {
-                    atributes: []
-                }
-            }
-        ],
+    const allEvents = await Event.scope('allMembers').findAll({
         attributes: {
             exclude: ['capacity', 'price', 'description']
         },
+        group: [['Event.id']],
         where,
+        // THE LIMIT IS WHAT BROKE MY AGGREGATE????
         limit,
-        offset
+        offset,
+        subQuery: false
     });
 
     return res.json({ Events: allEvents });

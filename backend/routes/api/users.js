@@ -2,11 +2,11 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 
-const { setTokenCookie, requireAuth } = require('../../utils/auth.js');
-const { User, Group, GroupMember, sequelize } = require('../../db/models');
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation.js');
 const { Op } = require('sequelize');
+const { check } = require('express-validator');
+const { User, Group, GroupMember } = require('../../db/models');
+const { handleValidationErrors } = require('../../utils/validation.js');
+const { setTokenCookie, requireAuth } = require('../../utils/auth.js');
 
 const router = express.Router();
 
@@ -56,7 +56,7 @@ const alreadyExists = async (req, res, next) => {
 }
 
 // #Sign up a new user
-router.post('/', validateSignup, alreadyExists, async (req, res) => {
+router.post('/', validateSignup, alreadyExists, async (req, res, next) => {
     const { email, password, username, firstName, lastName } = req.body;
 
     const hashedPassword = bcrypt.hashSync(password);
@@ -78,13 +78,13 @@ router.post('/', validateSignup, alreadyExists, async (req, res) => {
 
     setTokenCookie(res, safeUser);
 
-    return res.json({
+    return res.json(
         safeUser
-    });
+    );
 });
 
 // #Get all Groups joined or organized by the Current User
-router.get('/current/groups', requireAuth, async (req, res) => {
+router.get('/current/groups', requireAuth, async (req, res, next) => {
 
     // Query the join table to see where user is a member
     const joinedGroups = await GroupMember.findAll({
@@ -108,51 +108,6 @@ router.get('/current/groups', requireAuth, async (req, res) => {
     res.json({
         groups
     });
-
-    // const { user } = req;
-    // const ownedGroups = await user.getOwnedGroup({
-    //     include: {
-    //         association: 'Members',
-    //         attributes: [],
-    //         through: {
-    //           attributes: []
-    //         }
-    //       },
-    //     attributes: {
-    //         include: ['createdAt', 'updatedAt',             [
-    //             sequelize.fn("COUNT", sequelize.col("Members.id")),
-    //             "numMembers"
-    //           ]]
-    //     },
-    //     group: [sequelize.col('Group.id')]
-    // });
-
-    // const joinedGroups = await user.getMemberships({
-    //     through: {
-    //         attributes: []
-    //     }
-    // });
-
-    // res.json({ Groups: [...ownedGroups, ...joinedGroups] });
-});
-
-// Return all users
-// Dev route
-router.get('/', async (req, res) => {
-    const allUsers = await User.scope(null).findAll({
-        include: [
-            {
-                association: 'ownedGroup'
-            },
-            {
-                association: 'memberships'
-            },
-            {
-                association: 'attending'
-            }
-        ]
-    });
-    res.json(allUsers);
 });
 
 // Export Router

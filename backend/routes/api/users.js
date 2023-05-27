@@ -148,7 +148,7 @@ router.get('/', async (req, res) => {
                 association: 'memberships'
             },
             {
-                association: 'attending'
+                association: 'Attending'
             }
         ]
     });

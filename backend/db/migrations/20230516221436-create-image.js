@@ -4,6 +4,7 @@ let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
 }
+options.tableName = 'Images';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -20,7 +21,8 @@ module.exports = {
         allowNull: false
       },
       preview: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       imageType: {
         type: Sequelize.STRING
@@ -42,7 +44,6 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = 'Images';
     await queryInterface.dropTable(options);
   }
 };

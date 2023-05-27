@@ -1,10 +1,11 @@
 const express = require('express');
+
 const { Op } = require('sequelize');
-const { User, Image, Event, Venue, Group, GroupMember, EventAttendee, sequelize } = require('../../db/models');
 const { body } = require('express-validator');
 const { query } = require('express-validator');
 const { requireAuth } = require('../../utils/auth.js');
 const { handleValidationErrors } = require('../../utils/validation');
+const { User, Image, Event, Venue, Group, GroupMember, EventAttendee, sequelize } = require('../../db/models');
 
 // Middleware to Validate Query params
 const validateQuery = [
@@ -54,21 +55,6 @@ const validateQuery = [
     handleValidationErrors
 ];
 
-const validateImage = [
-    body('url')
-        .exists({ checkFalsy: true })
-        .withMessage('Image requires a url'),
-    body('preview')
-        // .exists({ checkFalsy: false }) // need to be able to give a false value
-        .custom( val => {
-            console.log(val);
-            if(typeof val !== 'boolean') throw new Error('Preview must be a boolean');
-            return true;
-        })
-        .withMessage('Preview must be a boolean'),
-    handleValidationErrors
-];
-
 const validateEventEdit = [
     body('venueId')
         .custom( async val => {
@@ -111,6 +97,7 @@ const router = express.Router();
 router.delete('/:eventId/images/:imageId', requireAuth, async (req, res, next) => {
     const { eventId, imageId } = req.params;
     let hasPermission = false;
+    let replace = false;
 
     try {
         // Grab Event
@@ -147,7 +134,17 @@ router.delete('/:eventId/images/:imageId', requireAuth, async (req, res, next) =
                 return res.json({ message: 'Event Image couldn\'t be found'});
             }
 
+            if(eventImage.preview) replace = true;
             await eventImage.destroy();
+            if(replace){
+                const replacementImage = await Image.findOne({
+                    where: {
+                        imageableId: eventId, imageType: 'eventImage', preview: true
+                    }
+                });
+                event.set({ previewImage: replacementImage ? replacementImage.url : null });
+                await event.save();
+            }
             return res.json({ message: 'Successfully deleted' });
         } else {
             res.status(403);
@@ -203,6 +200,11 @@ router.post('/:eventId/images', requireAuth, async (req, res, next) => {
             const newEventImage = await event.createEventImage({
                 url, preview
             });
+
+            if(preview) {
+                event.previewImage = url;
+                await event.save();
+            }
 
             return res.json({
                 id: newEventImage.id,
@@ -360,7 +362,6 @@ router.put('/:eventId/attendance', requireAuth, async (req, res, next) => {
         if(hasPermission){
             attendance.status = status;
             await attendance.save();
-            console.log(attendance.dataValues)
             res.json({
                 id: +attendance.id,
                 eventId: +eventId,
@@ -425,11 +426,11 @@ router.get('/:eventId', async (req, res, next) => {
             include: [
                 {
                   association: 'Group',
-                  attributes: ['id', 'name', 'city', 'state']
+                  attributes: ['id', 'name', 'city', 'state', 'private']
                 },
                 {
                   association: 'Venue',
-                  attributes: ['id', 'city', 'state']
+                  attributes: ['id', 'city', 'state', 'address', 'lat', 'lng']
                 },
                 {
                     model: Image,
@@ -438,7 +439,10 @@ router.get('/:eventId', async (req, res, next) => {
                 }
               ],
               attributes: {
-                exclude: ['createdAt', 'updatedAt']
+                include: [
+                    [sequelize.col('Event.id'), 'numAttending']
+                ],
+                exclude: ['createdAt', 'updatedAt', 'previewImage']
               }
         });
 
@@ -450,7 +454,7 @@ router.get('/:eventId', async (req, res, next) => {
 
         event.dataValues.numAttending = numAttending;
 
-        res.json({event});
+        res.json(event);
     } catch(e){
         return next(e);
     }

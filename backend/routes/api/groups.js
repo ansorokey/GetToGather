@@ -2,30 +2,10 @@
 const express = require('express');
 
 const { Op } = require('sequelize');
-const { Group, User, Image, Venue, Event, EventAttendee, GroupMember, sequelize } = require('../../db/models');
 const { body } = require('express-validator');
 const { requireAuth } = require('../../utils/auth.js');
 const { handleValidationErrors } = require('../../utils/validation.js');
-const { ResultWithContextImpl } = require('express-validator/src/chain');
-const event = require('../../db/models/event');
-
-// Returns an error message if the group cannot be found
-const checkForGroup = async (req, res, next) => {
-    const groupId = req.params.groupId;
-
-    let group;
-    try {
-        group = await Group.findByPk(groupId);
-        if(!group) {
-            res.status(404);
-            return res.json({ message: 'Group couldn\'t be found'});
-        }
-
-        next();
-    } catch (e) {
-        next(e);
-    }
-};
+const { Group, User, Image, Venue, GroupMember, sequelize } = require('../../db/models');
 
 // make sure group properties exist (give custom error instead of notNull violation)
 const validateGroup = [
@@ -48,38 +28,6 @@ const validateGroup = [
     body('state')
         .exists({ checkFalsy: true })
         .withMessage('state is required'),
-    handleValidationErrors
-];
-
-const validateImage = [
-    body('url')
-        .exists({ checkFalsy: true })
-        .withMessage('Image rquires a url'),
-    body('preview')
-        .exists({ checkFalsy: false }) // need to be able to give a false value
-        .withMessage('Preview must be a boolean'),
-    handleValidationErrors
-];
-
-const validateVenue = [
-    body('address')
-        .exists({ checkFalsy: true })
-        .notEmpty()
-        .withMessage('Street address is required'),
-    body('city')
-        .exists({ checkFalsy: true })
-        .notEmpty()
-        .withMessage('City is required'),
-    body('state')
-        .exists({ checkFalsy: true })
-        .notEmpty()
-        .withMessage('State is required'),
-    body('lat')
-        .exists({ checkFalsy: true })
-        .withMessage('Latitude is not valid'),
-    body('lng')
-        .exists({ checkFalsy: true })
-        .withMessage('Longitude is not valid'),
     handleValidationErrors
 ];
 
@@ -117,11 +65,14 @@ const validateEvent = [
         .withMessage('Description is required'),
     body('startDate')
         .exists({ checkFalsy: true })
-        .isAfter({ comparisonDate: Date().toString()})
+        .isAfter({ comparisonDate: Date().toString() })
         .withMessage('Start date must be in the future'),
     body('endDate')
         .exists({ checkFalsy: true })
-        .isAfter(body.startDate)
+        .custom( ( val, { req } ) => {
+            if(new Date(val) <= new Date(req.body.startDate)) throw new Error('End date is less than start date')
+            return true;
+        } )
         .withMessage('End date is less than start date'),
         handleValidationErrors
 ];
@@ -132,6 +83,7 @@ const router = express.Router();
 router.delete('/:groupId/images/:imageId', requireAuth, async (req, res, next) => {
     const { groupId, imageId } = req.params;
     let hasPermission = false;
+    let replace = false;
 
     try {
         // Grab group
@@ -165,7 +117,20 @@ router.delete('/:groupId/images/:imageId', requireAuth, async (req, res, next) =
                 return res.json({ message: 'Group Image couldn\'t be found'});
             }
 
+            if(groupImage.preview) replace = true;
+
             await groupImage.destroy();
+            if(replace){
+                const replacementImage = await Image.findOne({
+                    where: {
+                        imageableId: groupId, imageType: 'groupImage', preview: true
+                    }
+                });
+
+                group.set({ previewImage: replacementImage ? replacementImage.url : null });
+                await group.save();
+            }
+
             return res.json({ message: 'Successfully deleted' });
         } else {
             res.status(403);
@@ -195,6 +160,11 @@ router.post('/:groupId/images', requireAuth, async (req, res, next) => {
                 url,
                 preview
             });
+
+            if(preview) {
+                group.previewImage = url;
+                await group.save();
+            }
 
             return res.json({
                 id: newImage.id,
@@ -280,7 +250,15 @@ router.post('/:groupId/venues', requireAuth, async (req, res, next) => {
                 lat, lng: lng
             });
 
-            return res.json(newVenue);
+            return res.json({
+                id: newVenue.id,
+                groupId: newVenue.groupId,
+                address: newVenue.address,
+                city: newVenue.city,
+                state: newVenue.state,
+                lat: newVenue.lat,
+                lng: newVenue.lng
+            });
         } catch (e) {
             e.status = 400;
             return next(e);
@@ -465,7 +443,7 @@ router.post('/:groupId/members', requireAuth, async (req, res, next) => {
 
         await group.addMember(req.user);
 
-        res.json({ groupId: +groupId, status: 'pending' });
+        res.json({ memberId: +req.user.id, status: 'pending' });
     } catch (e) {
         return next(e);
     }
@@ -610,7 +588,12 @@ router.get('/:groupId', async (req, res, next) => {
                     association: 'Members',
                     attributes: [],
                     through: {
-                        attributes: []
+                        attributes: [],
+                        where: {
+                            status: {
+                                [Op.or]: ['member', 'co-host']
+                            }
+                        }
                     }
                 },
                 {
@@ -638,8 +621,6 @@ router.get('/:groupId', async (req, res, next) => {
         });
 
         if(group === null) {
-            console.log('\n no group \n')
-            console.log(group);
             res.status(404);
             return res.json({ message: 'Group couldn\'t be found'})
         }
@@ -718,7 +699,7 @@ router.delete('/:groupId', requireAuth, async (req, res, next) => {
 });
 
 // #Get all Groups
-router.get('/', async (_req, res) => {
+router.get('/', async (_req, res, next) => {
 
     const allGroups = await Group.scope('memberScope').findAll({
         order: [['id']]

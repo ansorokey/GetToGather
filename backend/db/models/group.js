@@ -123,7 +123,10 @@ module.exports = (sequelize, DataTypes) => {
           association: 'Members',
           attributes: [],
           through: {
-            attributes: []
+            attributes: [],
+            where: {
+              status: ['member', 'co-host']
+            }
           }
         },
         attributes: {

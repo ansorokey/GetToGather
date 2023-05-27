@@ -1,49 +1,8 @@
 // Router route - /api/venues
 const express = require('express');
 
-const { Venue, Group, GroupMember } = require('../../db/models');
-const { body } = require('express-validator');
 const { requireAuth } = require('../../utils/auth.js');
-const { handleValidationErrors } = require('../../utils/validation.js');
-
-const validateVenue = [
-    body('address')
-        .exists({ checkFalsy: true })
-        .notEmpty()
-        .withMessage('Street address is required'),
-    body('city')
-        .exists({ checkFalsy: true })
-        .notEmpty()
-        .withMessage('City is required'),
-    body('state')
-        .exists({ checkFalsy: true })
-        .notEmpty()
-        .withMessage('State is required'),
-    body('lat')
-        .exists({ checkFalsy: true })
-        .withMessage('Latitude is not valid'),
-    body('lng')
-        .exists({ checkFalsy: true })
-        .withMessage('Longitude is not valid'),
-    handleValidationErrors
-]
-
-const checkForVenue = async (req, res, next) => {
-    const venueId = req.params.venueId;
-
-    let venue;
-    try {
-        venue = await Venue.findByPk(venueId);
-        if(!venue) {
-            res.status(404);
-            return res.json({ message: 'Venue couldn\'t be found'});
-        }
-
-        next();
-    } catch (e) {
-        next(e);
-    }
-};
+const { Venue, Group, GroupMember } = require('../../db/models');
 
 const router = express.Router();
 
@@ -95,19 +54,6 @@ router.put('/:venueId', requireAuth, async (req, res, next) => {
     }
 });
 
-// Get a venue (dev test)
-router.get('/:venueId', async (req, res) => {
-    const venues = await Venue.findByPk(req.params.venueId);
-
-    res.json({venues})
-})
-
-// Get all venues (dev test)
-router.get('/', async (req, res) => {
-    const venues = await Venue.findAll();
-
-    res.json({venues})
-})
 
 // Export router
 module.exports = router;

@@ -57,10 +57,12 @@ module.exports = {
         type: Sequelize.STRING
       },
       capacity: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
       },
       price: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

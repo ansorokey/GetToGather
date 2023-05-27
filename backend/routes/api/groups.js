@@ -430,7 +430,7 @@ router.post('/:groupId/members', requireAuth, async (req, res, next) => {
         }
 
         const membership = await GroupMember.findOne({
-            where: { groupId, memberid: req.user.id }
+            where: { groupId, memberId: req.user.id }
         });
         if(membership && membership.status === 'pending'){
             res.status(400);
@@ -701,9 +701,32 @@ router.delete('/:groupId', requireAuth, async (req, res, next) => {
 // #Get all Groups
 router.get('/', async (_req, res, next) => {
 
-    const allGroups = await Group.scope('memberScope').findAll({
-        order: [['id']]
+    const allGroups = await Group.scope(null).findAll({
+        include: {
+            association: 'Members',
+            attributes: [],
+            through: {
+              attributes: [],
+              where: {
+                status: ['member', 'co-host']
+              }
+            }
+          },
+          attributes: {
+            include: [
+              [
+                sequelize.fn("COUNT", sequelize.col("Members.id")),
+                "numMembers"
+              ]
+            ],
+          },
+          group: [sequelize.col('Group.id')]
     });
+
+    for(let i = 0; i < allGroups.length; i++){
+        allGroups[i].dataValues.numMembers = Number.parseInt(allGroups[i].dataValues.numMembers);
+        console.log(typeof allGroups[i].dataValues.numMembers);
+    }
 
     return res.json({ Groups: allGroups });
 });

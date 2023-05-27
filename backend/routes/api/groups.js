@@ -701,9 +701,31 @@ router.delete('/:groupId', requireAuth, async (req, res, next) => {
 // #Get all Groups
 router.get('/', async (_req, res, next) => {
 
-    const allGroups = await Group.scope('memberScope').findAll({
-        order: [['id']]
+    const allGroups = await Group.scope(null).findAll({
+        include: {
+            association: 'Members',
+            attributes: [],
+            through: {
+              attributes: [],
+              where: {
+                status: ['member', 'co-host']
+              }
+            }
+          },
+          attributes: {
+            include: [
+              [
+                sequelize.fn("COUNT", sequelize.col("Members.id")),
+                "numMembers"
+              ]
+            ],
+          },
+          group: [sequelize.col('Group.id')]
     });
+
+    for(let i = 0; i < allGroups.length; i++){
+        allGroups[i].dataValues.numMembers = +allGroups[i].dataValues.numMembers;
+    }
 
     return res.json({ Groups: allGroups });
 });

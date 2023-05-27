@@ -572,7 +572,7 @@ router.get('/', validateQuery, async (req, res, next) => {
         attributes: {
             exclude: ['capacity', 'price', 'description']
         },
-        group: [['Event.id'], ['Group.id']],
+        group: [['Event.id'], ['Group.id'], ['Venue.id']],
         where,
         // THE LIMIT IS WHAT BROKE MY AGGREGATE????
         limit,

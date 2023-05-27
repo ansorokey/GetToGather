@@ -145,7 +145,7 @@ module.exports = {
         lastName,
         username: mixed,
         email: mixed + '@email.com',
-        hashedPassword: bcrypt.hashSync(password)
+        hashedPassword: bcrypt.hashSync('password')
       })
     }
 

@@ -106,7 +106,7 @@ router.get('/current/groups', requireAuth, async (req, res, next) => {
     });
 
     res.json({
-        groups
+        Groups: groups
     });
 });
 

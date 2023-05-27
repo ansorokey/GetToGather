@@ -430,7 +430,7 @@ router.post('/:groupId/members', requireAuth, async (req, res, next) => {
         }
 
         const membership = await GroupMember.findOne({
-            where: { groupId, memberid: req.user.id }
+            where: { groupId, memberId: req.user.id }
         });
         if(membership && membership.status === 'pending'){
             res.status(400);

@@ -724,7 +724,8 @@ router.get('/', async (_req, res, next) => {
     });
 
     for(let i = 0; i < allGroups.length; i++){
-        allGroups[i].dataValues.numMembers = +allGroups[i].dataValues.numMembers;
+        allGroups[i].dataValues.numMembers = Number.parseInt(allGroups[i].dataValues.numMembers);
+        console.log(typeof allGroups[i].dataValues.numMembers);
     }
 
     return res.json({ Groups: allGroups });

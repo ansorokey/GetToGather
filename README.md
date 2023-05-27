@@ -6,7 +6,7 @@ https://get-to-gather.onrender.com/
 ## Database Schema Design
 
 [Link to schema](https://dbdiagram.io/d/6452e74bdca9fb07c476cbe7)
-![Image](./gettogather-schema-5-8-23.png)
+![Image](./db-schema-05-27-23.png)
 
 ## API Documentation
 
@@ -817,7 +817,7 @@ Returns all the events.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /events
+  * URL: api/events
   * Body: none
 
 * Successful Response
@@ -880,7 +880,7 @@ Returns all the events of a group specified by its id
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: groups/:groupId/events
+  * URL: api/groups/:groupId/events
   * Body: none
 
 * Successful Response
@@ -955,7 +955,7 @@ Returns the details of an event specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /events/:eventId
+  * URL: api/events/:eventId
   * Body: none
 
 * Successful Response
@@ -1028,7 +1028,7 @@ Creates and returns a new event for a group specified by its id
   the group with a status of "co-host"
 * Request
   * Method: POST
-  * URL: /groups/:groupId/events
+  * URL: api/groups/:groupId/events
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1109,7 +1109,7 @@ Create and return a new image for an event specified by id.
 * Require proper authorization: Current User must be an attendee, host, or co-host of the event
 * Request
   * Method: POST
-  * URL: /events/:eventId/images
+  * URL: api/events/:eventId/images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1156,7 +1156,7 @@ Edit and returns an event specified by its id
   the group with a status of "co-host"
 * Request
   * Method: PUT
-  * URL: /events/:eventId
+  * URL: api/events/:eventId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1250,7 +1250,7 @@ Delete an event specified by its id
   the group with a status of "co-host"
 * Request
   * Method: DELETE
-  * URL: /events/:eventId
+  * URL: api/events/:eventId
   * Body: none
 
 * Successful Response
@@ -1286,7 +1286,7 @@ Returns the members of a group specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: groups/:groupId/members
+  * URL: api/groups/:groupId/members
   * Body: none
 
 * Successful Response: If you ARE the organizer or a co-host of the group. Shows
@@ -1376,7 +1376,7 @@ Request a new membership for a group specified by id.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: /groups/:groupId/members
+  * URL: api/groups/:groupId/members
   * Headers:
     * Content-Type: application/json
   * Body: none
@@ -1444,7 +1444,7 @@ Change the status of a membership for a group specified by id.
     * Current User must already be the organizer
 * Request
   * Method: PUT
-  * URL: /groups/:groupId/members/
+  * URL: api/groups/:groupId/members/
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1534,7 +1534,7 @@ Delete a membership to a group specified by id.
   the user whose membership is being deleted
 * Request
   * Method: DELETE
-  * URL: groups/:groupId/members/:memberId
+  * URL: api/groups/:groupId/members/
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1605,7 +1605,7 @@ Returns the attendees of an event specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /events/:eventId/attendance
+  * URL: api/events/:eventId/attendance
   * Body: none
 
 * Successful Response: If you ARE the organizer of the group or a member of the
@@ -1698,7 +1698,7 @@ Request attendance for an event specified by id.
 * Require Authorization: Current User must be a member of the group
 * Request
   * Method: POST
-  * URL: /events/:eventId/attendance
+  * URL: api/events/:eventId/attendance
   * Headers:
     * Content-Type: application/json
   * Body: none
@@ -1762,7 +1762,7 @@ Change the status of an attendance for an event specified by id.
   have a membership to the group with the status of "co-host"
 * Request
   * Method: PUT
-  * URL: /events/:eventId/attendance
+  * URL: api/events/:eventId/attendance
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1834,7 +1834,7 @@ Delete an attendance to an event specified by id.
   the user whose attendance is being deleted
 * Request
   * Method: DELETE
-  * URL: /events/:eventId/attendance
+  * URL: api/events/:eventId/attendance
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1904,7 +1904,7 @@ Delete an existing image for a Group.
   of the Group
 * Request
   * Method: DELETE
-  * URL: images/:imageId
+  * URL: api/groups/:groupId/images/:imageId
   * Body: none
 
 * Successful Response
@@ -1941,7 +1941,7 @@ Delete an existing image for an Event.
   of the Group that the Event belongs to
 * Request
   * Method: DELETE
-  * URL: images/:imageId
+  * URL: api/events/:eventId/images/:imageId
   * Body: none
 
 * Successful Response

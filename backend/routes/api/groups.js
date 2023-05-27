@@ -616,7 +616,7 @@ router.get('/:groupId', async (req, res, next) => {
                 ]
             },
             group: [
-                ['Group.id'], ['GroupImages.id'], ['Venues.id']
+                ['Group.id'], ['GroupImages.id'], ['Venues.id'], ['Organizer.id']
             ]
         });
 

@@ -1,7 +1,7 @@
 // Router route - /api/secret/dev
 
 const express = require('express');
-const { EventAttendee, GroupMember, Venue, Image } = require('../../db/models');
+const { EventAttendee, GroupMember, Venue, Image, User } = require('../../db/models');
 
 const router = express.Router();
 
@@ -17,48 +17,64 @@ router.get('/attendance', async (req, res, next) => {
 
 // Get all memberships
 router.get('/memberships', async (req, res, next) => {
-    const memberships = await GroupMember.findAll();
-
-    res.json(memberships);
+    try {
+        const memberships = await GroupMember.findAll();
+        res.json(memberships);
+    } catch (e) {
+        return next(e);
+    }
 });
 
 // Get a venue (dev test)
 router.get('/venues/:venueId', async (req, res, next) => {
-    const venue = await Venue.findByPk(req.params.venueId);
-
-    res.json(venue)
+    try {
+        const venue = await Venue.findByPk(req.params.venueId);
+        res.json(venue);
+    } catch (e) {
+        return next(e);
+    }
 })
 
 // Get all venues (dev test)
 router.get('/venues', async (req, res, next) => {
-    const venues = await Venue.findAll();
-
-    res.json({venues})
+    try {
+        const venues = await Venue.findAll();
+        res.json({venues});
+    } catch (e) {
+        return next(e);
+    }
 })
 
 // Return all users
-// Dev route
 router.get('/users', async (req, res, next) => {
-    const allUsers = await User.scope(null).findAll({
-        // include: [
-        //     {
-        //         association: 'ownedGroup'
-        //     },
-        //     {
-        //         association: 'memberships'
-        //     },
-        //     {
-        //         association: 'Attending'
-        //     }
-        // ]
-    });
-    res.json(allUsers);
+    try {
+        const allUsers = await User.scope(null).findAll({
+            // include: [
+            //     {
+            //         association: 'ownedGroup'
+            //     },
+            //     {
+            //         association: 'memberships'
+            //     },
+            //     {
+            //         association: 'Attending'
+            //     }
+            // ]
+        });
+        res.json(allUsers);
+    } catch (e) {
+        return next(e);
+    }
 });
 
 // Get all images
 router.get('/images', async (req, res, next) => {
-    const images = await Image.scope(null).findAll();
-    res.json({images});
+    try {
+        const images = await Image.scope(null).findAll();
+        res.json({images});
+    } catch (e) {
+        return next(e);
+    }
 });
 
 // Export router

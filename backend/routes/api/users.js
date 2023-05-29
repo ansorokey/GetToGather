@@ -105,6 +105,11 @@ router.get('/current/groups', requireAuth, async (req, res, next) => {
         }
     });
 
+    // Parse numMembers into an integer -- shows up as a string otherwise on Render
+    for(let i = 0; i < groups.length; i++){
+        groups[i].dataValues.numMembers = Number.parseInt(groups[i].dataValues.numMembers);
+    }
+
     res.json({
         Groups: groups
     });

@@ -1,12 +1,14 @@
 # GetToGather
 
 ## Link to render deployment
+[Link to deployment](https://get-to-gather.onrender.com/)
 https://get-to-gather.onrender.com/
 
 ## Database Schema Design
 
 [Link to schema](https://dbdiagram.io/d/6452e74bdca9fb07c476cbe7)
-![Image](./db-schema-05-27-23.png)
+https://dbdiagram.io/d/6452e74bdca9fb07c476cbe7
+![Image](./db-schema-05-29-23.png)
 
 ## API Documentation
 
@@ -1976,7 +1978,7 @@ Return events filtered by query parameters.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /events
+  * URL: api/events
   * Query Parameters
     * page: integer, minimum: 1, maximum: 10, default: 1
     * size: integer, minimum: 1, maximum: 20, default: 20

@@ -574,11 +574,15 @@ router.get('/', validateQuery, async (req, res, next) => {
         },
         group: [['Event.id'], ['Group.id'], ['Venue.id']],
         where,
-        // THE LIMIT IS WHAT BROKE MY AGGREGATE????
+        //Limit can cause issues when paired with associated include statements
         limit,
         offset,
         subQuery: false
     });
+
+    for(let i = 0; i < allEvents.length; i++){
+        allEvents[i].dataValues.numAttending = Number.parseInt(allEvents[i].dataValues.numAttending);
+    }
 
     return res.json({ Events: allEvents });
 });

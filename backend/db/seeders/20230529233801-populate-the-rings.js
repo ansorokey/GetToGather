@@ -5,72 +5,72 @@ const { User, Group, GroupMember, Event, EventAttendee, Image } = require('../mo
 
 const users = [
   {
-    firstName: 'Master',
-    lastName: 'Splinter'
+    firstName: 'Aragorn',
+    lastName: 'Strider'
   },
   {
-    firstName: 'Leonardo',
-    lastName: 'Hamato'
+    firstName: 'Frodo',
+    lastName: 'Baggins'
   },
   {
-    firstName: 'Donatello',
-    lastName: 'Hamato'
+    firstName: 'Sam',
+    lastName: 'Gamgee'
   },
   {
-    firstName: 'Raphael',
-    lastName: 'Hamato'
+    firstName: 'Pippin',
+    lastName: 'Took'
   },
   {
-    firstName: 'Michelangelo',
-    lastName: 'Hamato'
+    firstName: 'Merry',
+    lastName: 'Brandybuck'
   },
   {
-    firstName: 'April',
-    lastName: 'O\'Neil'
+    firstName: 'Gandalf',
+    lastName: 'theGrey'
   },
   {
-    firstName: 'Jesse',
-    lastName: 'Gordon'
+    firstName: 'Gandalf',
+    lastName: 'theWhite'
   },
 ]
 
 const group = {
-  name: "Heros in a halfshell",
-  about: 'It\'s the lean, green, ninja team, On the scene, cool teens doin\' ninja things, So extreme, out the sewer, like laser beams, Get rocked with the Shell-shocked Pizza Kings',
+  name: "The Hobbitsesss",
+  about: 'One Ring to rule them all, One Ring to find them, One Ring to bring them all, and in the darkness bind them, In the Land of Mordor where the Shadows lie.',
   type: "In person",
-  private: true,
-  city: "New York",
-  state: "NY"
+  private: false,
+  city: "Middle-earth",
+  state: "NZ"
 }
 
 const venues = [
   {
-    address: "122 & 8th",
-    city: "New York",
-    state: "NY",
-    lat: 40.7505,
-    lng: 73.9934,
+    address: "Amon Amarth",
+    city: "Mordor",
+    state: "NZ",
+    lat: 41.2924,
+    lng: 174.7787,
   },
 ]
 
 const events = [
   {
-    name: "Pizza party",
+    name: "Second Breakfast",
     type: "In person",
-    capacity: 10,
-    price: 18.50,
-    description: "You bring the pepperoni and we'll bring the pow! Radical!",
-    startDate: "2024-11-19 20:00:00",
-    endDate: "2024-11-19 22:00:00",
+    capacity: 7,
+    price: 0.00,
+    description: "Yes, we may have already had one, but what about second breakfast? Surely you know of second breakfast.",
+    startDate: "2024-07-13 10:00:00",
+    endDate: "2024-07-13 11:00:00",
   },
   {
-    name: "Beat up the foot clan",
-    type: "In person",
-    capacity: 100,
-    price: 0.0,
-    description: "Time to bring some SLAM down on the CLAN and shred The Shredder!",
-    startDate: "2024-12-19 20:00:00",
-    endDate: "2024-12-20 22:00:00",
+    name: "Walk into Mordor",
+    type: "Online",
+    capacity: 1,
+    price: 6.99,
+    description: "Virtual event! Hop on roblox and tour through a 1:24 recreation of Mount Doom!",
+    startDate: "2099-10-09 08:30:00",
+    endDate: "2099-11-21 13:45:00",
   }
 ]
 
@@ -276,15 +276,5 @@ module.exports = {
       });
     }
 
-    // Members
-    // for(let i = 0; i < users.length; i++){
-    //   const { firstName, lastName } = users[i];
-    //   const member = await User.findOne({
-    //     where: { firstName, lastName }
-    //   });
-    //   await curGroupMember.destroy({
-    //     where: member
-    //   });
-    // }
   }
 };

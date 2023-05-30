@@ -5,7 +5,6 @@ const usersRouter = require('./users.js');
 const groupsRouter = require('./groups.js');
 const eventsRouter = require('./events.js');
 const venuesRouter = require('./venues.js');
-const devRouter = require('./devroutes.js');
 
 // Import Authentication Helper Function
 const { restoreUser } = require('../../utils/auth.js');
@@ -18,7 +17,6 @@ router.use('/users', usersRouter);
 router.use('/groups', groupsRouter);
 router.use('/events', eventsRouter);
 router.use('/venues', venuesRouter);
-router.use('/secret/dev', devRouter);
 
 // Test the /api post route
 router.post('/test', (req, res) => {

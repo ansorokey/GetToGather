@@ -41,7 +41,7 @@ app.use(csurf({
     }
 }));
 
-// Uses ever router listed in the routes index file
+// Uses every router listed in the routes index file
 app.use(routes);
 
 // Catch unhandled requests and forward to error handler.

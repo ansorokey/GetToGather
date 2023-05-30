@@ -625,6 +625,7 @@ router.get('/:groupId', async (req, res, next) => {
             return res.json({ message: 'Group couldn\'t be found'})
         }
 
+        group.dataValues.numMembers = Number.parseInt(group.dataValues.numMembers);
         return res.json(group);
 
     } catch (e) {
@@ -725,7 +726,6 @@ router.get('/', async (_req, res, next) => {
 
     for(let i = 0; i < allGroups.length; i++){
         allGroups[i].dataValues.numMembers = Number.parseInt(allGroups[i].dataValues.numMembers);
-        console.log(typeof allGroups[i].dataValues.numMembers);
     }
 
     return res.json({ Groups: allGroups });

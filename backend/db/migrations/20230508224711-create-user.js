@@ -1,11 +1,12 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 
+// Include the following code each time a table is made
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
-options.tableName = 'Users';
+// options object passed in as second argument for creating and dropping tables
 
 module.exports = {
   async up(queryInterface, Sequelize) {

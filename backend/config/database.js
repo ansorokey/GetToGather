@@ -21,6 +21,7 @@ module.exports = {
     },
     define: {
       schema: process.env.SCHEMA
+      // when running in production, schema name will be prefixed to every request
     }
   }
 };

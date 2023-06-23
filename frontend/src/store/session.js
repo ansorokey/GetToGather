@@ -1,5 +1,4 @@
 import { csrfFetch } from "./csrf";
-import { useDispatch } from "react-redux";
 
 export const SET_USER = 'store/session/SET_USER';
 export function setUser(user) {
@@ -9,18 +8,21 @@ export function setUser(user) {
     }
 };
 export const setUserThunk = (credentials) => async dispatch => {
-    const response = await csrfFetch('/api/session', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(credentials)
-    });
+    try {
+        const response = await csrfFetch('/api/session', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(credentials)
+        });
 
-    if(response.ok){
-        const user = await response.json();
-        dispatch(setUser(user));
-    } else {
-        const error = response.json();
-        return error;
+        const res = await response.json();
+
+        if(response.ok){
+            dispatch(setUser(res));
+        }
+    } catch (e) {
+        const err = await e.json();
+        return err;
     }
 
 }
@@ -40,15 +42,13 @@ export const removeUserThunk = () => async dispatch => {
 
     const res = await response.json();
     return res;
-
 }
 
-export default function sessionReducer(state = { user: null }, action) {
+function sessionReducer(state = { user: null }, action) {
     let newState = {};
 
     switch (action.type) {
         case SET_USER:
-            console.log(action.user);
             newState = action.user;
             return newState;
         case REMOVE_USER:
@@ -58,3 +58,5 @@ export default function sessionReducer(state = { user: null }, action) {
             return {...state};
     }
 }
+
+export default sessionReducer;

@@ -16,7 +16,6 @@ if (process.env.NODE_ENV !== 'production') {
   restoreCSRF();
 
   window.store = store;
-  // window.store.dispatch = useDispatch();
   window.csrfFetch = csrfFetch;
   window.sessionActions = sessionActions;
 }

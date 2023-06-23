@@ -27,6 +27,16 @@ export const setUserThunk = (credentials) => async dispatch => {
 
 }
 
+export const restoreUserThunk = () => async dispatch => {
+    const response = await csrfFetch('/api/session');
+    const data = await response.json();
+
+    if(response.ok) dispatch(setUser(data));
+    return response;
+}
+
+
+
 export const REMOVE_USER = 'store/session/REMOVE_USER';
 export function removeUser() {
     return {

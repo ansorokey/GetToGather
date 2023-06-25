@@ -8,7 +8,7 @@ export function setUser(user) {
         user
     }
 };
-export const setUserThunk = (credentials) => async dispatch => {
+export const signin = (credentials) => async dispatch => {
     try {
         const response = await csrfFetch('/api/session', {
             method: 'POST',
@@ -43,7 +43,7 @@ export function removeUser() {
         type: REMOVE_USER
     }
 };
-export const removeUserThunk = () => async dispatch => {
+export const logout = () => async dispatch => {
     const response = await csrfFetch('/api/session', {
         method: 'DELETE'
     });
@@ -62,7 +62,7 @@ export function addUser(user) {
         user
     }
 }
-export const addUserThunk = (newUser) => async dispatch => {
+export const signup = (newUser) => async dispatch => {
     try {
         const response = await csrfFetch('/api/users', {
             method: 'POST',

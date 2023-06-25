@@ -1,6 +1,7 @@
 import * as sessionActions from './store/session';
 import LoginFormPage from "./components/LoginFormPage";
 import SignUpFormPage from "./components/SignUpFormPage";
+import Navigation from './components/Navigation';
 
 import { Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <>
+      <Navigation />
       <Switch>
         <Route exact path="/login">
           <LoginFormPage />

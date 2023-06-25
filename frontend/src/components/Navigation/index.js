@@ -1,16 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../store/session";
+import { useSelector } from "react-redux";
 import ProfileButton from './ProfileButton.js';
+
+import './Navigation.css';
 
 function Navigation() {
     const curUser = useSelector(state => state.session.user);
-    const dispatch = useDispatch();
-
-    function handleLogout(e) {
-        e.preventDefault();
-        dispatch(logout());
-    }
 
     const loggedOut = (
         <>
@@ -25,15 +20,11 @@ function Navigation() {
     );
 
     const loggedIn = (
-        <>
-            <li>
-                <ProfileButton/>
-            </li>
-            <li>
-                <button onClick={handleLogout}>Log Out</button>
-            </li>
-        </>
+        <li>
+            <ProfileButton user={curUser}/>
+        </li>
     );
+
     return (
         <ul>
             <li>

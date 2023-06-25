@@ -1,9 +1,11 @@
 import thunk from 'redux-thunk';
+import sessionReducer from './session';
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 
 const rootReducer = combineReducers({
-    // add imported reducers here
+    session: sessionReducer
+
 });
 
 // adds middleware based on running environment

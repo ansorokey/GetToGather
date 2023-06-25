@@ -1,5 +1,5 @@
 import { Redirect } from 'react-router-dom';
-import { setUserThunk } from '../../store/session'
+import { signin } from '../../store/session'
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -30,7 +30,7 @@ function LoginFormPage() {
         setSubmitted(true);
 
         const credentials = {email, password};
-        const res = await dispatch(setUserThunk(credentials));
+        const res = await dispatch(signin(credentials));
         // a successful login returns nothing
         if(res && res.errors){
             setErrMessage(res.errors.message);

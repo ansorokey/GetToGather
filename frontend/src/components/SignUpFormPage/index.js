@@ -3,7 +3,7 @@ import './SignUpFormPage.css';
 import {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { addUserThunk } from '../../store/session';
+import { signup } from '../../store/session';
 
 function SignUpFormPage() {
     const curUser = useSelector(state => state.session.user);
@@ -48,7 +48,7 @@ function SignUpFormPage() {
         // if(Object.values(errors).length) return
 
         // only an error returns, does not need to be parsed
-        const response = await dispatch(addUserThunk(userInfo));
+        const response = await dispatch(signup(userInfo));
         if(response && response.errors){
             setErrors(response.errors);
             return;

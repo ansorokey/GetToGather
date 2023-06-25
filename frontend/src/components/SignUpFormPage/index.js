@@ -49,7 +49,6 @@ function SignUpFormPage() {
 
         // only an error returns, does not need to be parsed
         const response = await dispatch(addUserThunk(userInfo));
-        console.log(response);
         if(response && response.errors){
             setErrors(response.errors);
             return;

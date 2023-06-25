@@ -38,11 +38,6 @@ function LoginFormPage() {
         reset();
     }
 
-    function toggleShowPassword(e) {
-        e.preventDefault();
-        setShowPassword(prevValue => !prevValue);
-    }
-
     //if there IS a user logged in, redirect to home
     if(curUser) return <Redirect to="/" />
 
@@ -72,7 +67,7 @@ function LoginFormPage() {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         {/* { submitted ? <p>Password is required</p> : null} */}
-                    <button onClick={toggleShowPassword}>🐵</button>
+                        <span onClick={() => setShowPassword(!showPassword)}>👁️‍🗨️</span>
                 </div>
 
                 <button className="login-button">Login</button>

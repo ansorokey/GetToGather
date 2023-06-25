@@ -22,7 +22,8 @@ export const setUserThunk = (credentials) => async dispatch => {
             dispatch(setUser(res));
         }
     } catch (e) {
-        return await e.json();
+        const err = await e.json();
+        return err;
     }
 
 }
@@ -55,10 +56,10 @@ export const removeUserThunk = () => async dispatch => {
 
 // sign up user
 export const ADD_USER = '/store/session/ADD_USER';
-export function addUser(newUser) {
+export function addUser(user) {
     return {
         type: ADD_USER,
-        newUser
+        user
     }
 }
 export const addUserThunk = (newUser) => async dispatch => {
@@ -70,10 +71,10 @@ export const addUserThunk = (newUser) => async dispatch => {
 
         if(response.ok){
             const data = await response.json();
-            addUser(data);
-            return data;
+            dispatch(addUser(data));
         }
     } catch (e) {
+        // when returned, will not need to be parsed
         return await e.json();
     }
 
@@ -88,6 +89,7 @@ function sessionReducer(state = { user: null }, action) {
             return newState;
         case ADD_USER:
             newState = { user: {...action.newUser}}
+            return newState;
         case REMOVE_USER:
             newState = { user: null };
             return newState;

@@ -3,7 +3,6 @@ import './SignUpFormPage.css';
 import {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { csrfFetch } from '../../store/csrf';
 import { addUserThunk } from '../../store/session';
 
 function SignUpFormPage() {
@@ -16,6 +15,8 @@ function SignUpFormPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState({});
 
     function reset() {
         setConfirmPassword('');
@@ -29,6 +30,13 @@ function SignUpFormPage() {
     async function handleSubmit(e) {
         e.preventDefault();
 
+        const valErrs = {};
+        if(password !== confirmPassword) {
+            valErrs.password = 'Passwords do not match';
+            setErrors(valErrs);
+            return;
+        }
+
         const userInfo = {
             firstName,
             lastName,
@@ -37,11 +45,24 @@ function SignUpFormPage() {
             password
         }
 
-        dispatch(addUserThunk(userInfo));
+        // if(Object.values(errors).length) return
+
+        // only an error returns, does not need to be parsed
+        const response = await dispatch(addUserThunk(userInfo));
+        console.log(response);
+        if(response && response.errors){
+            setErrors(response.errors);
+            return;
+        }
         reset();
     }
 
-    if(curUser) return <Redirect to="/"/>
+    useEffect(() => {
+        setErrors({});
+    }, [password, confirmPassword, username, email]);
+
+    if(curUser) return <Redirect to="/"/>;
+
     return (
         <div>
             <h1>Hello from sign up</h1>
@@ -53,7 +74,9 @@ function SignUpFormPage() {
                         value={firstName}
                         type="text"
                         onChange={(e) => setFirstName(e.target.value)}
+                        required
                     />
+                    {errors.firstName && <span>{errors.firstName}</span>}
                 </div>
 
                 <div>
@@ -63,7 +86,9 @@ function SignUpFormPage() {
                         value={lastName}
                         type="text"
                         onChange={(e) => setLastName(e.target.value)}
+                        required
                     />
+                    {errors.lastName && <span>{errors.lastName}</span>}
                 </div>
 
                 <div>
@@ -71,27 +96,36 @@ function SignUpFormPage() {
                     <input
                         id="email-input"
                         value={email}
-                        type="text"
+                        type="email"
                         onChange={(e) => setEmail(e.target.value)}
+                        required
                     />
+                    {errors.email && <span>{errors.email}</span>}
                 </div>
 
-                <label htmlFor="username-input">Username</label>
-                <input
-                    id="username-input"
-                    value={username}
-                    type="text"
-                    onChange={(e) => setUsername(e.target.value)}
-                />
+                <div>
+                    <label htmlFor="username-input">Username</label>
+                    <input
+                        id="username-input"
+                        value={username}
+                        type="text"
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                    {errors.username && <span>{errors.username}</span>}
+                </div>
 
                 <div>
                     <label htmlFor="password-input">Password</label>
                     <input
                         id="password-input"
                         value={password}
-                        type="text"
+                        type={showPassword ? 'text' : 'password'}
                         onChange={(e) => setPassword(e.target.value)}
+                        required
                     />
+                    <span onClick={() => setShowPassword(!showPassword)}>👁️‍🗨️</span>
+                    {errors.password && <span>{errors.password}</span>}
                 </div>
 
                 <div>
@@ -99,9 +133,11 @@ function SignUpFormPage() {
                     <input
                         id="confirm-password-input"
                         value={confirmPassword}
-                        type="text"
+                        type={showPassword ? 'text' : 'password'}
                         onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
                     />
+                    {errors.password && <span>{errors.password}</span>}
                 </div>
 
                 <div>

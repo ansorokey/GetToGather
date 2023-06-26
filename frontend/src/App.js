@@ -1,6 +1,7 @@
 import * as sessionActions from './store/session';
 import LoginFormPage from "./components/LoginFormPage";
 import SignUpFormPage from "./components/SignUpFormPage";
+import LandingPage from './components/LandingPage';
 import Navigation from './components/Navigation';
 import Modal from './components/Modal';
 
@@ -36,7 +37,7 @@ function App() {
         </Route>
 
         <Route exact path="/">
-          <h1>Hello from App</h1>
+          <LandingPage/>
         </Route>
       </Switch>
     </>

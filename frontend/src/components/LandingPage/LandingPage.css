@@ -1,0 +1,55 @@
+.landing-page-container {
+    display: grid;
+    grid-template:
+                ". s1 s1 s1 s1 ."
+                ". s2 s2 s2 s2 ."
+                ". s3 s3 s3 s3 ."
+                ". s4 s4 s4 s4 .";
+    row-gap: 3em;
+}
+
+#section-1 {
+    grid-area: s1;
+    display: grid;
+    grid-template:
+                "a b";
+    justify-items: center;
+}
+
+.s1-header-text {
+    grid-area: a;
+}
+
+.s1-image {
+    grid-area: b;
+}
+
+#section-2 {
+    grid-area: s2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#section-3 {
+    grid-area: s3;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#section-4 {
+    grid-area: s4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#section-1 > div {
+    width: 50%;
+}
+
+.landing-img {
+    width: 100%;
+}

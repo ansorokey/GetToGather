@@ -1,0 +1,54 @@
+.nav-bar {
+    background-color: #494646;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 3em;
+    border-bottom: 3px solid lightgray;
+    margin-bottom: 5em;
+}
+
+.logo {
+    height: 10em;
+}
+
+.session-buttons-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 3em;
+}
+
+.session-button {
+    border-radius: 1em;
+    border: none;
+    background-color: #969090;
+    box-sizing: border-box;
+    color: whitesmoke;
+    padding: 1em 2em;
+    height: 5em;
+    width: 10em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    font-size: 1.5em;
+}
+
+.session-button:hover {
+    background-color: #EBB45B;
+}
+
+.profile-btn-ctn {
+    border-radius: 100%;
+    border: none;
+    width: 5em;
+    height: 5em;
+    background-color: #969090;
+}
+
+.profile-img {
+    border-radius: 100%;
+    font-size: 3.5em;
+    background-color: #969090;
+}

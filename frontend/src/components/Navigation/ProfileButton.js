@@ -36,7 +36,7 @@ function ProfileButton({ user }) {
         dispatch(logout());
     }
 
-    const loggedInMenu = (
+    const menu = (
         <>
             <ul ref={ulRef}>
                 <li>{user?.username}</li>
@@ -50,24 +50,26 @@ function ProfileButton({ user }) {
         </>
     );
 
-    const loggedOutMenu = (
-        <ul ref={ulRef}>
-            <li>
-                <button onClick={() => openModal('login')}>Log In</button>
-            </li>
+    // const loggedOutMenu = (
+    //     <ul ref={ulRef}>
+    //         <li>
+    //             <button onClick={() => openModal('login')}>Log In</button>
+    //         </li>
 
-            <li>
-                <button onClick={() => openModal('signup')}>Sign Up</button>
-            </li>
-        </ul>
-    );
+    //         <li>
+    //             <button onClick={() => openModal('signup')}>Sign Up</button>
+    //         </li>
+    //     </ul>
+    // );
 
-    let menu = user ? loggedInMenu : loggedOutMenu;
+    // let menu = user ? loggedInMenu : loggedOutMenu;
 
     return (
         <>
-            <button onClick={openMenu}>
-                <i className="fa-regular fa-user"></i>
+            <button
+                onClick={openMenu}
+                className="profile-btn-ctn">
+                <i className="fa-regular fa-user profile-img"></i>
             </button>
             { showMenu ? menu : null }
         </>

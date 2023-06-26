@@ -2,7 +2,7 @@ import { useModalContext } from "../../Context/ModalContext";
 import './index.css';
 
 function LogInSignUp() {
-    const {setModalType, openModal} = useModalContext();
+    const {openModal} = useModalContext();
     return (
         <div className="session-buttons-container">
             <button

@@ -1,10 +1,13 @@
-import hands from '../../images/hands-together.jpg'
+import landingImg from '../../images/landing-page.png';
 import phImg1 from '../../images/placeholder1.png';
 import phImg2 from '../../images/placeholder2.png';
 import phImg3 from '../../images/placeholder3.png';
 import './LandingPage.css';
 
+import { useModalContext } from '../../Context/ModalContext';
+
 function LandingPage() {
+    const {openModal} = useModalContext();
     return (
         <div className='landing-page-container'>
 
@@ -14,7 +17,7 @@ function LandingPage() {
                     <p className="p-text">Fighting crime? Going on an adventure? A quest to save the world? Do what you love with people who love what <em>you</em> love.</p>
                 </div>
                 <div className='s1-image'>
-                    <img className='landing-img' src={hands}/>
+                    <img className='landing-img' src={landingImg}/>
                 </div>
             </div>
 
@@ -44,7 +47,14 @@ function LandingPage() {
             </div>
 
             <div id='section-4'>
-                <button>Join GetToGather</button>
+                <a href='#'>
+                    <button
+                        onClick={() => openModal('signup')}
+                        className='s4-join-btn'
+                    >
+                        Join GetToGather
+                    </button>
+                </a>
             </div>
         </div>
 

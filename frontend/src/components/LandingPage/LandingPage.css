@@ -4,7 +4,8 @@
                 ". s1 s1 s1 s1 ."
                 ". s2 s2 s2 s2 ."
                 ". s3 s3 s3 s3 ."
-                ". s4 s4 s4 s4 .";
+                ". s4 s4 s4 s4 ."
+                ". s5 s5 s5 s5 .";
     row-gap: 3em;
 
     font-family: "Ubuntu", sans-serif;
@@ -75,6 +76,17 @@
     justify-content: space-evenly;
 }
 
+.s3-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%;
+}
+
+.s3-tile > img {
+    max-width: 100%;
+}
+
 .s3-tile-header-text {
     font-size: 1.5em;
 }
@@ -85,9 +97,31 @@
     color: #EBB45B;
 }
 
+/* SECTION 4 */
 #section-4 {
     grid-area: s4;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.s4-join-btn {
+    border-radius: 1em;
+    border: none;
+    background-color: #969090;
+    box-sizing: border-box;
+    color: whitesmoke;
+    padding: 1em 2em;
+    height: 5em;
+    width: 10em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    font-size: 1.5em;
+}
+
+.s4-join-btn:hover {
+    background-color: #EBB45B;
 }

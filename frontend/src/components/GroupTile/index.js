@@ -3,14 +3,14 @@ import './GroupTile.css';
 
 function GroupTile({group}) {
     return (
-        <Link to={`/groups/${group.id}`}>
+        <Link className="tile-link" to={`/groups/${group.id}`}>
             <div className="tile-ctn">
                 <div className="tile-img-ctn">
                     <img className="tile-img"/>
                 </div>
                 <div className="tile-info">
                     <h2>{group.name}</h2>
-                    <h3>{group.state}</h3>
+                    <h3>{group.city}, {group.state}</h3>
                     <p>{group.about}</p>
                     <div>
                         <h4>{group.type}</h4>

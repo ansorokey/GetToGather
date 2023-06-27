@@ -4,6 +4,7 @@ import phImg2 from '../../images/placeholder2.png';
 import phImg3 from '../../images/placeholder3.png';
 import './LandingPage.css';
 
+import { Link } from 'react-router-dom';
 import { useModalContext } from '../../Context/ModalContext';
 
 function LandingPage() {
@@ -31,7 +32,8 @@ function LandingPage() {
             <div id='section-3'>
                 <div className='s3-tile'>
                     <img src={phImg1} />
-                    <h3 className='s3-tile-header-text'>See all groups</h3>
+                    <Link className="s3-link" to="/groups"><h3 className='s3-tile-header-text'>See all groups</h3></Link>
+                    {/* <h3 className='s3-tile-header-text'><Link to="/groups">See all groups</Link></h3> */}
                     <p className="p-text">Lorem Ipsum</p>
                 </div>
                 <div className='s3-tile'>

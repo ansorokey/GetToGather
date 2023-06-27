@@ -97,6 +97,10 @@
     color: #EBB45B;
 }
 
+.s3-link {
+    color: whitesmoke;
+}
+
 /* SECTION 4 */
 #section-4 {
     grid-area: s4;

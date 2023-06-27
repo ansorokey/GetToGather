@@ -1,11 +1,14 @@
 .nav-bar {
     background-color: #494646;
     display: flex;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
     padding-right: 3em;
     border-bottom: 3px solid lightgray;
     margin-bottom: 5em;
+    position: fixed;
+    top: 0;
 }
 
 .logo {

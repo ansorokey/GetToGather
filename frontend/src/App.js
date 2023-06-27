@@ -39,11 +39,9 @@ function App() {
         </Route>
 
         <Route path="/events">
-          <Listings />
         </Route>
 
         <Route path="/groups">
-          {/* <Listings /> */}
           <GroupsListing/>
         </Route>
 

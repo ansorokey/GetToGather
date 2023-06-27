@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadGroupsThunk } from '../../store/groups';
 import GroupTile from '../GroupTile';
+import './styles.css';
 
 function GroupsListing() {
 
@@ -15,8 +16,8 @@ function GroupsListing() {
     },[dispatch]);
 
     return (
-        <div>
-            {/* <Listings/> */}
+        <div className='list-ctn'>
+            <Listings/>
             <h1>These are groups</h1>
             {groupsArr.map(g => {
                 return (<GroupTile key={g.id} group={g}/>);

@@ -1,0 +1,20 @@
+.events-groups {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 3em;
+    align-items: center;
+    height: fit-content;
+}
+
+.eg-link {
+    font-size: 32px;
+    font-weight: 300;
+    color: whitesmoke;
+}
+
+.eg-link.active {
+    cursor: default;
+    text-decoration: underline;
+    color: #B733D4;
+}

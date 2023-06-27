@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom';
+import './Listings.css';
 
 function Listings() {
 
     return (
-        <div>
-            <NavLink exact to="/events">Events</NavLink>
-            <NavLink exact to="/groups">Groups</NavLink>
+        <div className="events-groups">
+            <NavLink className="eg-link" to="/events"><h2>Events</h2></NavLink>
+            <NavLink className="eg-link" to="/groups"><h2>Groups</h2></NavLink>
         </div>
     );
 }

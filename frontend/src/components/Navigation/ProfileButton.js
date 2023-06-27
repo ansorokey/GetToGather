@@ -1,9 +1,11 @@
 import { logout } from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useState, useEffect, useRef } from "react";
+import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
+import { useModalContext } from "../../Context/ModalContext";
 
-function ProfileButton({ user: { username, firstName, lastName, email } }) {
-
+function ProfileButton({ user }) {
+    const {setModalType, openModal} = useModalContext();
     const [showMenu, setShowMenu] = useState(false);
     const dispatch = useDispatch();
     const ulRef = useRef();
@@ -37,10 +39,10 @@ function ProfileButton({ user: { username, firstName, lastName, email } }) {
     const menu = (
         <>
             <ul ref={ulRef}>
-                <li>{username}</li>
-                <li>{firstName}</li>
-                <li>{lastName}</li>
-                <li>{email}</li>
+                <li>{user?.username}</li>
+                <li>{user?.firstName}</li>
+                <li>{user?.lastName}</li>
+                <li>{user?.email}</li>
             </ul>
             <button onClick={handleLogout}>
                 Log Out
@@ -48,10 +50,26 @@ function ProfileButton({ user: { username, firstName, lastName, email } }) {
         </>
     );
 
+    // const loggedOutMenu = (
+    //     <ul ref={ulRef}>
+    //         <li>
+    //             <button onClick={() => openModal('login')}>Log In</button>
+    //         </li>
+
+    //         <li>
+    //             <button onClick={() => openModal('signup')}>Sign Up</button>
+    //         </li>
+    //     </ul>
+    // );
+
+    // let menu = user ? loggedInMenu : loggedOutMenu;
+
     return (
         <>
-            <button onClick={openMenu}>
-                <i className="fa-regular fa-user"></i>
+            <button
+                onClick={openMenu}
+                className="profile-btn-ctn">
+                <i className="fa-regular fa-user profile-img"></i>
             </button>
             { showMenu ? menu : null }
         </>

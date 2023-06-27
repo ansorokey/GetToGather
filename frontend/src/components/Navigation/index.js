@@ -1,38 +1,30 @@
-import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton.js';
+import LogInSignUp from './LogInSignUp.js';
+import logo from '../../images/get-to-gather-logo.png';
+import './styles.css';
 
-import './Navigation.css';
+function Navigation({ firstLoad }){
+    const sessionUser = useSelector(state => state.session.user);
 
-function Navigation() {
-    const curUser = useSelector(state => state.session.user);
-
-    const loggedOut = (
-        <>
-            <li>
-                <NavLink exact to="login">Log In</NavLink>
-            </li>
-
-            <li>
-                <NavLink exact to="signup">Sign Up</NavLink>
-            </li>
-        </>
-    );
-
-    const loggedIn = (
-        <li>
-            <ProfileButton user={curUser}/>
-        </li>
-    );
+    // const loggedIn =
 
     return (
-        <ul>
-            <li>
-                <NavLink exact to="/">Home</NavLink>
-            </li>
-            { curUser ? loggedIn : loggedOut}
-        </ul>
+      <nav className="nav-bar">
+          <NavLink exact to="/">
+            <img className='logo' src={logo}/>
+          </NavLink>
+
+          <div className='session'>
+            {/* {firstLoad &&
+                <ProfileButton user={sessionUser} />
+            } */}
+            { sessionUser ? <ProfileButton user={sessionUser} /> : <LogInSignUp/>}
+          </div>
+      </nav>
     );
-};
+  }
 
 export default Navigation;

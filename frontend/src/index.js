@@ -7,6 +7,7 @@ import * as sessionActions from './store/session';
 import { Provider, useDispatch }  from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { restoreCSRF, csrfFetch } from './store/csrf';
+import ModalProvider from './Context/ModalContext.js';
 
 import './index.css';
 
@@ -22,11 +23,13 @@ if (process.env.NODE_ENV !== 'production') {
 
 function Root() {
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <App/>
-      </BrowserRouter>
-    </Provider>
+    <ModalProvider>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App/>
+        </BrowserRouter>
+      </Provider>
+    </ModalProvider>
   );
 }
 

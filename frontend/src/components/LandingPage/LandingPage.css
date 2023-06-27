@@ -1,0 +1,127 @@
+.landing-page-container {
+    display: grid;
+    grid-template:
+                ". s1 s1 s1 s1 ."
+                ". s2 s2 s2 s2 ."
+                ". s3 s3 s3 s3 ."
+                ". s4 s4 s4 s4 ."
+                ". s5 s5 s5 s5 .";
+    row-gap: 3em;
+
+    font-family: "Ubuntu", sans-serif;
+
+    background-color: #494646;
+    color: whitesmoke;
+}
+
+.p-text {
+    font-size: 1.1em;
+}
+
+/* SECTION 1 */
+#section-1 {
+    grid-area: s1;
+    display: grid;
+    grid-template:
+    "a b";
+    justify-items: center;
+}
+
+.s1-header-text {
+    grid-area: a;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+}
+
+.s1-header-text > h1 {
+    font-size: 3em;
+    font-weight: bolder;
+}
+
+.s1-header-text > p {
+    font-size: 1em;
+}
+
+.landing-img {
+    width: 100%;
+}
+
+#section-1 > div {
+    width: 75%;
+}
+
+.s1-image {
+    grid-area: b;
+}
+
+/* SECTION 2 */
+#section-2 {
+    grid-area: s2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.s2-header-text > h2 {
+    font-size: 2em;
+}
+
+/*  SECTION 3 */
+#section-3 {
+    grid-area: s3;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.s3-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%;
+}
+
+.s3-tile > img {
+    max-width: 100%;
+}
+
+.s3-tile-header-text {
+    font-size: 1.5em;
+}
+
+.s3-tile-header-text:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #EBB45B;
+}
+
+/* SECTION 4 */
+#section-4 {
+    grid-area: s4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.s4-join-btn {
+    border-radius: 1em;
+    border: none;
+    background-color: #969090;
+    box-sizing: border-box;
+    color: whitesmoke;
+    padding: 1em 2em;
+    height: 5em;
+    width: 10em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+    font-size: 1.5em;
+}
+
+.s4-join-btn:hover {
+    background-color: #EBB45B;
+}

@@ -1,14 +1,14 @@
 .modal-background {
     margin: auto;
     height: 100vh;
-    width:auto;
-    background-color: blueviolet;
+    width:100vw;
     display: flex;
+    position: fixed;
+    top: 0;
     justify-content: center;
     align-items: center;
-
-    position: relative;
-    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
 }
 
 .close-modal {
@@ -16,6 +16,7 @@
     justify-content: center;
     align-items: center;
     background-color: transparent;
+    color: whitesmoke;
     border: none;
 
     width: 2em;
@@ -25,5 +26,16 @@
     position: absolute;
     top: 1em;
     right: 1em;
+}
 
+.modal-content {
+    width: 75vw;
+    height: 75vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid whitesmoke;
+    border-radius: 1em;
+    background-color:rgba(0, 0, 0, 0.75);
 }

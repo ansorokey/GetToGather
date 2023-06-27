@@ -43,14 +43,13 @@ function LoginFormPage() {
 
     return (
         <div className='LogInMod'>
-            <h1 className='text'>Hello from Login {submitted}</h1>
             <h2 className='text'>Log In</h2>
             { errMessage ? <p>{errMessage}</p> : null}
-            <form onSubmit={onSubmit}>
+            <form className='login-form' onSubmit={onSubmit}>
                 <div className='entry'>
                         <input
                             type="email"
-                            placeholder="Email..."
+                            placeholder="   Email..."
                             value={email}
                             required
                             onChange={(e) => setEmail(e.target.value)}
@@ -61,17 +60,19 @@ function LoginFormPage() {
                 <div className='entry'>
                         <input
                             type={showPassword ? 'text' : 'password'}
-                            placeholder="Password..."
+                            placeholder="   Password..."
                             value={password}
                             required
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         {/* { submitted ? <p>Password is required</p> : null} */}
-                        <span onClick={() => setShowPassword(!showPassword)}>👁️‍🗨️</span>
+                        <span title="Show password" onClick={() => setShowPassword(!showPassword)}>👁️‍🗨️</span>
                 </div>
 
-                <button className="login-button">Login</button>
-                <button className="login-button">Sign Up</button>
+                <div className="login-btns">
+                    <button className="login-button">Login</button>
+                    <button className="login-button">Sign Up</button>
+                </div>
             </form>
         </div>
     );

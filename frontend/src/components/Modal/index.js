@@ -23,13 +23,15 @@ function Modal() {
 
     return (
         <div className='modal-background'>
-            <div className="close-modal">
-                    <i
-                        onClick={() => setShowModal(false)}
-                        class="fa-solid fa-x fa-2xl"
-                    ></i>
+            <div className='modal-content'>
+                <div className="close-modal">
+                        <i
+                            onClick={() => setShowModal(false)}
+                            class="fa-solid fa-x fa-2xl"
+                        ></i>
+                </div>
+                {modal}
             </div>
-            {modal}
         </div>
     );
 }

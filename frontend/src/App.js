@@ -37,12 +37,16 @@ function App() {
           <SignUpFormPage/>
         </Route>
 
-        <Route exact path="/events">
+        <Route path="/events">
           {/* <Listings /> */}
         </Route>
 
-        <Route exact path="/groups">
+        <Route path="/groups">
           <GroupsListing/>
+        </Route>
+
+        <Route exact path="/">
+          <LandingPage/>
         </Route>
       </Switch>
     </>

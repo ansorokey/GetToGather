@@ -5,10 +5,11 @@ import LandingPage from './components/LandingPage';
 import Navigation from './components/Navigation';
 import Modal from './components/Modal';
 
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useModalContext } from './Context/ModalContext';
+import GroupsListing from './components/GroupsListing';
 
 
 function App() {
@@ -36,8 +37,12 @@ function App() {
           <SignUpFormPage/>
         </Route>
 
-        <Route exact path="/">
-          <LandingPage/>
+        <Route exact path="/events">
+          {/* <Listings /> */}
+        </Route>
+
+        <Route exact path="/groups">
+          <GroupsListing/>
         </Route>
       </Switch>
     </>

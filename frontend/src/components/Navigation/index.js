@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import ProfileButton from './ProfileButton';
-import LogInSignUp from './LogInSignUp';
+import ProfileButton from './ProfileButton.js';
+import LogInSignUp from './LogInSignUp.js';
 import logo from '../../images/get-to-gather-logo.png';
-import './index.css';
+import './styles.css';
 
 function Navigation({ firstLoad }){
     const sessionUser = useSelector(state => state.session.user);

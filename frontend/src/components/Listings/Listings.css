@@ -5,6 +5,9 @@
     gap: 3em;
     align-items: center;
     height: fit-content;
+    position: sticky;
+    top: 10vh;
+    margin: 10 0vw;
 }
 
 .eg-link {

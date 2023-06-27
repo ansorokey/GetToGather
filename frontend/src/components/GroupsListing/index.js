@@ -18,7 +18,6 @@ function GroupsListing() {
     return (
         <div className='list-ctn'>
             <Listings/>
-            <h1>These are groups</h1>
             {groupsArr.map(g => {
                 return (<GroupTile key={g.id} group={g}/>);
             })}

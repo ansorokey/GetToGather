@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import './GroupTile.css';
+import {useModalContext} from '../../Context/ModalContext';
 
 function GroupTile({group}) {
+    // const {openModal} = useModalContext();
+    // onClick={() => openModal('groupDetails')}
+    // openModal('groupDetails')
+
     return (
         <Link className="tile-link" to={`/groups/${group.id}`}>
             <div className="tile-ctn">

@@ -9,6 +9,10 @@ html, body {
     scroll-behavior: smooth;
 }
 
+#root {
+    padding-top: 10vh;
+}
+
 a {
     text-decoration: none;
 }

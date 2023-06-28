@@ -1,13 +1,14 @@
 import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import groupsReducer from './groups';
+import eventsReducer from './events';
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
-    groups: groupsReducer
-
+    groups: groupsReducer,
+    events: eventsReducer
 });
 
 // adds middleware based on running environment

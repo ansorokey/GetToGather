@@ -3,6 +3,7 @@ import { useModalContext } from "../../Context/ModalContext";
 
 import LoginFormPage from "../LoginFormPage";
 import SignUpFormPage from '../SignUpFormPage';
+import GroupDetails from "../GroupDetails";
 
 import './Modal.css';
 
@@ -18,6 +19,8 @@ function Modal() {
                 return;
             case 'signup':
                 setModal(<SignUpFormPage/>);
+            case 'groupDetails':
+                setModal(<GroupDetails/>);
         }
     },[modalType]);
 
@@ -27,7 +30,7 @@ function Modal() {
                 <div className="close-modal">
                         <i
                             onClick={() => setShowModal(false)}
-                            class="fa-solid fa-x fa-2xl"
+                            className="fa-solid fa-x fa-2xl"
                         ></i>
                 </div>
                 {modal}

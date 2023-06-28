@@ -20,12 +20,40 @@ export const loadGroupsThunk = () => async dispatch => {
     }
 }
 
+export const ADD_GROUP = 'store/groups/ADD_GROUP';
+export function addGroup(group) {
+    return {
+        type: ADD_GROUP,
+        group
+    }
+}
+export const addGroupThunk = (groupId) => async dispatch => {
+    try {
+        const response = await csrfFetch(`/api/groups/${groupId}`);
+
+        if(response.ok){
+            const data = await response.json();
+            dispatch(addGroup(data));
+        }
+    } catch(e) {
+        return e;
+    }
+
+}
+
 function groupsReducer(state = {}, action) {
     let newState = {};
 
     switch(action.type) {
         case LOAD_GROUPS:
-            action.groups.forEach(g => newState[g.id] = g);
+            newState = {...state};
+            action.groups.forEach(g => {
+                if(!(g.id in newState)) {newState[g.id] = g};
+            });
+            return newState;
+        case ADD_GROUP:
+            newState = {...state};
+            newState[action.group.id] = action.group;
             return newState;
         default:
             return newState;

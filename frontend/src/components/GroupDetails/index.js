@@ -2,23 +2,29 @@ import { useParams, Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addGroupThunk } from "../../store/groups";
-import { grabGroupEvents } from '../../store/events';
+import { getGroupEvents } from '../../store/events';
 import './GroupDetails.css';
+
+import EventTile from "../EventTile";
 
 function GroupDetails() {
     const dispatch = useDispatch();
     const {groupId} = useParams();
     const group = useSelector(state => state.groups)[groupId];
-    const events = useSelector(state => state.events.byGroup[groupId])
+    let events = useSelector(state => state.events.byGroup);
+    let groupEvents = events[groupId];
     const back = '< Back To Groups';
+    console.log(groupEvents);
 
     useEffect(() => {
+        dispatch(getGroupEvents(groupId));
         dispatch(addGroupThunk(groupId));
-        dispatch(grabGroupEvents(groupId));
     }, [dispatch]);
 
-    // const upcomingEvents;
+    // const upcomingEvents = ;
     // const pastEvents;
+        if(!groupEvents) return null;
+
         return (
             <div className='details-ctn'>
                 <Link className='back-to-groups' to="/groups">{back}</Link>
@@ -47,6 +53,12 @@ function GroupDetails() {
                         <h2>What we're about</h2>
                         <p>{group?.about}</p>
                     </div>
+                </div>
+
+                <div className="details-events-ctn">
+                    <h2>Events</h2>
+                    {groupEvents.map( event => {
+                        return <EventTile event={event}/> })}
                 </div>
             </div>
         );

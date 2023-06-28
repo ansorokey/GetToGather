@@ -56,7 +56,7 @@ function groupsReducer(state = {}, action) {
             newState[action.group.id] = action.group;
             return newState;
         default:
-            return newState;
+            return state;
     }
 }
 

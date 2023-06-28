@@ -1,0 +1,19 @@
+.tile-ctn {
+    border: 1px solid whitesmoke;
+    height: fit-content;
+    display: flex;
+    color: whitesmoke;
+
+}
+
+.tile-img {
+    width: 20vw;
+    height: 100%;
+    background-color: black;
+}
+
+.date-time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useModalContext } from './Context/ModalContext';
 import GroupsListing from './components/GroupsListing';
-import Listings from './components/Listings';
+import EventsListing from './components/EventsListing';
 
 
 function App() {
@@ -39,6 +39,7 @@ function App() {
         </Route>
 
         <Route path="/events">
+            <EventsListing/>
         </Route>
 
         <Route path="/groups">

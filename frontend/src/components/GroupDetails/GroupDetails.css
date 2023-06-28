@@ -1,3 +1,7 @@
 .back-to-groups {
     color: whitesmoke;
 }
+
+.details-s1 > div > img {
+    background-color: red;
+}

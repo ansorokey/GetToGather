@@ -38,7 +38,7 @@ function LandingPage() {
                 </div>
                 <div className='s3-tile'>
                     <img src={phImg2} />
-                    <h3 className='s3-tile-header-text'>Find an event</h3>
+                    <Link className="s3-link" to="/events"><h3 className='s3-tile-header-text'>Find an event</h3></Link>
                     <p className="p-text">Lorem Ipsum</p>
                 </div>
                 <div className='s3-tile'>

@@ -144,6 +144,7 @@ router.delete('/:groupId/images/:imageId', requireAuth, async (req, res, next) =
 // #Add an Image to a Group based on the Group's id
 router.post('/:groupId/images', requireAuth, async (req, res, next) => {
     const { groupId }  = req.params;
+    console.log(req.body);
     let { url, preview } = req.body;
     let hasPermission = false;
 

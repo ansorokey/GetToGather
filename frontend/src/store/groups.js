@@ -1,5 +1,41 @@
 import { csrfFetch } from "./csrf";
 
+export const CREATE_GROUP = 'store/groups/CREATE_GROUP';
+export function createGroup(group){
+    return {
+        type: CREATE_GROUP,
+        group
+    }
+}
+export const createGroupThunk = (groupData) => async dispatch => {
+    try {
+        const response = await csrfFetch(`/api/groups`, {
+            method: 'POST',
+            body: JSON.stringify(groupData)
+        });
+
+        if(response.ok){
+            const data = await response.json();
+            console.log(data);
+            if(groupData.imgUrl) {
+                console.log('pic', typeof groupData.imgUrl)
+                console.log('groupId', data.id);
+                await csrfFetch(`/api/groups/${data.id}/images`, {
+                    method: 'POST',
+                    body: JSON.stringify({url: groupData.imgUrl, preview: true})
+                });
+            }
+            return data;
+        }
+    } catch(e) {
+        console.error(e);
+        const err = await e.json();
+        // console.log('');
+        return err;
+    }
+
+}
+
 export const LOAD_GROUPS = 'store/groups/LOAD_GROUPS';
 export function loadGroups(groupsArr) {
     return {
@@ -34,6 +70,7 @@ export const getGroupDetails = (groupId) => async dispatch => {
         if(response.ok){
             const data = await response.json();
             dispatch(addGroup(data));
+            return data;
         }
     } catch(e) {
         return e;

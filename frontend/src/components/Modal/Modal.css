@@ -23,9 +23,9 @@
     height: 2em;
     padding: 0;
 
-    position: absolute;
-    top: 1em;
-    right: 1em;
+    position: fixed;
+    top: 3em;
+    right: 3em;
 }
 
 .modal-content {

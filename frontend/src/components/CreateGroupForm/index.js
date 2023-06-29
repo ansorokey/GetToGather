@@ -12,15 +12,36 @@ function CreateGroupForm() {
     const [ name, setName ] = useState('');
     const [ about, setAbout ] = useState('');
     const [ meetType, setMeetType ] = useState('');
-    const [ isPrivate, setIsPrivate ] = useState('');
+    const [ isPrivate, setIsPrivate ] = useState(null);
     const [ imgUrl, setImgUrl ] = useState('');
 
     const dispatch = useDispatch();
     const { closeModal } = useModalContext();
     const history = useHistory();
 
+    function removeErr(key){
+        setValidations(prevValue => {
+            const newVal = {...prevValue};
+            newVal[key] = undefined;
+            return newVal;
+        });
+    }
+
     async function handleSubmit(e) {
         e.preventDefault();
+
+        const err = {};
+        if(!city) err.city = 'City is required';
+        if(!state) err.state = 'State is required';
+        if(!name) err.name = 'Group name is required';
+        if(about.length < 50) err.about = 'Description must be at least 50 charactrs long';
+        if(!meetType) err.meetType = 'Group type is required';
+        if(isPrivate === null) err.isPrivate = 'Group privacy is required';
+        if(!imgUrl || !imgUrl.endsWith('.png', '.jpg', '.jpeg')) err.imgUrl = 'Image Url must end in .png, .jpg, or .jpeg';
+
+        setValidations(err);
+
+        if(Object.values(err).length) return;
 
         const payload = {
             city,
@@ -63,14 +84,14 @@ function CreateGroupForm() {
                         type='text'
                         placeholder='City'
                         value={city}
-                        onChange={(e) => setCity(e.target.value)}
+                        onChange={(e) => { removeErr('city'); setCity(e.target.value)}}
                     />
                     {validations.city && <div className='err'>{validations.city}</div>}
                     <input type='text'
                         className='input'
                         placeholder='State'
                         value={state}
-                        onChange={(e) => setState(e.target.value)}
+                        onChange={(e) => {removeErr('state'); setState(e.target.value)}}
                     />
                     {validations.state && <div className='err'>{validations.state}</div>}
                 </div>
@@ -86,7 +107,7 @@ Feel free to get creative! You can edit this later if you change your mind.</p>
                         type='text'
                         placeholder="What is your group's name?"
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        onChange={(e) => {removeErr('name'); setName(e.target.value)}}
                         />
                         {validations.name && <div className='err'>{validations.name}</div>}
                 </div>
@@ -105,9 +126,9 @@ Feel free to get creative! You can edit this later if you change your mind.</p>
 
                     <textarea
                         className='textarea'
-                        placeholder='Please enter at least 30 characters'
+                        placeholder='Please enter at least 50 characters'
                         value={about}
-                        onChange={(e) => setAbout(e.target.value)}
+                        onChange={(e) => {removeErr('about'); setAbout(e.target.value)}}
                         rows="10"
                     />
                     {validations.about && <div className='err'>{validations.about}</div>}
@@ -119,20 +140,22 @@ Feel free to get creative! You can edit this later if you change your mind.</p>
                     <h2>Final Steps...</h2>
                     <div className='select'>
                         <span>Is this an in-person or online group?</span>
-                        <select value={meetType} onChange={(e) => setMeetType(e.target.value)}>
+                        <select value={meetType} onChange={(e) => {removeErr('meetType'); setMeetType(e.target.value)}}>
                             <option value=''>(select one)</option>
                             <option value='Online'>Online</option>
                             <option value='In person'>In person</option>
                         </select>
+                        {validations.meetType && <div className='err'>{validations.meetType}</div>}
                     </div>
 
                     <div className='select'>
                         <span>Is this group private or public?</span>
-                        <select value={isPrivate} onChange={(e) => setIsPrivate(e.target.value)}>
-                            <option value=''>(select one)</option>
+                        <select value={isPrivate} onChange={(e) => {removeErr('isPrivate'); setIsPrivate(e.target.value)}}>
+                            <option value={null}>(select one)</option>
                             <option value={true}>Private</option>
                             <option value={false}>Public</option>
                         </select>
+                        {validations.isPrivate && <div className='err'>{validations.isPrivate}</div>}
                     </div>
 
                     <div>
@@ -142,8 +165,9 @@ Feel free to get creative! You can edit this later if you change your mind.</p>
                             type='text'
                             placeholder='Image Url'
                             value={imgUrl}
-                            onChange={(e) => setImgUrl(e.target.value)}
+                            onChange={(e) => {removeErr('imgUrl'); setImgUrl(e.target.value)}}
                         />
+                        {validations.imgUrl && <div className='err'>{validations.imgUrl}</div>}
                     </div>
                 </div>
 

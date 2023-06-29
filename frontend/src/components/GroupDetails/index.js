@@ -27,7 +27,7 @@ function GroupDetails() {
                 <Link className='back-to-groups' to="/groups">{back}</Link>
                 <div className='details-s1'>
                     <div>
-                        <img/>
+                        <img src={group?.previewImage}/>
                     </div>
                     <div>
                         <h1>{group?.name}</h1>

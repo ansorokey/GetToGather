@@ -12,6 +12,11 @@ function ModalProvider({ children }) {
         setShowModal(true);
     }
 
+    function closeModal(){
+      setModalType(null);
+      setShowModal(false);
+    }
+
   return (
     <ModalContext.Provider
       value={{
@@ -19,7 +24,8 @@ function ModalProvider({ children }) {
         setShowModal,
         modalType,
         setModalType,
-        openModal
+        openModal,
+        closeModal
       }}
     >
       {children}

@@ -6,7 +6,6 @@ import GroupTile from '../GroupTile';
 import './styles.css';
 import { Route, Switch } from 'react-router-dom';
 import GroupDetails from '../GroupDetails';
-import { getGroupEvents } from '../../store/events';
 
 function GroupsListing() {
     const dispatch = useDispatch();
@@ -15,7 +14,6 @@ function GroupsListing() {
 
     useEffect(() => {
         dispatch(loadGroupsThunk());
-        // dispatch(getGroupEvents(groupId));
     },[dispatch]);
 
     return (

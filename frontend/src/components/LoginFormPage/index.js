@@ -2,6 +2,7 @@ import { Redirect } from 'react-router-dom';
 import { signin } from '../../store/session'
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useModalContext } from '../../Context/ModalContext';
 
 import './LoginFormPage.css';
 
@@ -15,6 +16,7 @@ function LoginFormPage() {
     const [submitted, setSubmitted] = useState(false);
 
     const dispatch = useDispatch();
+    const {closeModal} = useModalContext();
 
     useEffect(() => {
         setSubmitted(false);
@@ -34,6 +36,8 @@ function LoginFormPage() {
         // a successful login returns nothing
         if(res && res.errors){
             setErrMessage(res.errors.message);
+        } else {
+            closeModal();
         }
         reset();
     }

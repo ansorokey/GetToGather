@@ -27,7 +27,7 @@ export function addGroup(group) {
         group
     }
 }
-export const addGroupThunk = (groupId) => async dispatch => {
+export const getGroupDetails = (groupId) => async dispatch => {
     try {
         const response = await csrfFetch(`/api/groups/${groupId}`);
 

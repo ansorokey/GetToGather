@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addGroupThunk } from "../../store/groups";
+import { getGroupDetails } from "../../store/groups";
 import { getGroupEvents } from '../../store/events';
 import './GroupDetails.css';
 
@@ -14,15 +14,12 @@ function GroupDetails() {
     let events = useSelector(state => state.events.byGroup);
     let groupEvents = events[groupId];
     const back = '< Back To Groups';
-    console.log(groupEvents);
 
     useEffect(() => {
         dispatch(getGroupEvents(groupId));
-        dispatch(addGroupThunk(groupId));
+        dispatch(getGroupDetails(groupId));
     }, [dispatch]);
 
-    // const upcomingEvents = ;
-    // const pastEvents;
         if(!groupEvents) return null;
 
         return (

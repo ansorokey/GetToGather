@@ -2,8 +2,10 @@ import './SignUpFormPage.css';
 
 import {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 import { signup } from '../../store/session';
+import { useModalContext } from '../../Context/ModalContext';
+import { signin } from '../../store/session';
 
 function SignUpFormPage() {
     const curUser = useSelector(state => state.session.user);
@@ -17,6 +19,9 @@ function SignUpFormPage() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState({});
+
+    const { closeModal } = useModalContext();
+    const location = useLocation();
 
     function reset() {
         setConfirmPassword('');
@@ -52,8 +57,11 @@ function SignUpFormPage() {
         if(response && response.errors){
             setErrors(response.errors);
             return;
+        } else {
+            await dispatch(signin({email, password}));
+            reset();
+            closeModal();
         }
-        reset();
     }
 
     useEffect(() => {

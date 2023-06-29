@@ -4,6 +4,7 @@ import { useModalContext } from "../../Context/ModalContext";
 import LoginFormPage from "../LoginFormPage";
 import SignUpFormPage from '../SignUpFormPage';
 import GroupDetails from "../GroupDetails";
+import CreateGroupForm from "../CreateGroupForm";
 
 import './Modal.css';
 
@@ -22,6 +23,8 @@ function Modal() {
                 break;
             case 'groupDetails':
                 setModal(<GroupDetails/>);
+            case 'createGroup':
+                setModal(<CreateGroupForm/>);
         }
     },[modalType]);
 

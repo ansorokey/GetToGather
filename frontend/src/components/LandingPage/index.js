@@ -43,7 +43,10 @@ function LandingPage() {
                 </div>
                 <div className='s3-tile'>
                     <img src={phImg3} />
-                    <h3 className='s3-tile-header-text'>Start a new Group</h3>
+                    <h3
+                        className='s3-tile-header-text'
+                        onClick={() => openModal('createGroup')}
+                    >Start a new Group</h3>
                     <p className="p-text">Lorem Ipsum</p>
                 </div>
             </div>

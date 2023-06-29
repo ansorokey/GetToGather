@@ -38,4 +38,5 @@
     border: 5px solid whitesmoke;
     border-radius: 1em;
     background-color:rgba(0, 0, 0, 0.75);
+    overflow-y: scroll;
 }

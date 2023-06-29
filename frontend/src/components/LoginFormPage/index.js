@@ -20,6 +20,7 @@ function LoginFormPage() {
 
     useEffect(() => {
         setSubmitted(false);
+        setErrMessage('');
     }, [email, password]);
 
     function reset() {
@@ -38,8 +39,8 @@ function LoginFormPage() {
             setErrMessage(res.errors.message);
         } else {
             closeModal();
+            reset();
         }
-        reset();
     }
 
     //if there IS a user logged in, redirect to home

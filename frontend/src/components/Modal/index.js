@@ -16,9 +16,10 @@ function Modal() {
         switch(modalType) {
             case 'login':
                 setModal(<LoginFormPage/>);
-                return;
+                break;
             case 'signup':
                 setModal(<SignUpFormPage/>);
+                break;
             case 'groupDetails':
                 setModal(<GroupDetails/>);
         }

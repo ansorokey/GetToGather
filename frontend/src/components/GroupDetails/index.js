@@ -7,13 +7,29 @@ import './GroupDetails.css';
 
 import EventTile from "../EventTile";
 
+
 function GroupDetails() {
     const dispatch = useDispatch();
     const {groupId} = useParams();
+    const curUser = useSelector(state => state.session.user);
     const group = useSelector(state => state.groups)[groupId];
     let events = useSelector(state => state.events.byGroup);
     let groupEvents = events[groupId];
     const back = '< Back To Groups';
+
+    const ownerButtons = (
+        <>
+            <button>Create Event</button>
+            <button>Update</button>
+            <button>Delete</button>
+        </>
+    );
+
+    const guestButtons = (
+        <>
+            <button onClick={() => alert('Feature coming soon...')}>Join this group</button>
+        </>
+    );
 
     useEffect(() => {
         dispatch(getGroupEvents(groupId));
@@ -35,8 +51,9 @@ function GroupDetails() {
                         <p>{group?.type}</p>
                         <p>Organized by {group?.Organizer?.firstName} {group?.Organizer?.lastName}</p>
                     </div>
-                    <div>
-                        <button onClick={() => alert('Feature coming soon...')}>Join this group</button>
+
+                    <div className='group management'>
+                        { +curUser?.id === +groupId ? ownerButtons : guestButtons}
                     </div>
                 </div>
 

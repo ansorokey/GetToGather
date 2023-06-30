@@ -573,6 +573,7 @@ router.get('/', validateQuery, async (req, res, next) => {
             exclude: ['capacity', 'price', 'description']
         },
         group: [['Event.id'], ['Group.id'], ['Venue.id']],
+        order: [['startDate']],
         where,
         //Limit can cause issues when paired with associated include statements
         limit,

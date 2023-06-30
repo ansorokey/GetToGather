@@ -13,9 +13,11 @@ function Navigation({ firstLoad }){
     const sessionUser = useSelector(state => state.session.user);
     const history = useHistory();
 
-    useEffect(() => {
-      if(sessionUser) history.push('/');
-    }, [sessionUser])
+    //Intended to redirect user to home after logging in
+    //prevents sit wide page refresh instead
+    // useEffect(() => {
+    //   if(sessionUser) history.push('/');
+    // }, [sessionUser])
 
     return (
       <nav className="nav-bar">

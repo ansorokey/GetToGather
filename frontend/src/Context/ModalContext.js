@@ -6,15 +6,18 @@ export const useModalContext = () => useContext(ModalContext);
 function ModalProvider({ children }) {
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState('null');
+    const [modalOptions, setModalOptions] = useState({});
 
-    function openModal(type){
+    function openModal(type, options){
         setModalType(type);
         setShowModal(true);
+        if(options) setModalOptions(options);
     }
 
     function closeModal(){
       setModalType(null);
       setShowModal(false);
+      setModalOptions({});
     }
 
   return (
@@ -25,7 +28,8 @@ function ModalProvider({ children }) {
         modalType,
         setModalType,
         openModal,
-        closeModal
+        closeModal,
+        modalOptions
       }}
     >
       {children}

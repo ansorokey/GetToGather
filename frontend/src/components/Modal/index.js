@@ -7,10 +7,11 @@ import GroupDetails from "../GroupDetails";
 import CreateGroupForm from "../CreateGroupForm";
 
 import './Modal.css';
+import CreateEventForm from "../CreateEventForm";
 
 function Modal() {
 
-    const {modalType, setShowModal} = useModalContext();
+    const {modalType, closeModal, modalOptions} = useModalContext();
     const [modal, setModal] = useState(null);
 
     useEffect(() => {
@@ -25,6 +26,8 @@ function Modal() {
                 setModal(<GroupDetails/>);
             case 'createGroup':
                 setModal(<CreateGroupForm/>);
+            case 'createEvent':
+                setModal(<CreateEventForm group={modalOptions}/>)
         }
     },[modalType]);
 
@@ -33,7 +36,7 @@ function Modal() {
             <div className='modal-content'>
                 <div className="close-modal">
                         <i
-                            onClick={() => setShowModal(false)}
+                            onClick={() => closeModal()}
                             className="fa-solid fa-x fa-2xl"
                         ></i>
                 </div>

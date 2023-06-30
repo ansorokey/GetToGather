@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGroupDetails } from "../../store/groups";
 import { getGroupEvents } from '../../store/events';
+import { useModalContext } from '../../Context/ModalContext';
 import './GroupDetails.css';
 
 import EventTile from "../EventTile";
@@ -15,11 +16,12 @@ function GroupDetails() {
     const group = useSelector(state => state.groups)[groupId];
     let events = useSelector(state => state.events.byGroup);
     let groupEvents = events[groupId];
+    const {openModal} = useModalContext();
     const back = '< Back To Groups';
 
     const ownerButtons = (
         <>
-            <button>Create Event</button>
+            <button onClick={() => openModal('createEvent', group)}>Create Event</button>
             <button>Update</button>
             <button>Delete</button>
         </>

@@ -8,6 +8,7 @@ import './LoginFormPage.css';
 
 function LoginFormPage() {
     const curUser = useSelector(state => state.session.user);
+    console.log(curUser);
 
     const [errMessage, setErrMessage] = useState('');
     const [email, setEmail] = useState('');
@@ -44,7 +45,7 @@ function LoginFormPage() {
     }
 
     //if there IS a user logged in, redirect to home
-    if(curUser) return <Redirect to="/" />
+    if(curUser) return <Redirect to="/" />;
 
     return (
         <div className='LogInMod'>

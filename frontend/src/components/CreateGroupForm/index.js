@@ -12,7 +12,7 @@ function CreateGroupForm() {
     const [ name, setName ] = useState('');
     const [ about, setAbout ] = useState('');
     const [ meetType, setMeetType ] = useState('');
-    const [ isPrivate, setIsPrivate ] = useState(null);
+    const [ isPrivate, setIsPrivate ] = useState('default');
     const [ imgUrl, setImgUrl ] = useState('');
 
     const dispatch = useDispatch();
@@ -36,8 +36,8 @@ function CreateGroupForm() {
         if(!name) err.name = 'Group name is required';
         if(about.length < 50) err.about = 'Description must be at least 50 charactrs long';
         if(!meetType) err.meetType = 'Group type is required';
-        if(isPrivate === null) err.isPrivate = 'Group privacy is required';
-        if(!imgUrl || !imgUrl.endsWith('.png', '.jpg', '.jpeg')) err.imgUrl = 'Image Url must end in .png, .jpg, or .jpeg';
+        if(isPrivate === 'default') err.isPrivate = 'Group privacy is required';
+        if(!imgUrl || (!imgUrl.endsWith('.png') && !imgUrl.endsWith('.jpg') && !imgUrl.endsWith('.jpeg'))) err.imgUrl = 'Image Url must end in .png, .jpg, or .jpeg';
 
         setValidations(err);
 
@@ -151,7 +151,7 @@ Feel free to get creative! You can edit this later if you change your mind.</p>
                     <div className='select'>
                         <span>Is this group private or public?</span>
                         <select value={isPrivate} onChange={(e) => {removeErr('isPrivate'); setIsPrivate(e.target.value)}}>
-                            <option value={null}>(select one)</option>
+                            <option value='default'>(select one)</option>
                             <option value={true}>Private</option>
                             <option value={false}>Public</option>
                         </select>

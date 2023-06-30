@@ -7,7 +7,7 @@ function GroupTile({group}) {
         <Link className="tile-link" to={`/groups/${group.id}`}>
             <div className="tile-ctn">
                 <div className="tile-img-ctn">
-                    <img className="tile-img"/>
+                    <img className="tile-img" src={group.previewImage}/>
                 </div>
                 <div className="tile-info">
                     <h2>{group.name}</h2>

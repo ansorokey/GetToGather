@@ -6,13 +6,15 @@ import LogInSignUp from './LogInSignUp.js';
 import logo from '../../images/get-to-gather-logo.png';
 import './styles.css';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min.js';
+import { useModalContext } from '../../Context/ModalContext.js';
 
 function Navigation({ firstLoad }){
+    const { openModal } = useModalContext();
     const sessionUser = useSelector(state => state.session.user);
     const history = useHistory();
 
     useEffect(() => {
-      history.push('/');
+      if(sessionUser) history.push('/');
     }, [sessionUser])
 
     return (
@@ -22,9 +24,7 @@ function Navigation({ firstLoad }){
           </NavLink>
 
           <div className='session'>
-            {/* {firstLoad &&
-                <ProfileButton user={sessionUser} />
-            } */}
+            {sessionUser && <span className='create-group-prof' onClick={() => openModal('createGroup')}>Create a new Group</span>}
             { sessionUser ? <ProfileButton user={sessionUser} /> : <LogInSignUp/>}
           </div>
       </nav>

@@ -5,8 +5,8 @@ function Listings() {
 
     return (
         <div className="events-groups">
-            <NavLink className="eg-link" to="/events"><h2>Events</h2></NavLink>
-            <NavLink className="eg-link" to="/groups"><h2>Groups</h2></NavLink>
+            <NavLink className="eg-link" to="/events"><div>Events</div></NavLink>
+            <NavLink className="eg-link" to="/groups"><div>Groups</div></NavLink>
         </div>
     );
 }

@@ -37,42 +37,21 @@ function ProfileButton({ user }) {
     }
 
     const menu = (
-        <>
-            <ul ref={ulRef}>
-                <li>{user?.username}</li>
-                <li>{user?.firstName}</li>
-                <li>{user?.lastName}</li>
-                <li>{user?.email}</li>
-            </ul>
+        <div className='menu' ref={ulRef}>
+                <div>Hello, {user?.username}</div>
+                <div>{user?.email}</div>
             <button onClick={handleLogout}>
                 Log Out
             </button>
-        </>
+        </div>
     );
 
-    // const loggedOutMenu = (
-    //     <ul ref={ulRef}>
-    //         <li>
-    //             <button onClick={() => openModal('login')}>Log In</button>
-    //         </li>
-
-    //         <li>
-    //             <button onClick={() => openModal('signup')}>Sign Up</button>
-    //         </li>
-    //     </ul>
-    // );
-
-    // let menu = user ? loggedInMenu : loggedOutMenu;
-
     return (
-        <>
-            <button
-                onClick={openMenu}
-                className="profile-btn-ctn">
-                <i className="fa-regular fa-user profile-img"></i>
-            </button>
-            { showMenu ? menu : null }
-        </>
+        <div className='profile-ctn' onClick={openMenu}>
+            <i className="fa-regular fa-user fa"></i>
+            { showMenu ? <i className="fa-solid fa-chevron-up fa"></i> : <i className="fa-solid fa-chevron-down fa"></i>}
+            { showMenu && menu }
+        </div>
     );
 }
 

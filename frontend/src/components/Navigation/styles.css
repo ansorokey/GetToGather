@@ -17,6 +17,16 @@
     max-height: 10vh;
 }
 
+.session {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+}
+
+.create-group-prof {
+    cursor: pointer;
+}
+
 .session-buttons-container {
     display: flex;
     justify-content: space-around;
@@ -44,16 +54,39 @@
     background-color: #EBB45B;
 }
 
-.profile-btn-ctn {
-    border-radius: 100%;
-    border: none;
-    width: 5em;
-    height: 5em;
+.profile-ctn {
+    border: transparent;
+    /* width: 2.5em; */
+    width: fit-content;
+    height: 2.5em;
+    position: relative;
+    margin: 0;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2em;
+}
+
+.menu {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    user-select: none;
+    margin: 0;
+    padding: 1em;
+    right: 0;
+    top: 100%;
     background-color: #969090;
 }
 
-.profile-img {
+.fa {
+    font-size: 1em;
+    background-color: #EBB45B;
     border-radius: 100%;
-    font-size: 3.5em;
-    background-color: #969090;
+    /* box-sizing: content-box; */
+    padding: 10px;
 }

@@ -6,8 +6,10 @@ import './LandingPage.css';
 
 import { Link } from 'react-router-dom';
 import { useModalContext } from '../../Context/ModalContext';
+import { useSelector } from 'react-redux';
 
 function LandingPage() {
+    const curUser = useSelector(state => state.session.user);
     const {openModal} = useModalContext();
     return (
         <div className='landing-page-container'>
@@ -32,7 +34,11 @@ function LandingPage() {
             <div id='section-3'>
                 <div className='s3-tile'>
                     <img src={phImg1} />
-                    <Link className="s3-link" to="/groups"><h3 className='s3-tile-header-text'>See all groups</h3></Link>
+                    <Link className="s3-link" to="/groups">
+                        <h3 className='s3-tile-header-text'>
+                        See all groups
+                        </h3>
+                    </Link>
                     {/* <h3 className='s3-tile-header-text'><Link to="/groups">See all groups</Link></h3> */}
                     <p className="p-text">Lorem Ipsum</p>
                 </div>
@@ -51,7 +57,7 @@ function LandingPage() {
                 </div>
             </div>
 
-            <div id='section-4'>
+            { !curUser && <div id='section-4'>
                 <a href='#'>
                     <button
                         onClick={() => openModal('signup')}
@@ -60,7 +66,7 @@ function LandingPage() {
                         Join GetToGather
                     </button>
                 </a>
-            </div>
+            </div>}
         </div>
 
     );

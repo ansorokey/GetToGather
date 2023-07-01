@@ -1,0 +1,47 @@
+.details-ctn {
+    width: 80%;
+    margin: 0 10%;
+}
+
+.event-details-s2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main-event-img {
+    width: 50%;
+}
+
+.group-event-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    width: 50%;
+}
+
+.event-start-end {
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1em;
+}
+
+.time {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+}
+
+.event-price {
+    display: flex;
+    gap: 1em;
+}
+
+.event-type {
+    display: flex;
+    gap: 1em;
+}

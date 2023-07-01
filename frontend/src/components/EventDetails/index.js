@@ -35,21 +35,29 @@ function EventDetails() {
                 <h2>Hosted by {group?.Organizer?.firstName} {group?.Organizer?.lastName}</h2>
             </div>
             <div className='event-details-s2'>
-                <div className='main-event-img'>
-                    <img/>
+                <div>
+                    <img className='main-event-img' src={event?.EventImages[0]}/>
                 </div>
                 <div className='group-event-info'>
-                    <Link to={`/groups/${group?.id}`}><div className='group-link'>{group?.previewImage}</div></Link>
+                    <Link to={`/groups/${group?.id}`}>
+                        <div className='group-link'>
+                            <img src={group?.previewImage}/>
+                            <div>
+                                <div>{group?.name}</div>
+                                <div>{group?.type}</div>
+                            </div>
+                        </div>
+                    </Link>
                     <div className='event-info'>
                         <div className='event-start-end'>
                             <i className="fa-solid fa-clock"></i>
                             <div>
-                                <div>
+                                <div className='time'>
                                     START
                                     <span>{event?.startDate.slice(0, 10)}</span>
                                     <span>{event?.startDate.slice(11, 16)}</span>
                                 </div>
-                                <div>
+                                <div className='time'>
                                     END
                                     <span>{event?.endDate.slice(0, 10)}</span>
                                     <span>{event?.endDate.slice(11, 16)}</span>
@@ -58,7 +66,7 @@ function EventDetails() {
                         </div>
                         <div className='event-price'>
                             <i className="fa-solid fa-dollar-sign"></i>
-                            <div>{event?.price === 0 ? 'FREE' : '$' + event?.price?.toFixed(2)}</div>
+                            <div>{event?.price === 0 ? 'FREE' : '$' +event?.price?.toFixed(2)}</div>
                         </div>
                         <div className='event-type'>
                             <i className="fa-solid fa-location-arrow"></i>

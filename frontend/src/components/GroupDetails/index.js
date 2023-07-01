@@ -23,7 +23,7 @@ function GroupDetails() {
         <>
             <button onClick={() => openModal('createEvent', group)}>Create Event</button>
             <button>Update</button>
-            <button>Delete</button>
+            <button onClick={() => openModal('deleteGroup', group)}>Delete</button>
         </>
     );
 
@@ -55,7 +55,7 @@ function GroupDetails() {
                     </div>
 
                     <div className='group management'>
-                        { +curUser?.id === +groupId ? ownerButtons : guestButtons}
+                        { +curUser?.id === +group?.organizerId ? ownerButtons : guestButtons}
                     </div>
                 </div>
 
@@ -74,7 +74,7 @@ function GroupDetails() {
                 <div className="details-events-ctn">
                     <h2>Events</h2>
                     {groupEvents.map( event => {
-                        return <EventTile event={event}/> })}
+                        return <EventTile key ={event.id} event={event}/> })}
                 </div>
             </div>
         );

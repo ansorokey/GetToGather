@@ -16,10 +16,7 @@ export const createGroupThunk = (groupData) => async dispatch => {
 
         if(response.ok){
             const data = await response.json();
-            console.log(data);
             if(groupData.imgUrl) {
-                console.log('pic', typeof groupData.imgUrl)
-                console.log('groupId', data.id);
                 await csrfFetch(`/api/groups/${data.id}/images`, {
                     method: 'POST',
                     body: JSON.stringify({url: groupData.imgUrl, preview: true})
@@ -28,9 +25,7 @@ export const createGroupThunk = (groupData) => async dispatch => {
             return data;
         }
     } catch(e) {
-        console.error(e);
         const err = await e.json();
-        // console.log('');
         return err;
     }
 
@@ -78,6 +73,28 @@ export const getGroupDetails = (groupId) => async dispatch => {
 
 }
 
+export const DELETE_GROUP = 'store/groups/DELETE_GROUP';
+export function deleteGroup(groupId){
+    return {
+        type: DELETE_GROUP,
+        groupId
+    }
+}
+export const deleteGroupThunk = (group) => async dispatch => {
+    try {
+        const response = await csrfFetch(`/api/groups/${group.id}`, {
+            method: 'DELETE'
+        });
+
+        if(response.ok){
+            dispatch(deleteGroup(group.id));
+        }
+    } catch(e) {
+        const err = await e.json();
+        return err;
+    }
+}
+
 function groupsReducer(state = {}, action) {
     let newState = {};
 
@@ -88,10 +105,18 @@ function groupsReducer(state = {}, action) {
                 if(!(g.id in newState)) {newState[g.id] = g};
             });
             return newState;
+
         case ADD_GROUP:
             newState = {...state};
             newState[action.group.id] = action.group;
             return newState;
+
+        case DELETE_GROUP:
+            for(let g in state){
+                if(+g !== +action.groupId) newState[g] = state[g];
+            }
+            return newState;
+
         default:
             return state;
     }

@@ -55,11 +55,9 @@ function CreateGroupForm() {
 
         const response = await dispatch(createGroupThunk(payload));
         if(response && response.errors){
-            console.log(response.errors);
             setValidations(response.errors);
         } else {
             dispatch(getGroupDetails(response.id));
-            console.log('success', response)
             closeModal();
             history.push(`/groups/${response.id}`);
         }

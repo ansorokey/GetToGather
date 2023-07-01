@@ -60,6 +60,36 @@ export const getGroupEvents = (groupId) => async dispatch => {
     }
 }
 
+export const CREATE_EVENT = 'store/events/CREATE_EVENT';
+export function createEvent(event) {
+    return {
+        type: CREATE_EVENT,
+        event
+    }
+}
+export const createEventThunk = (eventData) => async dispatch => {
+    try {
+        const response = await csrfFetch(`/api/groups/${eventData.groupId}/events`, {
+            method: 'POST',
+            body: JSON.stringify(eventData)
+        });
+
+        if(response.ok){
+            const data = await response.json();
+            await csrfFetch(`/api/events/${data.id}/images`, {
+                method: 'POST',
+                body: JSON.stringify({url: eventData.imgUrl, preview: true})
+            });
+            dispatch(createEvent(data));
+            dispatch(getEventDetails(data));
+            return data;
+        }
+    } catch (e) {
+        const err = await e.json();
+        return err;
+    }
+}
+
 function eventsReducer(state = { byGroup: {}, allEvents: {}}, action) {
     let newState;
 
@@ -79,6 +109,12 @@ function eventsReducer(state = { byGroup: {}, allEvents: {}}, action) {
             newState = {...state};
             newState.byGroup = {...state.byGroup};
             newState.byGroup[action.groupId] = [...action.events];
+            return newState;
+
+        case CREATE_EVENT:
+            newState = {...state};
+            newState.allEvents[action.event.id] = action.event;
+            newState.byGroup[action.event.groupId].push(action.event);
             return newState;
 
         default:

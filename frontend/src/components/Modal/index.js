@@ -5,6 +5,7 @@ import LoginFormPage from "../LoginFormPage";
 import SignUpFormPage from '../SignUpFormPage';
 import GroupDetails from "../GroupDetails";
 import CreateGroupForm from "../CreateGroupForm";
+import DeleteGroup from "../DeleteGroup";
 
 import './Modal.css';
 import CreateEventForm from "../CreateEventForm";
@@ -24,10 +25,16 @@ function Modal() {
                 break;
             case 'groupDetails':
                 setModal(<GroupDetails/>);
+                break;
             case 'createGroup':
                 setModal(<CreateGroupForm/>);
+                break;
+            case 'deleteGroup':
+                setModal(<DeleteGroup group={modalOptions}/>);
+                break;
             case 'createEvent':
-                setModal(<CreateEventForm group={modalOptions}/>)
+                setModal(<CreateEventForm group={modalOptions}/>);
+                break;
         }
     },[modalType]);
 

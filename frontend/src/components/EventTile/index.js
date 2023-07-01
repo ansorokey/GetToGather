@@ -8,7 +8,7 @@ function EventTile({event}) {
         <Link className="tile-link" to={`/events/${event.id}`}>
             <div className="tile-ctn">
                 <div className="tile-img-ctn">
-                    <img className="tile-img"/>
+                    <img className="tile-img" src={event.previewImage}/>
                 </div>
                 <div className="tile-info">
                     <div className="date-time">

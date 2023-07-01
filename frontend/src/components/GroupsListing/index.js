@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadGroupsThunk } from '../../store/groups';
 import GroupTile from '../GroupTile';
 import './styles.css';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useParams } from 'react-router-dom';
 import GroupDetails from '../GroupDetails';
 
 function GroupsListing() {
+    const {groupId} = useParams();
     const dispatch = useDispatch();
     const groupState = useSelector(state => state.groups);
     const groupsArr = Object.values(groupState);

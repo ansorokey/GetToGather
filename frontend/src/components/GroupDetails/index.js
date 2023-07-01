@@ -12,11 +12,13 @@ import EventTile from "../EventTile";
 function GroupDetails() {
     const dispatch = useDispatch();
     const {groupId} = useParams();
-    const curUser = useSelector(state => state.session.user);
-    const group = useSelector(state => state.groups)[groupId];
-    let events = useSelector(state => state.events.byGroup);
-    let groupEvents = events[groupId];
+    const curUser = useSelector(state => state?.session?.user);
+    const group = useSelector(state => state?.groups)[groupId];
+    let eventsState = useSelector(state => state?.events);
+    const eventsArr = Object.values(eventsState);
+    const groupEvents = eventsArr.filter( e => +e?.Group?.id === +groupId );
     const {openModal} = useModalContext();
+
     const back = '< Back To Groups';
 
     const ownerButtons = (
@@ -34,11 +36,11 @@ function GroupDetails() {
     );
 
     useEffect(() => {
-        dispatch(getGroupEvents(groupId));
         dispatch(getGroupDetails(groupId));
+        dispatch(getGroupEvents(groupId));
     }, [dispatch]);
 
-        if(!groupEvents) return null;
+        // if(!groupEvents) return null;
 
         return (
             <div className='details-ctn'>
@@ -73,7 +75,7 @@ function GroupDetails() {
 
                 <div className="details-events-ctn">
                     <h2>Events</h2>
-                    {groupEvents.map( event => {
+                    {groupEvents?.map( event => {
                         return <EventTile key ={event.id} event={event}/> })}
                 </div>
             </div>

@@ -2,6 +2,7 @@ import './DeleteGroup.css';
 import { useModalContext } from '../../Context/ModalContext';
 import { useDispatch } from 'react-redux';
 import {deleteGroupThunk} from '../../store/groups';
+import {deleteEventsThunk} from '../../store/events';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function DeleteGroup({group}) {
@@ -10,6 +11,7 @@ function DeleteGroup({group}) {
     const {closeModal} = useModalContext();
     async function handleDelete() {
         await dispatch(deleteGroupThunk(group));
+        await dispatch(deleteEventsThunk(group));
         history.push('/groups');
         closeModal();
     }

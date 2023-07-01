@@ -10,7 +10,7 @@ import EventDetails from '../EventDetails';
 function EventsListing() {
     const dispatch = useDispatch();
     const eventState = useSelector(state => state.events);
-    const eventsArr = Object.values(eventState.allEvents);
+    const eventsArr = Object.values(eventState);
 
     useEffect(() => {
         dispatch(getEventsThunk());

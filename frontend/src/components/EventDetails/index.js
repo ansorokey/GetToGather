@@ -10,7 +10,7 @@ function EventDetails() {
     const {eventId} = useParams();
     const dispatch = useDispatch();
     const eventState = useSelector(state => state.events);
-    const event = eventState.allEvents[eventId];
+    const event = eventState[eventId];
     const groupState = useSelector(state => state.groups);
     let group;
     if(event) group = groupState[event.groupId];
@@ -36,7 +36,7 @@ function EventDetails() {
             </div>
             <div className='event-details-s2'>
                 <div>
-                    <img className='main-event-img' src={event?.EventImages[0]}/>
+                    <img className='main-event-img' src={event?.previewImage}/>
                 </div>
                 <div className='group-event-info'>
                     <Link to={`/groups/${group?.id}`}>

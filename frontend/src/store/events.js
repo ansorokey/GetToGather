@@ -90,31 +90,46 @@ export const createEventThunk = (eventData) => async dispatch => {
     }
 }
 
-function eventsReducer(state = { byGroup: {}, allEvents: {}}, action) {
-    let newState;
+export const DELETE_EVENTS = 'store/events/DELETE_EVENTS';
+export function deleteEvents(groupId) {
+    return {
+        type: DELETE_EVENTS,
+        groupId
+    }
+}
+export const deleteEventsThunk = (group) => async dispatch => {
+    dispatch(deleteEvents(group.id));
+}
+
+function eventsReducer(state = {}, action) {
+    let newState = {};
 
     switch(action.type) {
         case GET_EVENTS:
             newState = {...state};
             action.events.forEach(e => {
-                if(!(e.id in newState.allEvents)) newState.allEvents[e.id] = e});
+                if(!(e.id in newState)) newState[e.id] = e});
             return newState;
 
         case GET_EVENT_DETAILS:
             newState = {...state};
-            newState.allEvents[action.event.id] = action.event;
+            newState[action.event.id] = action.event;
             return newState;
 
         case LOAD_GROUP_EVENTS:
             newState = {...state};
-            newState.byGroup = {...state.byGroup};
-            newState.byGroup[action.groupId] = [...action.events];
+            action.events.forEach(e => newState[e.id] = e);
             return newState;
 
         case CREATE_EVENT:
             newState = {...state};
-            newState.allEvents[action.event.id] = action.event;
-            newState.byGroup[action.event.groupId].push(action.event);
+            newState[action.event.groupId] = action.event;
+            return newState;
+
+        case DELETE_EVENTS:
+            for(let key in state){
+                if(+state[key].groupId !== +action.groupId) newState[key] = state[key];
+            }
             return newState;
 
         default:

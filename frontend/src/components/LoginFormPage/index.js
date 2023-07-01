@@ -60,7 +60,6 @@ function LoginFormPage() {
                             required
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                        {/* { submitted && !email ? <p>Email is required</p> : null} */}
                 </div>
 
                 <div className='entry'>
@@ -71,7 +70,6 @@ function LoginFormPage() {
                             required
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        {/* { submitted ? <p>Password is required</p> : null} */}
                         <span title="Show password" onClick={() => setShowPassword(!showPassword)}>👁️‍🗨️</span>
                 </div>
 

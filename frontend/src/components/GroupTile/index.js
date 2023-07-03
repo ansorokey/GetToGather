@@ -4,21 +4,25 @@ import './GroupTile.css';
 function GroupTile({group}) {
 
     return (
-        <Link className="tile-link" to={`/groups/${group.id}`}>
-            <div className="tile-ctn">
-                <div className="tile-img-ctn">
-                    <img className="tile-img" src={group.previewImage}/>
-                </div>
-                <div className="tile-info">
-                    <h2>{group.name}</h2>
-                    <h3>{group.city}, {group.state}</h3>
-                    <p>{group.about}</p>
-                    <div>
-                        <h4>{group.type}</h4>
+        <>
+            <hr className="tile-split" />
+            <Link className="tile-link" to={`/groups/${group.id}`}>
+                <div className="tile-ctn">
+                    <div className="tile-img-ctn">
+                        <img className="tile-img" src={group.previewImage}/>
+                    </div>
+                    <div className="tile-info">
+                        <h2>{group.name}</h2>
+                        <h3>{group.city}, {group.state}</h3>
+                        <p>{group.about}</p>
+                        <div className='members-type'>
+                            <span>{group.numMembers} members</span>
+                            <span>{group.type}</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </Link>
+            </Link>
+        </>
     );
 }
 

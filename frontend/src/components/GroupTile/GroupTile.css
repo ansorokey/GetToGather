@@ -1,12 +1,30 @@
-.tile-ctn {
+.tile-split {
     border: 1px solid whitesmoke;
-    height: fit-content;
-    display: flex;
-    color: whitesmoke;
-
+    width: 100%;
+    margin: 1em 0;
 }
 
-.tile-img {
-    width: 20vw;
+.tile-ctn {
+    border: none;
+    height: fit-content;
+    display: flex;
+    gap: 1em;
+    color: whitesmoke;
+    box-sizing: border-box;
+    overflow-wrap: normal;
+    margin: 0 1em;
+}
+
+.tile-info {
     height: 100%;
+}
+
+.tile-img-ctn {
+    width: 20vw;
+    height: 13vw;
+}
+
+.members-type {
+    display: flex;
+    gap: 1em;
 }

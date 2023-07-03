@@ -10,7 +10,7 @@
 .details-s1 {
     display: flex;
     width: 100%;
-    height: 50vh;
+    height: 400px;
 }
 
 .about-group {
@@ -37,5 +37,10 @@
 .details-events-ctn {
     display: flex;
     flex-direction: column;
+    gap: 1em;
+}
+
+.group-management {
+    display: flex;
     gap: 1em;
 }

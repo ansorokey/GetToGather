@@ -78,7 +78,7 @@ function GroupDetails() {
                         <p>Organized by {group?.Organizer?.firstName} {group?.Organizer?.lastName}</p>
                     </div>
 
-                    <div className='group management'>
+                    <div className='group-management'>
                         { +curUser?.id === +group?.organizerId ? ownerButtons : guestButtons}
                     </div>
                 </div>
@@ -102,13 +102,13 @@ function GroupDetails() {
                     <>
                         <h2>Upcoming Events ({upcomingEvents?.length})</h2>
                         {upcomingEvents?.map( event => <EventTile key={event?.id} event={event}/>)}
-                    </> : null
+                    </> : <h2>No upcoming events</h2>
                 }
 
                 {pastEvents?.length ?
                     <>
                         <h2>Past Events </h2>
-                        {pastEvents?.reverse()?.map( event => <EventTile key ={event?.id} event={event}/>)}
+                        {pastEvents?.reverse()?.map( event => <EventTile key={event?.id} event={event}/>)}
                     </> : null
                 }
             </div>

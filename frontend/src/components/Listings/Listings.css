@@ -9,6 +9,7 @@
     top: 10vh;
     background-color: #494646;
     padding: 1em 0;
+    z-index: 0;
 }
 
 .eg-link {

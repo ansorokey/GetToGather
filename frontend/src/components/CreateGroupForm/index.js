@@ -125,6 +125,7 @@ Feel free to get creative! You can edit this later if you change your mind.</p>
                     <textarea
                         className='textarea'
                         placeholder='Please enter at least 50 characters'
+                        maxLength='256'
                         value={about}
                         onChange={(e) => {removeErr('about'); setAbout(e.target.value)}}
                         rows="10"

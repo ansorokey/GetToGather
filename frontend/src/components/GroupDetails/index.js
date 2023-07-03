@@ -36,7 +36,6 @@ function GroupDetails() {
         </>
     );
 
-    // <EventTile key ={event.id} event={event}/>
     async function initialLoad(){
         dispatch(getGroupDetails(groupId));
         const eventResponse = await dispatch(getGroupEvents(groupId));
@@ -99,11 +98,19 @@ function GroupDetails() {
             </div>
 
             <div className="details-events-ctn">
-                <h2>Upcoming Events</h2>
-                {upcomingEvents?.map( event => <EventTile key={event?.id} event={event}/>)}
+                {upcomingEvents?.length ?
+                    <>
+                        <h2>Upcoming Events ({upcomingEvents?.length})</h2>
+                        {upcomingEvents?.map( event => <EventTile key={event?.id} event={event}/>)}
+                    </> : null
+                }
 
-                <h2>Past Events </h2>
-                {pastEvents?.map( event => <EventTile key ={event?.id} event={event}/>)}
+                {pastEvents?.length ?
+                    <>
+                        <h2>Past Events </h2>
+                        {pastEvents?.reverse()?.map( event => <EventTile key ={event?.id} event={event}/>)}
+                    </> : null
+                }
             </div>
         </div>
     );

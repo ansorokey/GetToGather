@@ -50,8 +50,8 @@ function LandingPage() {
                 <div className='s3-tile'>
                     <img src={phImg3} />
                     <h3
-                        className='s3-tile-header-text'
-                        onClick={() => openModal('createGroup')}
+                        className={curUser ? 's3-tile-header-text' : 'disabled-landing-link'}
+                        onClick={curUser ? () => openModal('createGroup') : null}
                     >Start a new Group</h3>
                     <p className="p-text">Lorem Ipsum</p>
                 </div>

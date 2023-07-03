@@ -102,6 +102,11 @@
     color: whitesmoke;
 }
 
+.disabled-landing-link {
+    color: lightgray;
+    cursor: default;
+}
+
 /* SECTION 4 */
 #section-4 {
     grid-area: s4;

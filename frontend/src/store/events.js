@@ -109,12 +109,12 @@ function eventsReducer(state = {}, action) {
         case GET_EVENTS:
             newState = {...state};
             action.events.forEach(e => {
-                if(!(e.id in newState)) newState[e.id] = e});
+                newState[e.id] = {...newState[e.id], ...e}});
             return newState;
 
         case GET_EVENT_DETAILS:
             newState = {...state};
-            newState[action.event.id] = action.event;
+            newState[action.event.id] = {...newState[action.event.id], ...action.event};
             return newState;
 
         case LOAD_GROUP_EVENTS:

@@ -11,7 +11,7 @@ function LoginFormPage() {
     console.log(curUser);
 
     const [errMessage, setErrMessage] = useState('');
-    const [email, setEmail] = useState('');
+    const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [submitted, setSubmitted] = useState(false);
@@ -22,10 +22,10 @@ function LoginFormPage() {
     useEffect(() => {
         setSubmitted(false);
         setErrMessage('');
-    }, [email, password]);
+    }, [credential, password]);
 
     function reset() {
-        setEmail('');
+        setCredential('');
         setPassword('');
     }
 
@@ -33,7 +33,7 @@ function LoginFormPage() {
         e.preventDefault();
         setSubmitted(true);
 
-        const credentials = {email, password};
+        const credentials = {credential, password};
         const res = await dispatch(signin(credentials));
         // a successful login returns nothing
         if(res && res.errors){
@@ -44,21 +44,27 @@ function LoginFormPage() {
         }
     }
 
+    async function demoLogin() {
+        await dispatch(signin({credential: 'demouser', password: 'password'}));
+        closeModal();
+        reset();
+
+    }
+
     //if there IS a user logged in, redirect to home
     if(curUser) return <Redirect to="/" />;
 
     return (
         <div className='LogInMod'>
-            <h2 className='text'>Log In</h2>
+            <h2 className='cred'>Log In</h2>
             { errMessage ? <p>{errMessage}</p> : null}
             <form className='login-form' onSubmit={onSubmit}>
                 <div className='entry'>
                         <input
-                            type="email"
-                            placeholder="   Email..."
-                            value={email}
-                            required
-                            onChange={(e) => setEmail(e.target.value)}
+                            type="text"
+                            placeholder="   Email or Username..."
+                            value={credential}
+                            onChange={(e) => setCredential(e.target.value)}
                         />
                 </div>
 
@@ -67,14 +73,17 @@ function LoginFormPage() {
                             type={showPassword ? 'text' : 'password'}
                             placeholder="   Password..."
                             value={password}
-                            required
                             onChange={(e) => setPassword(e.target.value)}
                         />
                         <span title="Show password" onClick={() => setShowPassword(!showPassword)}>👁️‍🗨️</span>
                 </div>
 
+                <div
+                    className='demo-log'
+                    onClick={demoLogin}>Log in as Demo User</div>
+
                 <div className="login-btns">
-                    <button className="login-button">Login</button>
+                    <button className="login-button" disabled={(!credential || !password)}>Login</button>
                     <button className="login-button">Sign Up</button>
                 </div>
             </form>

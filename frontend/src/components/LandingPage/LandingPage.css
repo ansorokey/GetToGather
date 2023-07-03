@@ -103,6 +103,7 @@
 }
 
 .disabled-landing-link {
+    font-size: 1.5em;
     color: lightgray;
     cursor: default;
 }

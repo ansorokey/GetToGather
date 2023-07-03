@@ -40,6 +40,11 @@
     cursor: default;
 }
 
+.demo-log:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .login-btns {
     display: flex;
     justify-content: space-evenly;

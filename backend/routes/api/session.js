@@ -6,16 +6,16 @@ const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { setTokenCookie, restoreUser } = require('../../utils/auth.js');
 const { handleValidationErrors } = require('../../utils/validation.js');
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
 // Validate login credentials
 const validateLogin = [
-    check('email')
+    check('credential')
         .exists({ checkFalsy: true })
         .notEmpty()
-        .isEmail()
-        .withMessage('Email is required'),
+        .withMessage('Email or username is required'),
     check('password')
         .exists({ checkFalsy: true})
         .withMessage('Password is required'),
@@ -43,13 +43,13 @@ router.get('/', async (req, res, next) => {
 
 // #Log In a User
 router.post('/', validateLogin, async (req, res, next) => {
-    let { email, password } = req.body;
-    email = email.toLowerCase();
+    let { credential, password } = req.body;
+    credential = credential.toLowerCase();
 
     //find user with all attributes included
     const user = await User.unscoped().findOne({
         where: {
-            email
+            [Op.or]: [{email: credential}, {username: credential}]
         }
     });
 

@@ -7,11 +7,8 @@
     height: fit-content;
     position: sticky;
     top: 10vh;
-    z-index: 1;
     background-color: #494646;
     padding: 1em 0;
-    border-right: 5px solid #494646;
-    border-left: 5px solid #494646;
 }
 
 .eg-link {
@@ -26,4 +23,10 @@
     cursor: default;
     text-decoration: underline;
     color: #B733D4;
+}
+
+.tile-split {
+    border: 1px solid whitesmoke;
+    width: 90%;
+    margin: 2em 5%;
 }

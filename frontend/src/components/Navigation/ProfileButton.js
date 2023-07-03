@@ -38,7 +38,7 @@ function ProfileButton({ user }) {
 
     const menu = (
         <div className='menu' ref={ulRef}>
-                <div>Hello, {user?.username}</div>
+                <div>Hello, {user?.firstName}</div>
                 <div>{user?.email}</div>
             <button onClick={handleLogout}>
                 Log Out

@@ -14,10 +14,11 @@ function GroupDetails() {
     const {groupId} = useParams();
     const curUser = useSelector(state => state?.session?.user);
     const group = useSelector(state => state?.groups)[groupId];
-    let eventsState = useSelector(state => state?.events);
-    const eventsArr = Object.values(eventsState);
-    const groupEvents = eventsArr.filter( e => +e?.Group?.id === +groupId );
     const {openModal} = useModalContext();
+
+    const [groupEvents, setGroupEvents] = useState([]);
+    const [upcomingEvents, setUpcomingEvents] = useState([]);
+    const [pastEvents, setPastEvents] = useState([]);
 
     const back = '< Back To Groups';
 
@@ -35,20 +36,42 @@ function GroupDetails() {
         </>
     );
 
-    useEffect(() => {
+    // <EventTile key ={event.id} event={event}/>
+    async function initialLoad(){
         dispatch(getGroupDetails(groupId));
-        dispatch(getGroupEvents(groupId));
-    }, [dispatch]);
+        const eventResponse = await dispatch(getGroupEvents(groupId));
+        console.log(eventResponse);
+        if(Array.isArray(eventResponse)) {
+            setGroupEvents(eventResponse);
+            setUpcomingEvents(() => {
+                return eventResponse?.filter( event => {
+                    const eDate = new Date(event?.startDate);
+                    const now = new Date();
+                    return (eDate > now);
+                });
+            });
 
-        // if(!groupEvents) return null;
+            setPastEvents(() => {
+                return eventResponse?.filter( event => {
+                    const eDate = new Date(event?.startDate);
+                    const now = new Date();
+                    return (eDate < now) });
+            });
+        }
+    }
 
-        return (
-            <div className='details-ctn'>
-                <Link className='back-to-groups' to="/groups">{back}</Link>
-                <div className='details-s1'>
-                    <div>
-                        <img src={group?.previewImage}/>
-                    </div>
+    useEffect(() => {
+        initialLoad();
+    }, []);
+
+    return (
+        <div className='details-ctn'>
+            <Link className='back-to-groups' to="/groups">{back}</Link>
+            <div className='details-s1'>
+                <div className="group-img-ctn">
+                    <img src={group?.previewImage}/>
+                </div>
+                <div className='about-group'>
                     <div>
                         <h1>{group?.name}</h1>
                         <p>{group?.city}, {group?.state}</p>
@@ -61,25 +84,29 @@ function GroupDetails() {
                     </div>
                 </div>
 
-                <div className='details-s2'>
-                    <div>
-                        <h2>Organizer</h2>
-                        <h3>{group?.Organizer?.firstName} {group?.Organizer?.lastName}</h3>
-                    </div>
+            </div>
 
-                    <div>
-                        <h2>What we're about</h2>
-                        <p>{group?.about}</p>
-                    </div>
+            <div className='details-s2'>
+                <div>
+                    <h2>Organizer</h2>
+                    <h3>{group?.Organizer?.firstName} {group?.Organizer?.lastName}</h3>
                 </div>
 
-                <div className="details-events-ctn">
-                    <h2>Events</h2>
-                    {groupEvents?.map( event => {
-                        return <EventTile key ={event.id} event={event}/> })}
+                <div>
+                    <h2>What we're about</h2>
+                    <p>{group?.about}</p>
                 </div>
             </div>
-        );
+
+            <div className="details-events-ctn">
+                <h2>Upcoming Events</h2>
+                {upcomingEvents?.map( event => <EventTile key={event?.id} event={event}/>)}
+
+                <h2>Past Events </h2>
+                {pastEvents?.map( event => <EventTile key ={event?.id} event={event}/>)}
+            </div>
+        </div>
+    );
 
 }
 

@@ -53,7 +53,8 @@ export const getGroupEvents = (groupId) => async dispatch => {
         if(response.ok) {
             const data = await response.json();
             const events = data.Events;
-            dispatch(loadGroupEvents(groupId, events))
+            dispatch(loadGroupEvents(groupId, events));
+            return events;
         }
     } catch(e) {
         return e;

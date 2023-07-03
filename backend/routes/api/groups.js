@@ -305,7 +305,8 @@ router.get('/:groupId/events', async (req, res, next) => {
             ],
             attributes: {
                 exclude: ['price', 'capacity', 'description', 'createdAt', 'updatedAt']
-            }
+            },
+            order: [['startDate']]
         });
 
         for(let i = 0; i < events.length; i++){

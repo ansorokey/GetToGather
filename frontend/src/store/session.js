@@ -16,10 +16,10 @@ export const signin = (credentials) => async dispatch => {
             body: JSON.stringify(credentials)
         });
 
-        const res = await response.json();
 
         if(response.ok){
-            dispatch(setUser(res));
+            const res = await response.json();
+            dispatch(setUser(res.user));
         }
     } catch (e) {
         const err = await e.json();
@@ -31,9 +31,11 @@ export const signin = (credentials) => async dispatch => {
 // restoring logged in user via cookies
 export const restoreUserThunk = () => async dispatch => {
     const response = await csrfFetch('/api/session');
-    const data = await response.json();
 
-    if(response.ok) dispatch(setUser(data));
+    if(response.ok) {
+        const data = await response.json();
+        dispatch(setUser(data.user));
+    }
     return response;
 }
 
@@ -55,13 +57,6 @@ export const logout = () => async dispatch => {
 }
 
 // sign up user
-export const ADD_USER = '/store/session/ADD_USER';
-export function addUser(user) {
-    return {
-        type: ADD_USER,
-        user
-    }
-}
 export const signup = (newUser) => async dispatch => {
     try {
         const response = await csrfFetch('/api/users', {
@@ -71,7 +66,7 @@ export const signup = (newUser) => async dispatch => {
 
         if(response.ok){
             const data = await response.json();
-            dispatch(addUser(data));
+            dispatch(setUser(data.user));
         }
     } catch (e) {
         // when returned, will not need to be parsed
@@ -85,13 +80,10 @@ function sessionReducer(state = { user: null }, action) {
 
     switch (action.type) {
         case SET_USER:
-            newState = action.user;
-            return newState;
-        case ADD_USER:
-            newState = { user: {...action.newUser}}
+            newState.user = action.user;
             return newState;
         case REMOVE_USER:
-            newState = { user: null };
+            newState.user = null;
             return newState;
         default:
             return {...state};

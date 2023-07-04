@@ -58,7 +58,7 @@ function SignUpFormPage() {
             setErrors(response.errors);
             return;
         } else {
-            await dispatch(signin({email, password}));
+            await dispatch(signin({ credential: email, password}));
             reset();
             closeModal();
         }

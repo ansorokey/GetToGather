@@ -27,7 +27,10 @@ function Modal() {
                 setModal(<GroupDetails/>);
                 break;
             case 'createGroup':
-                setModal(<CreateGroupForm/>);
+                setModal(<CreateGroupForm options={{type: 'create'}}/>);
+                break;
+            case 'updateGroup':
+                setModal(<CreateGroupForm options={modalOptions}/>);
                 break;
             case 'deleteGroup':
                 setModal(<DeleteGroup group={modalOptions}/>);

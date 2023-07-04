@@ -639,15 +639,11 @@ router.get('/:groupId', async (req, res, next) => {
 // #Edit a Group
 router.put('/:groupId', requireAuth, async (req, res, next) => {
     const { groupId } = req.params;
-    const { name, about, type, private, city, state } = req.body;
+    const { name, about, type, private, city, state, previewImage } = req.body;
 
     let group;
     try {
-        group = await Group.scope(null).findByPk(groupId, {
-            attributes: {
-                exclude: ['previewImage']
-            }
-        });
+        group = await Group.scope(null).findByPk(groupId);
         if(!group){
             res.status(404);
             return res.json({ message: 'Group couldn\'t be found'});
@@ -668,6 +664,7 @@ router.put('/:groupId', requireAuth, async (req, res, next) => {
         if(private) group.private = private;
         if(city) group.city = city;
         if(state) group.state = state;
+        if(previewImage) group.previewImage = previewImage;
 
         await group.save();
 

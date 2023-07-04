@@ -25,7 +25,7 @@ function GroupDetails() {
     const ownerButtons = (
         <>
             <button onClick={() => openModal('createEvent', group)}>Create Event</button>
-            <button>Update</button>
+            <button onClick={() => openModal('updateGroup', {type: 'update', group})}>Update</button>
             <button onClick={() => openModal('deleteGroup', group)}>Delete</button>
         </>
     );
@@ -39,7 +39,6 @@ function GroupDetails() {
     async function initialLoad(){
         dispatch(getGroupDetails(groupId));
         const eventResponse = await dispatch(getGroupEvents(groupId));
-        console.log(eventResponse);
         if(Array.isArray(eventResponse)) {
             setGroupEvents(eventResponse);
             setUpcomingEvents(() => {

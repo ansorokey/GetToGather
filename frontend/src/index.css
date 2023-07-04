@@ -1,6 +1,6 @@
 * {
     font-family: 'Ubuntu', sans-serif;
-    color: whitesmoke;
+    /* color: whitesmoke; */
 }
 
 html, body {
@@ -17,3 +17,7 @@ html, body {
 a {
     text-decoration: none;
 }
+
+/* button, input, textarea, option {
+    color: black;
+} */

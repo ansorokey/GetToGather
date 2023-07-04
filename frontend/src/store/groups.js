@@ -94,6 +94,29 @@ export const deleteGroupThunk = (group) => async dispatch => {
         return err;
     }
 }
+export const UPDATE_GROUP = 'store/groups/UPDATE_GROUP';
+export function updateGroup(group) {
+    return {
+        type: UPDATE_GROUP,
+        group
+    }
+}
+export const updateGroupThunk = (groupData, groupId) => async dispatch => {
+    try {
+        const response = await csrfFetch(`/api/groups/${groupId}`, {
+            method: 'PUT',
+            body: JSON.stringify(groupData)
+        });
+
+        if(response.ok){
+            const data = await response.json();
+            dispatch(addGroup(data));
+            return data;
+        }
+    } catch(e) {
+        return e;
+    }
+}
 
 function groupsReducer(state = {}, action) {
     let newState = {};

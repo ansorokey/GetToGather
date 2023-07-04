@@ -1,11 +1,11 @@
 import './CreateGroupForm.css';
-import {useState} from 'react';
-import { createGroupThunk, getGroupDetails } from '../../store/groups';
+import {useEffect, useState} from 'react';
+import { createGroupThunk, getGroupDetails, updateGroupThunk } from '../../store/groups';
 import { useDispatch } from 'react-redux';
 import { useModalContext } from '../../Context/ModalContext';
 import {useHistory} from 'react-router-dom';
 
-function CreateGroupForm() {
+function CreateGroupForm({options}) {
     const [ validations, setValidations ] = useState({});
     const [ city, setCity ] = useState('');
     const [ state, setState ] = useState('');
@@ -18,6 +18,19 @@ function CreateGroupForm() {
     const dispatch = useDispatch();
     const { closeModal } = useModalContext();
     const history = useHistory();
+
+    useEffect(() => {
+        if(options?.type === 'update'){
+            const {group} = options;
+            setCity(group.city);
+            setState(group.state);
+            setName(group.name);
+            setAbout(group.about);
+            setMeetType(group.type);
+            setIsPrivate(group.private);
+            setImgUrl(group.previewImage);
+        }
+    }, [options])
 
     function removeErr(key){
         setValidations(prevValue => {
@@ -53,7 +66,16 @@ function CreateGroupForm() {
             imgUrl
         };
 
-        const response = await dispatch(createGroupThunk(payload));
+        let response;
+        if(options.type === 'create') {
+            response = await dispatch(createGroupThunk(payload));
+        } else {
+            console.log('payload', payload);
+            console.log('groupId', options.group.id);
+            response = await dispatch(updateGroupThunk(payload, options.group.id));
+            console.log('response', response);
+        }
+
         if(response && response.errors){
             setValidations(response.errors);
         } else {
@@ -68,15 +90,24 @@ function CreateGroupForm() {
         <div className='create-group-ctn'>
             <form className='form' onSubmit={handleSubmit}>
                 <div className='sec'>
-                    <h3>Become an Organizer</h3>
-                    <h2>We'll walk you throught a few steps to build your local community</h2>
+                    {options.type === 'update' ?
+                        <>
+                            <h3>update</h3>
+                            <h2>We'll walk you throught a few steps to update your group</h2>
+                        </>
+                        :
+                        <>
+                            <h3>Become an Organizer</h3>
+                            <h2>We'll walk you throught a few steps to build your local community</h2>
+                        </>
+                        }
                 </div>
 
                 <hr className='line-break'/>
 
                 <div className='sec'>
                     <h2>First, set your group's location</h2>
-                    <p>GetToGather groups meet locally, in personm and online. We'll connec tyou with people in your area, and more can join you online.</p>
+                    <p>GetToGather groups meet locally, in person and online. We'll connect you with people in your area, and more can join you online.</p>
                     <input
                         className='input'
                         type='text'
@@ -172,7 +203,7 @@ Feel free to get creative! You can edit this later if you change your mind.</p>
 
                 <hr className='line-break'/>
 
-                <button>Create Group</button>
+                <button>{ options.type === 'create' ? 'Create Group' : 'Update Group'}</button>
             </form>
         </div>
     );

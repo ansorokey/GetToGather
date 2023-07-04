@@ -1,10 +1,11 @@
 import { logout } from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useState, useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
+import { NavLink, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useModalContext } from "../../Context/ModalContext";
 
 function ProfileButton({ user }) {
+    const history = useHistory();
     const {setModalType, openModal} = useModalContext();
     const [showMenu, setShowMenu] = useState(false);
     const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function ProfileButton({ user }) {
     function handleLogout(e) {
         e.preventDefault();
         dispatch(logout());
+        history.push('/');
     }
 
     const menu = (

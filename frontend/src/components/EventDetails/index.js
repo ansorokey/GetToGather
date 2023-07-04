@@ -4,8 +4,10 @@ import { useParams, Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect, useState } from 'react';
 import { getEventDetailsThunk } from '../../store/events';
 import { getGroupDetails } from '../../store/groups';
+import { useModalContext } from '../../Context/ModalContext';
 
 function EventDetails() {
+    const { openModal } = useModalContext();
     const curUser = useSelector(state => state.session.user)
     const {eventId} = useParams();
     const dispatch = useDispatch();
@@ -74,7 +76,7 @@ function EventDetails() {
                             <i className="fa-solid fa-location-arrow fa-deet"></i>
                             <div>{event?.type}</div>
                         </div>
-                        {+curUser?.id === +event?.Group?.organizerId ? <button className='del-event'>Delete</button> : null}
+                        {+curUser?.id === +event?.Group?.organizerId ? <button className='del-event' onClick={() => openModal('deleteEvent', event)}>Delete</button> : null}
                     </div>
                 </div>
             </div>

@@ -102,6 +102,27 @@ export const deleteEventsThunk = (group) => async dispatch => {
     dispatch(deleteEvents(group.id));
 }
 
+export const REMOVE_SINGLE_EVENT = 'store/events/REMOVE_SINGLE_EVENT';
+export function removeSingleEvent(eventId) {
+    return {
+        type: REMOVE_SINGLE_EVENT,
+        eventId
+    }
+}
+export const removeSingleEventThunk = (eventId) => async dispatch => {
+    try {
+        const response = await csrfFetch(`/api/events/${eventId}`, {
+            method: 'DELETE'
+        });
+
+        if(response.ok) {
+            dispatch(removeSingleEvent(eventId));
+        }
+    } catch (e) {
+        return e;
+    }
+}
+
 function eventsReducer(state = {}, action) {
     let newState = {};
 
@@ -109,7 +130,7 @@ function eventsReducer(state = {}, action) {
         case GET_EVENTS:
             newState = {...state};
             action.events.forEach(e => {
-                newState[e.id] = Object.assign({...newState[e.id]}, {...e})});
+                newState[e.id] = Object.assign({...e}, {...newState[e.id]})});
             return newState;
 
         case GET_EVENT_DETAILS:
@@ -130,6 +151,12 @@ function eventsReducer(state = {}, action) {
         case DELETE_EVENTS:
             for(let key in state){
                 if(+state[key].groupId !== +action.groupId) newState[key] = state[key];
+            }
+            return newState;
+
+        case REMOVE_SINGLE_EVENT:
+            for(let key in state){
+                if(+state[key].id !== +action.eventId) newState[key] = state[key];
             }
             return newState;
 

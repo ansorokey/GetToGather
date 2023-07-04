@@ -1,27 +1,25 @@
-import './DeleteGroup.css';
 import { useModalContext } from '../../Context/ModalContext';
-import { useDispatch } from 'react-redux';
-import {deleteGroupThunk} from '../../store/groups';
-import {deleteEventsThunk} from '../../store/events';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { removeSingleEventThunk } from '../../store/events';
+import './DeleteEvent.css';
+import { useDispatch } from 'react-redux';
 
-function DeleteGroup({group}) {
-    const history = useHistory();
+function DeleteEvent({event}) {
     const dispatch = useDispatch();
-    const {closeModal} = useModalContext();
+    const history = useHistory();
+    const { closeModal } = useModalContext();
 
     async function handleDelete() {
-        await dispatch(deleteGroupThunk(group));
-        await dispatch(deleteEventsThunk(group));
-        history.push('/groups');
+        const response = await dispatch(removeSingleEventThunk(+event.id));
+        history.push(`/groups/${event.groupId}`);
         closeModal();
     }
 
     return (
         <div className='del-group-ctn'>
                 <div>Confirm Delete</div>
-                <div>Are you sure you want to delete this group?</div>
-                <div>{group.name}</div>
+                <div>Are you sure you want to delete this event?</div>
+                <div>{event.name}</div>
                 <button
                     className='dlt-yes'
                     onClick={handleDelete}
@@ -35,4 +33,4 @@ function DeleteGroup({group}) {
     );
 }
 
-export default DeleteGroup;
+export default DeleteEvent;

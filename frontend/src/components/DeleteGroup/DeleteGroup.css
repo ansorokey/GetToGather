@@ -1,0 +1,33 @@
+.del-group-ctn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    padding: 1em;
+
+    border-radius: 1em;
+    background-color: #969090;
+}
+
+.dlt-yes, .dlt-no {
+    width: 75%;
+    height: 3em;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.dlt-yes {
+    background-color: #EBB45B;
+}
+
+.dlt-no {
+    background-color: #2DEB75;
+}
+
+.dlt-yes:hover {
+    background-color: #B70404;
+}
+
+.dlt-no:hover {
+    background-color: #2B7A0B;
+}

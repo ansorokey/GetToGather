@@ -6,7 +6,7 @@ import { getEventDetailsThunk } from '../../store/events';
 import { getGroupDetails } from '../../store/groups';
 
 function EventDetails() {
-    const back = '< Back To Events';
+    const curUser = useSelector(state => state.session.user)
     const {eventId} = useParams();
     const dispatch = useDispatch();
     const eventState = useSelector(state => state.events);
@@ -24,6 +24,8 @@ function EventDetails() {
     useEffect(() => {
         loadStuff();
     }, []);
+
+    const back = '< Back To Events';
 
     if(!group || !event) return <h1>Loading...</h1>
 
@@ -72,6 +74,7 @@ function EventDetails() {
                             <i className="fa-solid fa-location-arrow fa-deet"></i>
                             <div>{event?.type}</div>
                         </div>
+                        {+curUser?.id === +event?.Group?.organizerId ? <button className='del-event'>Delete</button> : null}
                     </div>
                 </div>
             </div>

@@ -82,3 +82,7 @@
 .et {
     width: 3em;
 }
+
+.del-event {
+    color: black;
+}

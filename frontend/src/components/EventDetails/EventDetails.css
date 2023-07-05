@@ -85,4 +85,10 @@
 
 .del-event {
     color: black;
+    /* width: 25%; */
+}
+
+.event-managament {
+    display: flex;
+    justify-content: center;
 }

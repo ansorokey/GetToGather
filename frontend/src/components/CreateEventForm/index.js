@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useModalContext } from '../../Context/ModalContext';
 
-function CreateEventForm ({group}) {
+function CreateEventForm ({group, event, formType}) {
     const dispatch = useDispatch();
     const history = useHistory();
     const {closeModal} = useModalContext();
@@ -67,6 +67,16 @@ function CreateEventForm ({group}) {
             return newVal;
         });
     }
+
+    useEffect(() => {
+        if(formType === 'update'){
+            setName(event.name);
+            setType(event.type);
+            setCapacity(event.capacity);
+            setPrice(event.price);
+            setStartDate(new Date(event.startDate).getMonth().toString());
+        }
+    }, []);
 
     return (
         <div className='create-event-ctn'>

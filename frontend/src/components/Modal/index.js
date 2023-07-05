@@ -39,6 +39,9 @@ function Modal() {
             case 'createEvent':
                 setModal(<CreateEventForm group={modalOptions}/>);
                 break;
+            case 'updateEvent':
+                setModal(<CreateEventForm group={modalOptions.group} event={modalOptions.event} formType={modalOptions.type}/>);
+                break;
             case 'deleteEvent':
                 setModal(<DeleteEvent event={modalOptions}/>);
                 break;

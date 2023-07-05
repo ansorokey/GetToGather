@@ -84,7 +84,6 @@ function LoginFormPage() {
 
                 <div className="login-btns">
                     <button className="login-button" disabled={(!credential || !password)}>Login</button>
-                    <button className="login-button">Sign Up</button>
                 </div>
             </form>
         </div>

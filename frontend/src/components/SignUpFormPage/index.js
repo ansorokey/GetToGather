@@ -2,7 +2,7 @@ import './SignUpFormPage.css';
 
 import {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect, useLocation } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { signup } from '../../store/session';
 import { useModalContext } from '../../Context/ModalContext';
 import { signin } from '../../store/session';
@@ -21,7 +21,6 @@ function SignUpFormPage() {
     const [errors, setErrors] = useState({});
 
     const { closeModal } = useModalContext();
-    const location = useLocation();
 
     function reset() {
         setConfirmPassword('');
@@ -50,9 +49,6 @@ function SignUpFormPage() {
             password
         }
 
-        // if(Object.values(errors).length) return
-
-        // only an error returns, does not need to be parsed
         const response = await dispatch(signup(userInfo));
         if(response && response.errors){
             setErrors(response.errors);
@@ -80,7 +76,6 @@ function SignUpFormPage() {
                         value={firstName}
                         type="text"
                         onChange={(e) => setFirstName(e.target.value)}
-                        required
                         placeholder='   First Name'
                     />
                     {errors.firstName && <span>{errors.firstName}</span>}
@@ -92,7 +87,6 @@ function SignUpFormPage() {
                         value={lastName}
                         type="text"
                         onChange={(e) => setLastName(e.target.value)}
-                        required
                         placeholder='   Last Name'
                     />
                     {errors.lastName && <span>{errors.lastName}</span>}
@@ -104,7 +98,6 @@ function SignUpFormPage() {
                         value={email}
                         type="email"
                         onChange={(e) => setEmail(e.target.value)}
-                        required
                         placeholder='   Email...'
                     />
                     {errors.email && <span>{errors.email}</span>}
@@ -116,7 +109,6 @@ function SignUpFormPage() {
                         value={username}
                         type="text"
                         onChange={(e) => setUsername(e.target.value)}
-                        required
                         placeholder='   Username...'
                     />
                     {errors.username && <span>{errors.username}</span>}
@@ -128,7 +120,6 @@ function SignUpFormPage() {
                         value={password}
                         type={showPassword ? 'text' : 'password'}
                         onChange={(e) => setPassword(e.target.value)}
-                        required
                         placeholder='   Password...'
                     />
                     <span className='show-pass-btn' onClick={() => setShowPassword(!showPassword)}>👁️‍🗨️</span>
@@ -141,14 +132,15 @@ function SignUpFormPage() {
                         value={confirmPassword}
                         type={showPassword ? 'text' : 'password'}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
                         placeholder='   Confirm Password...'
                     />
                     {errors.password && <span>{errors.password}</span>}
                 </div>
 
 
-                    <button className='submit-signup'>Sign Up</button>
+                    <button className='submit-signup'
+                            disabled={!(firstName && lastName && email && username.length >= 4 && password.length >= 6 && confirmPassword === password)}
+                    >Sign Up</button>
 
             </form>
         </div>

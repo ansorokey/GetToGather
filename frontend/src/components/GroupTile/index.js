@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import './GroupTile.css';
 
-function GroupTile({group}) {
+function GroupTile({group, buttons = false}) {
 
     return (
         <>

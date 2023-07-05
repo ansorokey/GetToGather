@@ -118,6 +118,27 @@ export const updateGroupThunk = (groupData, groupId) => async dispatch => {
     }
 }
 
+export const GET_MY_GROUPS = 'store/groups/GET_MY_GROUPS';
+export function getMyGroups(groups) {
+    return {
+        type: GET_MY_GROUPS,
+        groups
+    }
+}
+export const getMyGroupsThunk = () => async dispatch => {
+    try {
+        const response = await csrfFetch('/api/users/current/groups');
+
+        if(response.ok){
+            const data = await response.json();
+            dispatch(loadGroups(data.Groups));
+            return data.Groups;
+        }
+    } catch (e) {
+        return e;
+    }
+}
+
 function groupsReducer(state = {}, action) {
     let newState = {};
 

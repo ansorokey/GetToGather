@@ -1,7 +1,7 @@
 import { logout } from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useState, useEffect, useRef } from "react";
-import { NavLink, useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useModalContext } from "../../Context/ModalContext";
 
 function ProfileButton({ user }) {
@@ -42,6 +42,7 @@ function ProfileButton({ user }) {
         <div className='menu' ref={ulRef}>
                 <div>Hello, {user?.firstName}</div>
                 <div>{user?.email}</div>
+                <Link to="/groups/current">Your Groups</Link>
             <button onClick={handleLogout}>
                 Log Out
             </button>

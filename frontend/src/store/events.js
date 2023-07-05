@@ -123,6 +123,30 @@ export const removeSingleEventThunk = (eventId) => async dispatch => {
     }
 }
 
+export const UPDATE_EVENT = 'store/events/UPDATE_EVENT';
+export function updateEvent(event) {
+    return {
+        type: UPDATE_EVENT,
+        event
+    }
+}
+export const updateEventThunk = (eventData, eventId) => async dispatch => {
+    try {
+        const response = await csrfFetch(`/api/events/${eventId}`, {
+            method: 'PUT',
+            body: JSON.stringify(eventData)
+        });
+
+        if(response.ok){
+            const data = await response.json();
+            dispatch(updateEvent(data));
+            return data;
+        }
+    } catch(e) {
+        return e;
+    }
+}
+
 function eventsReducer(state = {}, action) {
     let newState = {};
 
@@ -158,6 +182,11 @@ function eventsReducer(state = {}, action) {
             for(let key in state){
                 if(+state[key].id !== +action.eventId) newState[key] = state[key];
             }
+            return newState;
+
+        case UPDATE_EVENT:
+            newState = {...state};
+            newState[action.event.id] = Object.assign({...newState[action.event.id]}, {...action.event})
             return newState;
 
         default:

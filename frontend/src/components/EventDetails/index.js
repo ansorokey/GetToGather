@@ -76,7 +76,7 @@ function EventDetails() {
                             <i className="fa-solid fa-location-arrow fa-deet"></i>
                             <div>{event?.type}</div>
                         </div>
-                        <div className='event-management'>
+                        <div className='event-btns'>
                             {+curUser?.id === +event?.Group?.organizerId ? <button className='del-event' onClick={() => openModal('updateEvent', {type: 'update', group, event})}>Update</button> : null}
                             {+curUser?.id === +event?.Group?.organizerId ? <button className='del-event' onClick={() => openModal('deleteEvent', event)}>Delete</button> : null}
                         </div>

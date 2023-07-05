@@ -1,6 +1,6 @@
 import './styles.css';
 import { useEffect, useState } from 'react';
-import { createEventThunk } from '../../store/events';
+import { createEventThunk, updateEventThunk } from '../../store/events';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useModalContext } from '../../Context/ModalContext';
@@ -49,7 +49,13 @@ function CreateEventForm ({group, event, formType}) {
             imgUrl
         };
 
-        const res = await dispatch(createEventThunk(payload));
+        let res;
+        if(formType === 'update'){
+            res = await dispatch(updateEventThunk(payload, event.id));
+        } else {
+            res = await dispatch(createEventThunk(payload));
+        }
+
         if(res && res.errors){
             setValErrs(res.errors);
             return;
@@ -74,7 +80,10 @@ function CreateEventForm ({group, event, formType}) {
             setType(event.type);
             setCapacity(event.capacity);
             setPrice(event.price);
-            setStartDate(new Date(event.startDate).getMonth().toString());
+            setStartDate(event.startDate.slice(0,19));
+            setEndDate(event.endDate.slice(0,19));
+            setDescription(event.description);
+            if(event.EventImages[0]?.url) setImgUrl(event.EventImages[0]?.url);
         }
     }, []);
 
@@ -83,7 +92,7 @@ function CreateEventForm ({group, event, formType}) {
 
             <form onSubmit={handleSubmit}>
                 <div className='sec'>
-                    <div>Create an event for {group.name}</div>
+                    {formType === 'update' ? <div>Update your event</div> : <div>Create an event for {group.name}</div>}
                     <div>What is the name of your event?</div>
                     <input
                         type='text'
@@ -163,7 +172,7 @@ function CreateEventForm ({group, event, formType}) {
                     />
                     {valErrs.description && <span className='err'>{valErrs.description}</span>}
                 </div>
-                <button>Create Event</button>
+                <button>{ formType === 'update' ? 'Update Event' : 'Create Event'}</button>
             </form>
         </div>
     );

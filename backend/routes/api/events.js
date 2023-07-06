@@ -417,6 +417,28 @@ router.delete('/:eventId/attendance', requireAuth, async (req, res, next) => {
     }
 });
 
+router.get('/current', async (req, res, next) => {
+    const {user} = req;
+    const {id} = user;
+    try {
+        const userEvents = await Event.findAll({
+            include: [{
+                association: 'Group',
+                attributes: ['organizerId']
+            },
+            {
+                association: 'Attendance'
+            }
+        ]
+
+        });
+
+        return res.json(userEvents);
+    } catch (e) {
+        next(e);
+    }
+})
+
 // #Get details of an Event specified by its id
 router.get('/:eventId', async (req, res, next) => {
     const { eventId } = req.params;

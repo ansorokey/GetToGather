@@ -43,6 +43,7 @@ function ProfileButton({ user }) {
                 <div>Hello, {user?.firstName}</div>
                 <div>{user?.email}</div>
                 <Link to="/groups/current">Your Groups</Link>
+                <Link to="/events/current">Your Events</Link>
             <button onClick={handleLogout}>
                 Log Out
             </button>

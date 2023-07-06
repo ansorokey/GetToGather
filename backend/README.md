@@ -1021,6 +1021,9 @@ Returns the details of an event specified by its id.
     }
     ```
 
+### CUSTOM ROUTE Get all events organized by or attended by the current user
+
+
 ### Create an Event for a Group specified by its id
 
 Creates and returns a new event for a group specified by its id

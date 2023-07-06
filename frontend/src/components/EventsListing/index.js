@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getEventsThunk } from '../../store/events';
 import './EventsListing.css';
 import EventDetails from '../EventDetails';
+import MyEvents from './MyEvents';
 
 function EventsListing() {
     const dispatch = useDispatch();
@@ -26,6 +27,10 @@ function EventsListing() {
                             return <EventTile key={e.id} event={e}/>
                         })}
                     </div>
+                </Route>
+
+                <Route exact path="/events/current">
+                        <MyEvents/>
                 </Route>
 
                 <Route exact path="/events/:eventId">

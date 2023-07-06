@@ -147,6 +147,26 @@ export const updateEventThunk = (eventData, eventId) => async dispatch => {
     }
 }
 
+export const GET_MY_EVENTS = 'store/events/GET_MY_EVENTS';
+export function getMyEvents(events) {
+    return {
+        type: GET_MY_EVENTS,
+        events
+    }
+}
+export const getMyEventsThunk = (userId) => async dispatch => {
+    try {
+        const response = await csrfFetch(`/api/events/current`);
+
+        if(response.ok){
+            const data = await response.json();
+            console.log(data);
+        }
+    } catch (e) {
+        return e;
+    }
+}
+
 function eventsReducer(state = {}, action) {
     let newState = {};
 

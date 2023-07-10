@@ -418,22 +418,34 @@ router.delete('/:eventId/attendance', requireAuth, async (req, res, next) => {
 });
 
 router.get('/current', async (req, res, next) => {
-    const {user} = req;
-    const {id} = user;
-    try {
-        const userEvents = await Event.findAll({
-            include: [{
-                association: 'Group',
-                attributes: ['organizerId']
-            },
-            {
-                association: 'Attendance'
-            }
-        ]
+    const userId = req.user.id;
 
+    try {
+        const ownedEvents = await Event.findAll({
+            include: {
+                association: 'Group',
+                attributes: ['organizerId'],
+                where: {
+                    organizerId: userId
+                }
+            }
         });
 
-        return res.json(userEvents);
+        const joinedEvents = await Event.findAll({
+            include: [{
+                association: 'Attendance',
+                attributes: ['id'],
+                where: {
+                    id: userId
+                }
+            },
+            {
+                association: 'Group',
+            }
+        ]
+        });
+
+        return res.json({events: [...ownedEvents, ...joinedEvents]});
     } catch (e) {
         next(e);
     }

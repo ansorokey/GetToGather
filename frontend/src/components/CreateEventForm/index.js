@@ -38,7 +38,8 @@ function CreateEventForm ({group, event, formType}) {
         }
 
         const payload = {
-            groupId: group.id,
+            //a ternary operator in an object does not need brackets
+            groupId: formType === 'update' ? event.groupId : group.id,
             name,
             type,
             capacity,

@@ -26,7 +26,7 @@ function LandingPage() {
 
             <div id='section-2'>
                 <div className='s2-header-text'>
-                    <h2>How GetToGather Works</h2>
+                    <h2>How TeamUp Works</h2>
                     <p className="p-text">Become part of a crew and find something to do online or in-person. It's free to join!</p>
                 </div>
             </div>
@@ -63,7 +63,7 @@ function LandingPage() {
                         onClick={() => openModal('signup')}
                         className='s4-join-btn'
                     >
-                        Join GetToGather
+                        Join TeamUp
                     </button>
                 </a>
             </div>}

@@ -422,13 +422,18 @@ router.get('/current', async (req, res, next) => {
 
     try {
         const ownedEvents = await Event.findAll({
-            include: {
+            include: [
+                {
                 association: 'Group',
-                attributes: ['organizerId'],
                 where: {
                     organizerId: userId
                 }
+            },
+            {
+                association: 'Attendance',
+                attributes: ['id']
             }
+            ]
         });
 
         const joinedEvents = await Event.findAll({

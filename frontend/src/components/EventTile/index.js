@@ -21,10 +21,10 @@ function EventTile({event}) {
                         </div>
                         <div>
                             <h2>{event.name}</h2>
-                            <div>Hoested by {Group.name}</div>
+                            <div>Hosted by {Group.name}</div>
                         </div>
                         <h3>{event.Venue}</h3>
-                        <div> {numAttending} Attending</div>
+                        <div> {numAttending >= 0 ? numAttending : event?.Attendance?.length} Attending</div>
                     </div>
                 </div>
             </Link>

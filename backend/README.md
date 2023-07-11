@@ -1,4 +1,4 @@
-# GetToGather
+# TeamUp
 
 ## Link to render deployment
 [Link to deployment](https://get-to-gather.onrender.com/)

@@ -46,7 +46,7 @@ function CreateEventForm ({group, event, formType}) {
             startDate,
             endDate,
             description,
-            imgUrl
+            previewImage: imgUrl
         };
 
         let res;
@@ -83,7 +83,7 @@ function CreateEventForm ({group, event, formType}) {
             setStartDate(event.startDate.slice(0,19));
             setEndDate(event.endDate.slice(0,19));
             setDescription(event.description);
-            if(event.EventImages[0]?.url) setImgUrl(event.EventImages[0]?.url);
+            setImgUrl(event?.previewImage || '');
         }
     }, []);
 

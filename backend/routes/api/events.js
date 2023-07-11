@@ -497,7 +497,7 @@ router.get('/:eventId', async (req, res, next) => {
 // #Edit an Event specified by its id
 router.put('/:eventId', validateEventEdit, async (req, res, next) => {
     const { eventId } = req.params;
-    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
+    const { venueId, name, type, capacity, price, description, startDate, endDate, previewImage } = req.body;
     let hasPermission = false;
 
     try {
@@ -540,6 +540,7 @@ router.put('/:eventId', validateEventEdit, async (req, res, next) => {
             if(description) event.description = description;
             if(startDate) event.startDate = startDate;
             if(endDate) event.endDate = endDate;
+            if(previewImage) event.previewImage = previewImage;
             await event.save();
             res.json(event);
         } else {

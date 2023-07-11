@@ -63,7 +63,7 @@ function CreateGroupForm({options}) {
             about,
             type: meetType,
             private: isPrivate,
-            imgUrl
+            previewImage: imgUrl
         };
 
         let response;

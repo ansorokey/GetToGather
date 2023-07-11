@@ -10,8 +10,7 @@ Eric
 Circuit`;
 
 const lastNames =
-`
-Collins
+`Collins
 Scotts
 Kendall
 Walker

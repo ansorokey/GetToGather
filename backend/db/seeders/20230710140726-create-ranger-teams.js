@@ -1,32 +1,26 @@
 'use strict';
+const { User } = require('../models');
+const { Op } = require('sequelize');
+
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+options.tableName = 'Groups';
 
 const data = [
   {
     name: 'Power Rangers Dino Thunder',
-    about: `Power Rangers' roar!
-
-    There's a light in the distance
+    about: `Power Rangers' roar! There's a light in the distance
     See them coming closer!
     With the force of ages
     Centuries gone by!
-
     Protectors of the right,
     Defenders sworn to fight!
-
     Dino Rangers' roar!
     Power Rangers' score!
     Save us from these evil forces, win!
-    (Power Rangers Dino Thunder!)
-    Victory is ours forever more!
-
-    Protectors of the right
-    Defenders sworn to fight!
-    (Power Rangers Dino Thunder!)
-
-    Dino Rangers' roar!
-    Power Rangers' score!
-    Save us from these evil forces, win!
-    (Power Rangers Dino Thunder!)`,
+    (Pow`,
     type: 'In person',
     private: true,
     city: 'Reefside',
@@ -37,50 +31,20 @@ const data = [
   {
     name: 'Power Rangers Lightspeed Rescue',
     about: `Power Rangers Lightspeed!
-
     Lightspeed Rescue!
-
-
     The signal is calling,
-
     Our planet is falling;
-
     The danger will test you,
-
     Better make it a Lightspeed Rescue!
-
-
     Rangers, Go! Power Rangers!
-
-
     Power Rangers Lightspeed Rescue!
-
     Power Rangers Lightspeed Rescue!
-
-    Power Rangers Lightspeed Rescue!
-
-    Light, Speed, go!
-
-
-    Power's on its way,
-
-    Rangers save the day!
-
-
-    Power Rangers Lightspeed Rescue!
-
-    Power Rangers Lightspeed Rescue!
-
-    Power Rangers Lightspeed Rescue!
-
-    Power Rangers Lightspeed Rescue!
-
-    Light, Speed, Go!`,
+    Power `,
     type: 'In person',
     private: true,
     city: 'Mariner Bay',
     state: 'California',
-    previewImage: 'https://static.wikia.nocookie.net/powerrangers/images/c/c0/Power_Rangers_Lightspeed_Rescue_logo.png/revision/latest?cb=20201211051348',
+    previewImage: 'https://static.wikia.nocookie.net/powerrangers/images/c/c0/Power_Rangers_Lightspeed_Rescue_logo.png',
     username: 'captainmitchell'
 
   },
@@ -94,31 +58,12 @@ const data = [
     Ninja Storm!
     Let's Go!
     The call is on!
-    Their force is getting strong!
-    They'll have to brave the weather!
-    Ninja Storm! stand together!
-    The storm will grow!
-    Waters flow!
-    Power Ranger Ninjas Go!
-    Power Rangers Ninja Storm is growing (growing)
-    is growing (growing)
-    is GROWING! (GROWING!)
-    Go!
-    Power Rangers Go
-    Ninja Storm!
-    Let's Go!
-    With the speed of the wind!
-    Go!
-    And strength like thunder!
-    Go!
-    Power Rangers Go
-    Ninja Storm!
-    Let's Go!`,
+    Their force is getting `,
     type: 'In person',
     private: true,
     city: 'Blue Bay Harbor',
     state: 'New Jersey',
-    previewImage: 'https://static.wikia.nocookie.net/powerrangers/images/9/9f/Power_Rangers_Ninja_Storm_logo.png/revision/latest?cb=20201211045603',
+    previewImage: 'https://static.wikia.nocookie.net/powerrangers/images/9/9f/Power_Rangers_Ninja_Storm_logo.png',
     username: 'senseiwatanabe'
 
   },
@@ -129,17 +74,8 @@ const data = [
     But there is still one place where we can be safe:
     The domed city of Corinth.
     And the only hope we have left is...
-
-    (sung)
-
     Power Rangers RPM! Get in gear!
-    Power Rangers RPM! We stand together!
-    Power Rangers RPM! Get in gear!
-    Power Rangers RPM! Get in gear!
-
-    Power Rangers RPM! We stand together!
-    Power Rangers RPM! Get in gear!
-    Power Rangers RPM! Get in gear!`,
+    Power Rangers RPM! W`,
     type: 'In person',
     private: true,
     city: 'Corinth',
@@ -150,41 +86,66 @@ const data = [
   },
   {
     name: 'Power Rangers SPD',
-    about: ``,
+    about: `S.P.D. Emergency!
+    Power Rangers S.P.D.
+    Power Rangers to the rescue!
+    (Go Go Go Go)
+    Power Rangers S.P.D.
+    Power Rangers to the rescue!
+    (Go Go Go Go)
+    Heroes on your side,
+    Heroes for all time,
+    Out to save the universe!
+    No matter where you are,
+    If it's near o`,
     type: 'In person',
     private: true,
-    city: '',
-    state: '',
-    previewImage: '',
-
+    city: 'Chicago',
+    state: 'Illinois',
+    previewImage: 'https://static.wikia.nocookie.net/powerrangers/images/f/f0/Power_Rangers_SPD_S13_Logo_2005.png',
+    username: 'anubiscruger'
   },
   {
     name: 'Power Rangers Time Force',
-    about: ``,
+    about: `Time Force!
+    Time Force!
+    Power Rangers!
+    Racing to another time
+    Chrono Morphers are online
+    Timeless wonders
+    Fire and thunder
+    Off to save the world!
+    Go Go Time Force!
+    Time, Time, Time for Power Rangers Time Force!
+    Time, Time, Time for Power Rangers Time Fo`,
     type: 'In person',
     private: true,
-    city: '',
-    state: '',
-    previewImage: '',
+    city: 'Millenium City',
+    state: 'New York',
+    previewImage: 'https://static.wikia.nocookie.net/powerrangers/images/f/f0/Power_Rangers_Time_Force_S9_logo.png',
+    username: 'circuitowl'
 
   },
   {
     name: 'Power Rangers Wild Force',
-    about: ``,
+    about: `(Wild! Wild Force!)
+    (Wild Force Access!)
+    Wild Force Power Rangers!
+    We'll defend what's right forever
+    Wild Force Power Rangers!
+    We'll protect this world together
+    (Wild Force)
+    (Wild Force, Wild Force!)
+    Power Rangers flying higher (Go!)
+    Wild Force running `,
     type: 'In person',
     private: true,
-    city: '',
-    state: '',
-    previewImage: '',
-
+    city: 'Turtle Cove',
+    state: 'California',
+    previewImage: 'https://static.wikia.nocookie.net/powerrangers/images/3/3c/Power_Rangers_Wild_Force_S10_Logo.png',
+    username: 'princessshayla'
   }
 ]
-
-let options = {};
-if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  // define your schema in options object
-}
-options.tableName = 'Groups';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -198,7 +159,24 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   await queryInterface.bulkInsert(options, );
+   for( let i = 0; i < data.length; i++){
+    const pr = data[i];
+    const user = await User.findOne({
+      where: {
+        username: pr.username
+      }
+    });
+
+    await user.createOwnedGroup({
+      name: pr.name,
+      about: pr.about.slice(0, 256),
+      type: pr.type,
+      private: pr.private,
+      city: pr.city,
+      state: pr.state,
+      previewImage: pr.previewImage
+    });
+   }
   },
 
   async down (queryInterface, Sequelize) {
@@ -208,5 +186,11 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    const names = data.map(pr => pr.name);
+    await queryInterface.bulkDelete(options, {
+      name: {
+        [Op.in]: names
+      }
+    });
   }
 };

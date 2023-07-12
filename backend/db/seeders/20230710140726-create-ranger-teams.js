@@ -20,7 +20,7 @@ const data = [
     Dino Rangers' roar!
     Power Rangers' score!
     Save us from these evil forces, win!
-    (Pow`,
+    ...`,
     type: 'In person',
     private: true,
     city: 'Reefside',
@@ -39,7 +39,7 @@ const data = [
     Rangers, Go! Power Rangers!
     Power Rangers Lightspeed Rescue!
     Power Rangers Lightspeed Rescue!
-    Power `,
+    Po...`,
     type: 'In person',
     private: true,
     city: 'Mariner Bay',
@@ -58,7 +58,7 @@ const data = [
     Ninja Storm!
     Let's Go!
     The call is on!
-    Their force is getting `,
+    Their force is gett...`,
     type: 'In person',
     private: true,
     city: 'Blue Bay Harbor',
@@ -75,7 +75,7 @@ const data = [
     The domed city of Corinth.
     And the only hope we have left is...
     Power Rangers RPM! Get in gear!
-    Power Rangers RPM! W`,
+    Power Rangers RP...`,
     type: 'In person',
     private: true,
     city: 'Corinth',
@@ -97,7 +97,7 @@ const data = [
     Heroes for all time,
     Out to save the universe!
     No matter where you are,
-    If it's near o`,
+    If it's ne...`,
     type: 'In person',
     private: true,
     city: 'Chicago',
@@ -117,7 +117,7 @@ const data = [
     Off to save the world!
     Go Go Time Force!
     Time, Time, Time for Power Rangers Time Force!
-    Time, Time, Time for Power Rangers Time Fo`,
+    Time, Time, Time for Power Rangers Tim...`,
     type: 'In person',
     private: true,
     city: 'Millenium City',
@@ -137,7 +137,7 @@ const data = [
     (Wild Force)
     (Wild Force, Wild Force!)
     Power Rangers flying higher (Go!)
-    Wild Force running `,
+    Wild Force run...`,
     type: 'In person',
     private: true,
     city: 'Turtle Cove',

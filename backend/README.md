@@ -1,4 +1,4 @@
-# GetToGather
+# TeamUp
 
 ## Link to render deployment
 [Link to deployment](https://get-to-gather.onrender.com/)
@@ -1020,6 +1020,9 @@ Returns the details of an event specified by its id.
       "message": "Event couldn't be found"
     }
     ```
+
+### CUSTOM ROUTE Get all events organized by or attended by the current user
+
 
 ### Create an Event for a Group specified by its id
 

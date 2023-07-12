@@ -1,0 +1,35 @@
+.events-groups {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 3em;
+    align-items: center;
+    height: fit-content;
+    position: sticky;
+    top: 10vh;
+    background-color: #494646;
+    padding: 1em 0;
+    z-index: 0;
+}
+
+.eg-text {
+    height: fit-content;
+    font-size: 32px;
+    font-weight: 300;
+    color: whitesmoke;
+    padding: 0;
+    margin: 0;
+    font-family: 'Russo One', sans-serif;
+}
+
+.eg-link.active, .eg-link.active > .eg-text {
+    cursor: default;
+    text-decoration: underline;
+    color: #B733D4;
+}
+
+.tile-split {
+    border: 1px solid whitesmoke;
+    width: 90%;
+    margin: 2em 5%;
+}

@@ -1,0 +1,51 @@
+.signup-ctn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25vw;
+    background-color: #969090;
+    border-radius: 3em;
+    padding-bottom: 2em;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    width: 50%;
+}
+
+.signup-input-field {
+    width: 100%;
+    position: relative;
+}
+
+.signup-input-field > input {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 1em;
+    height: 2em;
+}
+
+.show-pass-btn {
+    position: absolute;
+    right: 100px;
+    height: 100%;
+}
+
+.show-pass-btn {
+    position: absolute;
+    right: 5%;
+    cursor: default;
+}
+
+.submit-signup {
+    width: 100%;
+    height: 2em;
+    border-radius: 1em;
+}
+
+.submit-signup:hover {
+    background-color: #EBB45B;
+}

@@ -1,0 +1,65 @@
+.create-group-ctn {
+    width: 80%;
+    height: fit-content;
+    background-color: #969090;
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 2em 5%;
+}
+
+.sec {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 75%;
+}
+
+.input {
+    width: 50%;
+    height: 1em;
+}
+
+.textarea {
+    width: 50%;
+    height: 5em;
+}
+
+.select {
+    display: flex;
+    flex-direction: column;
+}
+
+input, textarea, select {
+    border-radius: 1em;
+    min-height: 2em;
+}
+
+.select > select {
+    width: 20%;
+}
+
+.err {
+    color: #EBB45B;
+    background-color: black;
+    border-bottom: 1px solid #2DEB75;
+    /* width: fit-content; */
+    padding: 5px;
+    border-radius: 1em;
+}
+
+.line-break {
+    border: solid 2px #494646;
+    width: 80%;
+}
+
+.create-update-group-btn {
+    height: 2em;
+    border-radius: 1em;
+}
+
+.create-update-group-btn:hover {
+    background-color: #EBB45B;
+}

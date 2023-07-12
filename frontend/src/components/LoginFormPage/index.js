@@ -2,26 +2,30 @@ import { Redirect } from 'react-router-dom';
 import { signin } from '../../store/session'
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useModalContext } from '../../Context/ModalContext';
 
 import './LoginFormPage.css';
 
 function LoginFormPage() {
     const curUser = useSelector(state => state.session.user);
+    console.log(curUser);
 
     const [errMessage, setErrMessage] = useState('');
-    const [email, setEmail] = useState('');
+    const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [submitted, setSubmitted] = useState(false);
 
     const dispatch = useDispatch();
+    const {closeModal} = useModalContext();
 
     useEffect(() => {
         setSubmitted(false);
-    }, [email, password]);
+        setErrMessage('');
+    }, [credential, password]);
 
     function reset() {
-        setEmail('');
+        setCredential('');
         setPassword('');
     }
 
@@ -29,49 +33,58 @@ function LoginFormPage() {
         e.preventDefault();
         setSubmitted(true);
 
-        const credentials = {email, password};
+        const credentials = {credential, password};
         const res = await dispatch(signin(credentials));
         // a successful login returns nothing
         if(res && res.errors){
             setErrMessage(res.errors.message);
+        } else {
+            closeModal();
+            reset();
         }
+    }
+
+    async function demoLogin() {
+        await dispatch(signin({credential: 'demouser', password: 'password'}));
+        closeModal();
         reset();
+
     }
 
     //if there IS a user logged in, redirect to home
-    if(curUser) return <Redirect to="/" />
+    if(curUser) return <Redirect to="/" />;
 
     return (
         <div className='LogInMod'>
-            <h1 className='text'>Hello from Login {submitted}</h1>
-            <h2 className='text'>Log In</h2>
+            <h2 className='cred'>Log In</h2>
             { errMessage ? <p>{errMessage}</p> : null}
-            <form onSubmit={onSubmit}>
+            <form className='login-form' onSubmit={onSubmit}>
                 <div className='entry'>
                         <input
-                            type="email"
-                            placeholder="Email..."
-                            value={email}
-                            required
-                            onChange={(e) => setEmail(e.target.value)}
+                            type="text"
+                            placeholder="   Email or Username..."
+                            value={credential}
+                            onChange={(e) => setCredential(e.target.value)}
                         />
-                        {/* { submitted && !email ? <p>Email is required</p> : null} */}
                 </div>
 
                 <div className='entry'>
                         <input
                             type={showPassword ? 'text' : 'password'}
-                            placeholder="Password..."
+                            placeholder="   Password..."
                             value={password}
-                            required
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        {/* { submitted ? <p>Password is required</p> : null} */}
-                        <span onClick={() => setShowPassword(!showPassword)}>👁️‍🗨️</span>
+                        <span title="Show password" onClick={() => setShowPassword(!showPassword)}>👁️‍🗨️</span>
                 </div>
 
-                <button className="login-button">Login</button>
-                <button className="login-button">Sign Up</button>
+                <div
+                    className='demo-log'
+                    onClick={demoLogin}>Log in as Demo User</div>
+
+                <div className="login-btns">
+                    <button className="login-button" disabled={(!credential || !password)}>Login</button>
+                </div>
             </form>
         </div>
     );

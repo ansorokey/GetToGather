@@ -1,10 +1,11 @@
 import { logout } from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useState, useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useModalContext } from "../../Context/ModalContext";
 
 function ProfileButton({ user }) {
+    const history = useHistory();
     const {setModalType, openModal} = useModalContext();
     const [showMenu, setShowMenu] = useState(false);
     const dispatch = useDispatch();
@@ -34,45 +35,27 @@ function ProfileButton({ user }) {
     function handleLogout(e) {
         e.preventDefault();
         dispatch(logout());
+        history.push('/');
     }
 
     const menu = (
-        <>
-            <ul ref={ulRef}>
-                <li>{user?.username}</li>
-                <li>{user?.firstName}</li>
-                <li>{user?.lastName}</li>
-                <li>{user?.email}</li>
-            </ul>
-            <button onClick={handleLogout}>
+        <div className='menu' ref={ulRef}>
+                <div className="hello-user">Hello, {user?.firstName}</div>
+                <div>{user?.email}</div>
+                <Link className='user-menu-btn' to="/groups/current">Your Groups</Link>
+                <Link className='user-menu-btn' to="/events/current">Your Events</Link>
+            <button className="logout-btn" onClick={handleLogout}>
                 Log Out
             </button>
-        </>
+        </div>
     );
 
-    // const loggedOutMenu = (
-    //     <ul ref={ulRef}>
-    //         <li>
-    //             <button onClick={() => openModal('login')}>Log In</button>
-    //         </li>
-
-    //         <li>
-    //             <button onClick={() => openModal('signup')}>Sign Up</button>
-    //         </li>
-    //     </ul>
-    // );
-
-    // let menu = user ? loggedInMenu : loggedOutMenu;
-
     return (
-        <>
-            <button
-                onClick={openMenu}
-                className="profile-btn-ctn">
-                <i className="fa-regular fa-user profile-img"></i>
-            </button>
-            { showMenu ? menu : null }
-        </>
+        <div className='profile-ctn' onClick={openMenu}>
+            <i className="fa-regular fa-user fa"></i>
+            { showMenu ? <i className="fa-solid fa-chevron-up fa"></i> : <i className="fa-solid fa-chevron-down fa"></i>}
+            { showMenu && menu }
+        </div>
     );
 }
 

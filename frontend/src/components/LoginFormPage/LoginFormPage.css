@@ -1,37 +1,64 @@
-/* input {
-    border: none;
-    border-radius: 1em;
-
-}
-
-button {
-    box-sizing: border-box;
-    background-color: transparent;
-    border: none;
-    border-radius: 1em;
-}
-
-.text {
-    color: darkgoldenrod;
-}
-
-.entry {
-    box-sizing: border-box;
-    display: flex;
-    width: 25%;
-    height: 3em;
-    border: 1px black solid;
-    padding: 0;
-}
-
 .LogInMod {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    background-color: #671c19;
+    /* gap: 1em; */
+    background-color: #969090;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+.login-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.entry {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.entry > input {
+    border-radius: 1em;
+    border: none;
+    height: 2em;
+}
+
+.entry > span {
+    position: absolute;
+    right: 0.5em;
+    bottom: 0.25em;
+}
+
+.entry > span:hover {
+    cursor: default;
+}
+
+.demo-log:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.login-btns {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
 }
 
 .login-button {
-    background-color: darkgoldenrod;
-    width: 50%;
-} */
+    width: 100%;
+    font-size: 1em;
+    border-radius: 1em;
+    height: 2em;
+}
+
+.login-button:hover {
+    background-color: #EBB45B;
+}

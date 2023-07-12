@@ -1,0 +1,21 @@
+.list-ctn {
+    margin: 0 10vw;
+    padding: 0 0 5vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.group-manage-btns {
+    padding: 0 1em;
+}
+
+.group-manage-btns > button {
+    border-radius: 1em;
+    height: 3em;
+    font-size: 1em;
+    padding: 0 1em;
+}
+
+.group-manage-btns > button:hover {
+    background-color: #EBB45B;
+}

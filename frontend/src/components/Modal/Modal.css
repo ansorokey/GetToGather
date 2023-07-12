@@ -1,14 +1,28 @@
 .modal-background {
     margin: auto;
     height: 100vh;
-    width:auto;
-    background-color: blueviolet;
+    width:100vw;
+    display: flex;
+    position: fixed;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+
+.modal-content {
+    width: 75vw;
+    height: 75vh;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    position: relative;
-    top: 0;
+    border: 5px solid whitesmoke;
+    border-radius: 1em;
+    background-color:rgba(0, 0, 0, 0.75);
+    overflow-y: scroll;
 }
 
 .close-modal {
@@ -16,14 +30,14 @@
     justify-content: center;
     align-items: center;
     background-color: transparent;
+    color: whitesmoke;
     border: none;
 
     width: 2em;
     height: 2em;
     padding: 0;
 
-    position: absolute;
-    top: 1em;
-    right: 1em;
-
+    position: fixed;
+    top: 14vh;
+    right: 16vw;
 }

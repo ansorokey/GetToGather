@@ -1,0 +1,31 @@
+.tile-ctn {
+    border: none;
+    height: fit-content;
+    display: flex;
+    gap: 1em;
+    color: whitesmoke;
+    box-sizing: border-box;
+    overflow-wrap: normal;
+    margin: 0 1em;
+}
+
+.tile-info {
+    height: 100%;
+    width: 100%;
+}
+
+.tile-img-ctn {
+    width: 20vw;
+    height: 13vw;
+}
+
+.members-type {
+    display: flex;
+    gap: 1em;
+}
+
+.group-manage-btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1em;
+}

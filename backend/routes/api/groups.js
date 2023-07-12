@@ -144,6 +144,7 @@ router.delete('/:groupId/images/:imageId', requireAuth, async (req, res, next) =
 // #Add an Image to a Group based on the Group's id
 router.post('/:groupId/images', requireAuth, async (req, res, next) => {
     const { groupId }  = req.params;
+    console.log(req.body);
     let { url, preview } = req.body;
     let hasPermission = false;
 
@@ -304,7 +305,8 @@ router.get('/:groupId/events', async (req, res, next) => {
             ],
             attributes: {
                 exclude: ['price', 'capacity', 'description', 'createdAt', 'updatedAt']
-            }
+            },
+            order: [['startDate']]
         });
 
         for(let i = 0; i < events.length; i++){
@@ -637,15 +639,11 @@ router.get('/:groupId', async (req, res, next) => {
 // #Edit a Group
 router.put('/:groupId', requireAuth, async (req, res, next) => {
     const { groupId } = req.params;
-    const { name, about, type, private, city, state } = req.body;
+    const { name, about, type, private, city, state, previewImage } = req.body;
 
     let group;
     try {
-        group = await Group.scope(null).findByPk(groupId, {
-            attributes: {
-                exclude: ['previewImage']
-            }
-        });
+        group = await Group.scope(null).findByPk(groupId);
         if(!group){
             res.status(404);
             return res.json({ message: 'Group couldn\'t be found'});
@@ -666,6 +664,7 @@ router.put('/:groupId', requireAuth, async (req, res, next) => {
         if(private) group.private = private;
         if(city) group.city = city;
         if(state) group.state = state;
+        if(previewImage) group.previewImage = previewImage;
 
         await group.save();
 

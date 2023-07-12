@@ -54,10 +54,10 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: {
           args: [50, 256],
-          msg: 'About must be 50 characters or more'
+          msg: 'About must be between 50 and 256 characters'
         },
         notEmpty: {
-          msg: 'About must be 50 characters or more'
+          msg: 'About must be between 50 and 256 characters'
         }
       }
     },

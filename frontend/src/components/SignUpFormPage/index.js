@@ -4,6 +4,8 @@ import {useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { signup } from '../../store/session';
+import { useModalContext } from '../../Context/ModalContext';
+import { signin } from '../../store/session';
 
 function SignUpFormPage() {
     const curUser = useSelector(state => state.session.user);
@@ -17,6 +19,8 @@ function SignUpFormPage() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState({});
+
+    const { closeModal } = useModalContext();
 
     function reset() {
         setConfirmPassword('');
@@ -45,15 +49,15 @@ function SignUpFormPage() {
             password
         }
 
-        // if(Object.values(errors).length) return
-
-        // only an error returns, does not need to be parsed
         const response = await dispatch(signup(userInfo));
         if(response && response.errors){
             setErrors(response.errors);
             return;
+        } else {
+            await dispatch(signin({ credential: email, password}));
+            reset();
+            closeModal();
         }
-        reset();
     }
 
     useEffect(() => {
@@ -63,85 +67,81 @@ function SignUpFormPage() {
     if(curUser) return <Redirect to="/"/>;
 
     return (
-        <div>
-            <h1>Hello from sign up</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="first-name-input">First Name</label>
+        <div className='signup-ctn'>
+            <h1>Sign Up</h1>
+            <form className='signup-form' onSubmit={handleSubmit}>
+                <div className='signup-input-field'>
                     <input
                         id="first-name-input"
                         value={firstName}
                         type="text"
                         onChange={(e) => setFirstName(e.target.value)}
-                        required
+                        placeholder='   First Name'
                     />
                     {errors.firstName && <span>{errors.firstName}</span>}
                 </div>
 
-                <div>
-                    <label htmlFor="last-name-input">Last Name</label>
+                <div className='signup-input-field'>
                     <input
                         id="last-name-input"
                         value={lastName}
                         type="text"
                         onChange={(e) => setLastName(e.target.value)}
-                        required
+                        placeholder='   Last Name'
                     />
                     {errors.lastName && <span>{errors.lastName}</span>}
                 </div>
 
-                <div>
-                    <label htmlFor="email-input">Email</label>
+                <div className='signup-input-field'>
                     <input
                         id="email-input"
                         value={email}
                         type="email"
                         onChange={(e) => setEmail(e.target.value)}
-                        required
+                        placeholder='   Email...'
                     />
                     {errors.email && <span>{errors.email}</span>}
                 </div>
 
-                <div>
-                    <label htmlFor="username-input">Username</label>
+                <div className='signup-input-field'>
                     <input
                         id="username-input"
                         value={username}
                         type="text"
                         onChange={(e) => setUsername(e.target.value)}
-                        required
+                        placeholder='   Username...'
                     />
                     {errors.username && <span>{errors.username}</span>}
                 </div>
 
-                <div>
-                    <label htmlFor="password-input">Password</label>
+                <div className='signup-input-field'>
                     <input
                         id="password-input"
                         value={password}
                         type={showPassword ? 'text' : 'password'}
                         onChange={(e) => setPassword(e.target.value)}
-                        required
+                        placeholder='   Password...'
                     />
-                    <span onClick={() => setShowPassword(!showPassword)}>👁️‍🗨️</span>
+                    <span className='show-pass-btn' onClick={() => setShowPassword(!showPassword)}>👁️‍🗨️</span>
                     {errors.password && <span>{errors.password}</span>}
                 </div>
 
-                <div>
-                    <label htmlFor="confirm-password-input">Confirm Password</label>
+                <div className='signup-input-field'>
                     <input
                         id="confirm-password-input"
                         value={confirmPassword}
                         type={showPassword ? 'text' : 'password'}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
+                        placeholder='   Confirm Password...'
                     />
                     {errors.password && <span>{errors.password}</span>}
                 </div>
 
-                <div>
-                    <button>Submit</button>
-                </div>
+
+                    <button className='submit-signup'
+                            disabled={!(firstName && lastName && email && username.length >= 4 && password.length >= 6 && confirmPassword === password)}
+                    >Sign Up</button>
+
             </form>
         </div>
     );

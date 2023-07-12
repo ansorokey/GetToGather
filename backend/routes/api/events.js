@@ -417,6 +417,45 @@ router.delete('/:eventId/attendance', requireAuth, async (req, res, next) => {
     }
 });
 
+router.get('/current', async (req, res, next) => {
+    const userId = req.user.id;
+
+    try {
+        const ownedEvents = await Event.findAll({
+            include: [
+                {
+                association: 'Group',
+                where: {
+                    organizerId: userId
+                }
+            },
+            {
+                association: 'Attendance',
+                attributes: ['id']
+            }
+            ]
+        });
+
+        const joinedEvents = await Event.findAll({
+            include: [{
+                association: 'Attendance',
+                attributes: ['id'],
+                where: {
+                    id: userId
+                }
+            },
+            {
+                association: 'Group',
+            }
+        ]
+        });
+
+        return res.json({events: [...ownedEvents, ...joinedEvents]});
+    } catch (e) {
+        next(e);
+    }
+})
+
 // #Get details of an Event specified by its id
 router.get('/:eventId', async (req, res, next) => {
     const { eventId } = req.params;
@@ -426,7 +465,7 @@ router.get('/:eventId', async (req, res, next) => {
             include: [
                 {
                   association: 'Group',
-                  attributes: ['id', 'name', 'city', 'state', 'private']
+                  attributes: ['id', 'name', 'city', 'state', 'private', 'organizerId'],
                 },
                 {
                   association: 'Venue',
@@ -463,7 +502,7 @@ router.get('/:eventId', async (req, res, next) => {
 // #Edit an Event specified by its id
 router.put('/:eventId', validateEventEdit, async (req, res, next) => {
     const { eventId } = req.params;
-    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
+    const { venueId, name, type, capacity, price, description, startDate, endDate, previewImage } = req.body;
     let hasPermission = false;
 
     try {
@@ -506,6 +545,7 @@ router.put('/:eventId', validateEventEdit, async (req, res, next) => {
             if(description) event.description = description;
             if(startDate) event.startDate = startDate;
             if(endDate) event.endDate = endDate;
+            if(previewImage) event.previewImage = previewImage;
             await event.save();
             res.json(event);
         } else {
@@ -573,6 +613,7 @@ router.get('/', validateQuery, async (req, res, next) => {
             exclude: ['capacity', 'price', 'description']
         },
         group: [['Event.id'], ['Group.id'], ['Venue.id']],
+        order: [['startDate']],
         where,
         //Limit can cause issues when paired with associated include statements
         limit,

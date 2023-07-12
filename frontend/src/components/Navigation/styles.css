@@ -1,15 +1,40 @@
 .nav-bar {
     background-color: #494646;
     display: flex;
+    width: 100%;
+    height: 10vh;
     justify-content: space-between;
     align-items: center;
-    padding-right: 3em;
-    border-bottom: 3px solid lightgray;
-    margin-bottom: 5em;
+    z-index: 5;
+    padding: 1em 5vw;
+    /* border-bottom: 3px solid lightgray; */
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
 }
 
 .logo {
-    height: 10em;
+    height: 10vh;
+}
+
+.session {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    height: 36px;
+}
+
+.create-group-prof {
+    cursor: pointer;
+    font-size: 1.25em;
+    color: whitesmoke;
+}
+
+.create-group-prof:hover {
+    cursor: pointer;
+    font-size: 1.25em;
+    color: #EBB45B;
+    text-decoration: underline;
 }
 
 .session-buttons-container {
@@ -24,8 +49,8 @@
     background-color: #969090;
     box-sizing: border-box;
     color: whitesmoke;
-    padding: 1em 2em;
-    height: 5em;
+    padding: 0.25em 0.5em;
+    height: 5vh;
     width: 10em;
     display: flex;
     justify-content: center;
@@ -39,16 +64,62 @@
     background-color: #EBB45B;
 }
 
-.profile-btn-ctn {
-    border-radius: 100%;
-    border: none;
-    width: 5em;
-    height: 5em;
-    background-color: #969090;
+.profile-ctn {
+    border: transparent;
+    /* width: 2.5em; */
+    width: fit-content;
+    height: 2.5em;
+    position: relative;
+    margin: 0;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2em;
 }
 
-.profile-img {
-    border-radius: 100%;
-    font-size: 3.5em;
+.menu {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    user-select: none;
+    margin: 0;
+    padding: 1em;
+    right: 0;
+    top: 100%;
     background-color: #969090;
+    border-radius: 1em;
+    min-width: 200px;
+    width: fit-content;
+}
+
+.fa {
+    font-size: 1em;
+    background-color: #EBB45B;
+    border-radius: 100%;
+    /* box-sizing: content-box; */
+    padding: 10px;
+}
+
+.logout-btn {
+    border-radius: 1em;
+    height: 2em;
+    font-size: 1em;
+    padding: 0 10px;
+}
+
+.logout-btn:hover {
+    background-color: #EBB45B;
+}
+
+.user-menu-btn {
+    color: black;
+}
+
+.user-menu-btn:hover {
+    color: #EBB45B;
+    text-decoration: underline;
 }

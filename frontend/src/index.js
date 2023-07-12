@@ -10,6 +10,7 @@ import { restoreCSRF, csrfFetch } from './store/csrf';
 import ModalProvider from './Context/ModalContext.js';
 
 import './index.css';
+import Favicon from 'react-favicon';
 
 const store = configureStore();
 
@@ -26,6 +27,7 @@ function Root() {
     <ModalProvider>
       <Provider store={store}>
         <BrowserRouter>
+          <Favicon url='https://res.cloudinary.com/dzntryr5a/image/upload/v1689185030/favicon_trm1r9.ico'/>
           <App/>
         </BrowserRouter>
       </Provider>

@@ -4,6 +4,7 @@ import SignUpFormPage from "./components/SignUpFormPage";
 import LandingPage from './components/LandingPage';
 import Navigation from './components/Navigation';
 import Modal from './components/Modal';
+import Favicon from 'react-favicon';
 
 import { Switch, Route, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";

@@ -16,6 +16,7 @@
 .event-img-ctn {
     width: 50%;
     height: 400px;
+    padding: 1em 0;
 }
 
 .event-img-ctn > img {
@@ -45,8 +46,14 @@
 }
 
 .group-link > img {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
+}
+
+.group-link > div {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
 
 .event-info {
@@ -92,4 +99,10 @@
     display: flex;
     justify-content: flex-end;
     gap: 1em;
+}
+
+.e-text {
+    color: black;
+    font-size: 1.5em;
+    font-weight: 500;
 }

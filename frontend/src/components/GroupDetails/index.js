@@ -70,7 +70,7 @@ function GroupDetails() {
                     <img src={group?.previewImage}/>
                 </div>
                 <div className='about-group'>
-                    <div>
+                    <div className="g-info">
                         <h1>{group?.name}</h1>
                         <p>{group?.city}, {group?.state}</p>
                         <p>{group?.type}</p>
@@ -92,7 +92,7 @@ function GroupDetails() {
 
                 <div>
                     <h2>What we're about</h2>
-                    <p>{group?.about}</p>
+                    <p className="g-about">{group?.about}</p>
                 </div>
             </div>
 

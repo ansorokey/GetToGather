@@ -16,6 +16,10 @@ function GroupsListing() {
     const curUser = useSelector(state => state.session.user);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    useEffect(() => {
         dispatch(loadGroupsThunk());
     },[dispatch]);
 

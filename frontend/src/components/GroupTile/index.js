@@ -6,7 +6,7 @@ function GroupTile({group, buttons = false}) {
     return (
         <>
             <hr className="tile-split" />
-            <Link className="tile-link" to={`/groups/${group.id}`}>
+            <Link className="tile-link" to={`/groups/${group.id}`} onClick={() => window.scrollTo(0, 0)}>
                 <div className="tile-ctn">
                     <div className="tile-img-ctn">
                         <img className="tile-img" src={group.previewImage}/>

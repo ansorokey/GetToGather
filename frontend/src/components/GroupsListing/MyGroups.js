@@ -24,7 +24,7 @@ function MyGroups() {
         loadMyGroups();
     }, [curUser]);
 
-    return <>
+    return <div className="list-ctn">
         {groupsArr.map(g => { return (
             <>
                 <GroupTile key={g.id} group={g} buttons={true} />
@@ -40,7 +40,7 @@ function MyGroups() {
                 </div>
             </>
         )})}
-    </>;
+    </div>;
 }
 
 export default MyGroups;

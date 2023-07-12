@@ -6,25 +6,35 @@
     justify-content: space-between;
     align-items: center;
     z-index: 5;
-    padding: 0 10vw;
-    border-bottom: 3px solid lightgray;
+    padding: 1em 5vw;
+    /* border-bottom: 3px solid lightgray; */
     box-sizing: border-box;
     position: fixed;
     top: 0;
 }
 
 .logo {
-    max-height: 10vh;
+    height: 10vh;
 }
 
 .session {
     display: flex;
     align-items: center;
     gap: 2em;
+    height: 36px;
 }
 
 .create-group-prof {
     cursor: pointer;
+    font-size: 1.25em;
+    color: whitesmoke;
+}
+
+.create-group-prof:hover {
+    cursor: pointer;
+    font-size: 1.25em;
+    color: #EBB45B;
+    text-decoration: underline;
 }
 
 .session-buttons-container {
@@ -81,6 +91,9 @@
     right: 0;
     top: 100%;
     background-color: #969090;
+    border-radius: 1em;
+    min-width: 200px;
+    width: fit-content;
 }
 
 .fa {
@@ -89,4 +102,24 @@
     border-radius: 100%;
     /* box-sizing: content-box; */
     padding: 10px;
+}
+
+.logout-btn {
+    border-radius: 1em;
+    height: 2em;
+    font-size: 1em;
+    padding: 0 10px;
+}
+
+.logout-btn:hover {
+    background-color: #EBB45B;
+}
+
+.user-menu-btn {
+    color: black;
+}
+
+.user-menu-btn:hover {
+    color: #EBB45B;
+    text-decoration: underline;
 }

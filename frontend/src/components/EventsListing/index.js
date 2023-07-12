@@ -14,6 +14,10 @@ function EventsListing() {
     const eventsArr = Object.values(eventState);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    useEffect(() => {
         dispatch(getEventsThunk());
     }, [dispatch]);
 

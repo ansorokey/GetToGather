@@ -14,6 +14,7 @@
     height: 3em;
     font-size: 1em;
     font-weight: bold;
+    border-radius: 1em;
 }
 
 .dlt-yes {
@@ -30,4 +31,9 @@
 
 .dlt-no:hover {
     background-color: #2B7A0B;
+}
+
+.del-g-name {
+    font-size: 1.5em;
+    font-weight: 500;
 }

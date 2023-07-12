@@ -32,6 +32,11 @@
     flex-direction: column;
 }
 
+input, textarea, select {
+    border-radius: 1em;
+    min-height: 2em;
+}
+
 .select > select {
     width: 20%;
 }
@@ -40,10 +45,21 @@
     color: #EBB45B;
     background-color: black;
     border-bottom: 1px solid #2DEB75;
-    width: fit-content;
+    /* width: fit-content; */
+    padding: 5px;
+    border-radius: 1em;
 }
 
 .line-break {
     border: solid 2px #494646;
     width: 80%;
+}
+
+.create-update-group-btn {
+    height: 2em;
+    border-radius: 1em;
+}
+
+.create-update-group-btn:hover {
+    background-color: #EBB45B;
 }

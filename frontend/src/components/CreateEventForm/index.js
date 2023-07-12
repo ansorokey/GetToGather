@@ -30,7 +30,7 @@ function CreateEventForm ({group, event, formType}) {
         if(!startDate) errs.startDate = 'Start date is required';
         if(!endDate) errs.endDate = 'End date is required';
         if(!(imgUrl.endsWith('.png') || imgUrl.endsWith('.jpg') || imgUrl.endsWith('.jpeg'))) errs.imgUrl = 'Image URL must end in .png, .jpg, or .jpeg';
-        if(description.length < 30) errs.description = 'Description must be at least 30 characters long';
+        if(description.length < 50) errs.description = 'Description must be at least 50 characters long';
 
         if(Object.values(errs).length){
             setValErrs(errs);
@@ -93,8 +93,8 @@ function CreateEventForm ({group, event, formType}) {
 
             <form onSubmit={handleSubmit}>
                 <div className='sec'>
-                    {formType === 'update' ? <div>Update your event</div> : <div>Create an event for {group.name}</div>}
-                    <div>What is the name of your event?</div>
+                    {formType === 'update' ? <h2>Update your event</h2> : <h2>Create an event for {group.name}</h2>}
+                    <div className='form-question'>What is the name of your event?</div>
                     <input
                         type='text'
                         placeholder='  Event name...'
@@ -106,7 +106,7 @@ function CreateEventForm ({group, event, formType}) {
                 </div>
                 <hr/>
                 <div className='sec'>
-                    <div>Is this an in-person or online event?</div>
+                    <div className='form-question'>Is this an in-person or online event?</div>
                     <select value={type}
                             onChange={e => {removeErr('type'); setType(e.target.value)}}
                             >
@@ -116,7 +116,7 @@ function CreateEventForm ({group, event, formType}) {
                     </select>
                     {valErrs.type && <span className='err'>{valErrs.type}</span>}
 
-                    <div>How many people can join?</div>
+                    <div className='form-question'>How many people can join?</div>
                     <input
                         type='number'
                         value={capacity}
@@ -124,7 +124,7 @@ function CreateEventForm ({group, event, formType}) {
                     />
                     {valErrs.capacity && <span className='err'>{valErrs.capacity}</span>}
 
-                    <div>What is the price for your event?</div>
+                    <div className='form-question'>What is the price for your event?</div>
                     <input
                         type='number'
                         placeholder='   0'
@@ -135,7 +135,7 @@ function CreateEventForm ({group, event, formType}) {
                 </div>
                 <hr/>
                 <div className='sec'>
-                    <div>When does your event start?</div>
+                    <div className='form-question'>When does your event start?</div>
                     <input
                         type='datetime-local'
                         value={startDate}
@@ -143,7 +143,7 @@ function CreateEventForm ({group, event, formType}) {
                     />
                     {valErrs.startDate && <span className='err'>{valErrs.startDate}</span>}
 
-                    <div>When does your event end?</div>
+                    <div className='form-question'>When does your event end?</div>
                     <input
                         type='datetime-local'
                         value={endDate}
@@ -153,7 +153,7 @@ function CreateEventForm ({group, event, formType}) {
                 </div>
                 <hr/>
                 <div className='sec'>
-                    <div>Please add an image url for your event below:</div>
+                    <div className='form-question'>Please add an image url for your event below:</div>
                     <input
                         type='text'
                         placeholder='   Image URL...'
@@ -164,16 +164,17 @@ function CreateEventForm ({group, event, formType}) {
                 </div>
                 <hr/>
                 <div className='sec'>
-                    <div>Please describe your event</div>
+                    <div className='form-question'>Please describe your event</div>
                     <textarea
-                        placeholder='   Please include at least _ characters...'
+                        placeholder='   Please include at least 50 characters...'
                         rows='10'
                         value={description}
                         onChange={e => {removeErr('description'); setDescription(e.target.value)}}
                     />
                     {valErrs.description && <span className='err'>{valErrs.description}</span>}
                 </div>
-                <button>{ formType === 'update' ? 'Update Event' : 'Create Event'}</button>
+                <br/>
+                <button className='e-create-update'>{ formType === 'update' ? 'Update Event' : 'Create Event'}</button>
             </form>
         </div>
     );

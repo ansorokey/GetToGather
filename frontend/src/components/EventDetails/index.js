@@ -36,7 +36,7 @@ function EventDetails() {
             <Link className='back-to-events' to="/events">{back}</Link>
             <div className='event-details-s1'>
                 <h1>{event?.name}</h1>
-                <h2>Hosted by {group?.Organizer?.firstName} {group?.Organizer?.lastName}</h2>
+                <h2>Organized by {group?.Organizer?.firstName} {group?.Organizer?.lastName}</h2>
             </div>
             <div className='event-details-s2'>
                 <div className='event-img-ctn'>
@@ -47,8 +47,8 @@ function EventDetails() {
                         <div className='group-link'>
                             <img src={group?.previewImage}/>
                             <div>
-                                <div>{group?.name}</div>
-                                <div>{group?.type}</div>
+                                <div className='e-text'>Hosted by {group?.name}</div>
+                                <div className='e-text'>{group?.type}</div>
                             </div>
                         </div>
                     </Link>
@@ -85,7 +85,7 @@ function EventDetails() {
             </div>
             <div className='event-details-s3'>
                 <h2>Details</h2>
-                <p>{event.description}</p>
+                <p className='e-text'>{event.description}</p>
             </div>
         </div>
     );

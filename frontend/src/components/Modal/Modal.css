@@ -11,6 +11,20 @@
     backdrop-filter: blur(10px);
 }
 
+
+.modal-content {
+    width: 75vw;
+    height: 75vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid whitesmoke;
+    border-radius: 1em;
+    background-color:rgba(0, 0, 0, 0.75);
+    overflow-y: scroll;
+}
+
 .close-modal {
     display: flex;
     justify-content: center;
@@ -24,19 +38,6 @@
     padding: 0;
 
     position: fixed;
-    top: 3em;
-    right: 3em;
-}
-
-.modal-content {
-    width: 75vw;
-    height: 75vh;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 5px solid whitesmoke;
-    border-radius: 1em;
-    background-color:rgba(0, 0, 0, 0.75);
-    overflow-y: scroll;
+    top: 14vh;
+    right: 16vw;
 }

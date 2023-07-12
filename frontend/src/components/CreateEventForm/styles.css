@@ -27,15 +27,6 @@
     height: 5em;
 }
 
-.select {
-    display: flex;
-    flex-direction: column;
-}
-
-.select > select {
-    width: 20%;
-}
-
 .err {
     color: #EBB45B;
     background-color: black;
@@ -46,4 +37,26 @@
 .line-break {
     border: solid 2px #494646;
     width: 80%;
+}
+
+.form-question {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1.5em;
+}
+
+.form-question + input, .form-question + textarea {
+    width: 50%;
+}
+
+.form-question + select {
+    width: 25%;
+}
+
+.e-create-update {
+    border-radius: 1em;
+    height: 2em;
+}
+
+.e-create-update:hover {
+    background-color: #EBB45B;
 }

@@ -54,7 +54,10 @@ function CreateGroupForm({options}) {
 
         setValidations(err);
 
-        if(Object.values(err).length) return;
+        if(Object.values(err).length) {
+            console.log(this);
+            return;
+        }
 
         const payload = {
             city,
@@ -203,7 +206,7 @@ Feel free to get creative! You can edit this later if you change your mind.</p>
 
                 <hr className='line-break'/>
 
-                <button>{ options.type === 'create' ? 'Create Group' : 'Update Group'}</button>
+                <button className='create-update-group-btn'>{ options.type === 'create' ? 'Create Group' : 'Update Group'}</button>
             </form>
         </div>
     );

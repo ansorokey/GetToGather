@@ -21,7 +21,7 @@ function DeleteGroup({group}) {
         <div className='del-group-ctn'>
                 <div>Confirm Delete</div>
                 <div>Are you sure you want to delete this group?</div>
-                <div>{group.name}</div>
+                <div className='del-g-name'>{group.name}</div>
                 <button
                     className='dlt-yes'
                     onClick={handleDelete}

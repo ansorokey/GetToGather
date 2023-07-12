@@ -24,7 +24,7 @@ function MyEvents() {
         loadMyEvents();
     }, [curUser]);
 
-    return <>
+    return <div className="list-ctn">
         {eventsArr.map(event => { return (
             <>
                 <EventTile key={event.id} event={event} />
@@ -40,7 +40,7 @@ function MyEvents() {
                 </div>
             </>
         )})}
-    </>;
+    </ div>;
 }
 
 export default MyEvents;

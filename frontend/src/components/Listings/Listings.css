@@ -12,15 +12,17 @@
     z-index: 0;
 }
 
-.eg-link {
+.eg-text {
     height: fit-content;
     font-size: 32px;
     font-weight: 300;
     color: whitesmoke;
     padding: 0;
+    margin: 0;
+    font-family: 'Russo One', sans-serif;
 }
 
-.eg-link.active {
+.eg-link.active, .eg-link.active > .eg-text {
     cursor: default;
     text-decoration: underline;
     color: #B733D4;

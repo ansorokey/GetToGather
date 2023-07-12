@@ -22,7 +22,7 @@ function Navigation({ firstLoad }){
     return (
       <nav className="nav-bar">
           <NavLink exact to="/">
-            <img className='logo' src={logo}/>
+            <img className='logo' src='https://res.cloudinary.com/dzntryr5a/image/upload/v1689116250/TEAM_UP_i2q07g.png'/>
           </NavLink>
 
           <div className='session'>

@@ -40,11 +40,11 @@ function ProfileButton({ user }) {
 
     const menu = (
         <div className='menu' ref={ulRef}>
-                <div>Hello, {user?.firstName}</div>
+                <div className="hello-user">Hello, {user?.firstName}</div>
                 <div>{user?.email}</div>
-                <Link to="/groups/current">Your Groups</Link>
-                <Link to="/events/current">Your Events</Link>
-            <button onClick={handleLogout}>
+                <Link className='user-menu-btn' to="/groups/current">Your Groups</Link>
+                <Link className='user-menu-btn' to="/events/current">Your Events</Link>
+            <button className="logout-btn" onClick={handleLogout}>
                 Log Out
             </button>
         </div>

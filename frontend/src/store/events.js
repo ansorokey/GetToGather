@@ -140,7 +140,6 @@ export const updateEventThunk = (eventData, eventId) => async dispatch => {
         if(response.ok){
             const data = await response.json();
             dispatch(updateEvent(data));
-            console.log(data);
             return data;
         }
     } catch(e) {
@@ -161,7 +160,6 @@ export const getMyEventsThunk = (userId) => async dispatch => {
 
         if(response.ok){
             const data = await response.json();
-            // console.log(data.events);
             dispatch(getEvents(data.events));
             return data.events;
         }

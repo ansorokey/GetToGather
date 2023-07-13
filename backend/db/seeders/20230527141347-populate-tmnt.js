@@ -40,7 +40,8 @@ const group = {
   type: "In person",
   private: true,
   city: "New York",
-  state: "NY"
+  state: "NY",
+  previewImage: 'https://loodibee.com/wp-content/uploads/Logo_TMNT_2003.png'
 }
 
 const venues = [
@@ -62,6 +63,7 @@ const events = [
     description: "You bring the pepperoni and we'll bring the pow! Radical!",
     startDate: "2024-11-19 20:00:00",
     endDate: "2024-11-19 22:00:00",
+    previewImage: 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2019/02/teenage-mutant-ninja-turtles-pizza-display.jpg'
   },
   {
     name: "Beat up the foot clan",
@@ -71,6 +73,7 @@ const events = [
     description: "Time to bring some SLAM down on the CLAN and shred The Shredder!",
     startDate: "2024-12-19 20:00:00",
     endDate: "2024-12-20 22:00:00",
+    previewImage: 'https://i.ytimg.com/vi/BOdXEeKPoTM/maxresdefault.jpg'
   }
 ]
 

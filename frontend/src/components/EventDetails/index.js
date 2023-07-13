@@ -59,13 +59,13 @@ function EventDetails() {
                                 <div className='event-time'>
                                     <span className='et'>START</span>
                                     <span>{event?.startDate.slice(0, 10)}</span>
-                                    <i class="fa-solid fa-circle fa-2xs"></i>
+                                    <i className="fa-solid fa-circle fa-2xs"></i>
                                     <span>{event?.startDate.slice(11, 16)}</span>
                                 </div>
                                 <div className='event-time'>
                                     <span className='et'>END</span>
                                     <span>{event?.endDate.slice(0, 10)}</span>
-                                    <i class="fa-solid fa-circle fa-2xs"></i>
+                                    <i className="fa-solid fa-circle fa-2xs"></i>
                                     <span>{event?.endDate.slice(11, 16)}</span>
                                 </div>
                             </div>
@@ -75,7 +75,7 @@ function EventDetails() {
                             <div>{event?.price === 0 ? 'FREE' : '$' +event?.price?.toFixed(2)}</div>
                         </div>
                         <div className='deet'>
-                        <i class="fa-solid fa-map-pin fa-deet"></i>
+                        <i className="fa-solid fa-map-pin fa-deet"></i>
                             <div>{event?.type}</div>
                         </div>
                         <div className='event-btns'>

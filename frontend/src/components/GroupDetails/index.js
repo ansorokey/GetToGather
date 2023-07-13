@@ -75,7 +75,7 @@ function GroupDetails() {
                         <p>{group?.city}, {group?.state}</p>
                         <div className='members-type group-num-events-private'>
                             <span>{group?.Events?.length} events</span>
-                            <i class="fa-solid fa-circle fa-2xs"></i>
+                            <i className="fa-solid fa-circle fa-2xs"></i>
                             <span>{group?.private === true ? 'Private' : 'Public'}</span>
                         </div>
                         <p>Organized by {group?.Organizer?.firstName} {group?.Organizer?.lastName}</p>

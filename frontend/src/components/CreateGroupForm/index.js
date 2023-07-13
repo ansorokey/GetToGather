@@ -54,10 +54,7 @@ function CreateGroupForm({options}) {
 
         setValidations(err);
 
-        if(Object.values(err).length) {
-            console.log(this);
-            return;
-        }
+        if(Object.values(err).length) return;
 
         const payload = {
             city,
@@ -73,10 +70,7 @@ function CreateGroupForm({options}) {
         if(options.type === 'create') {
             response = await dispatch(createGroupThunk(payload));
         } else {
-            console.log('payload', payload);
-            console.log('groupId', options.group.id);
             response = await dispatch(updateGroupThunk(payload, options.group.id));
-            console.log('response', response);
         }
 
         if(response && response.errors){

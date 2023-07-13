@@ -40,7 +40,8 @@ const group = {
   type: "In person",
   private: false,
   city: "Middle-earth",
-  state: "NZ"
+  state: "NZ",
+  previewImage: 'https://www.looper.com/img/gallery/why-the-hobbits-are-the-best-part-of-lord-of-the-rings/l-intro-1604348765.jpg'
 }
 
 const venues = [
@@ -62,6 +63,7 @@ const events = [
     description: "Yes, we may have already had one, but what about second breakfast? Surely you know of second breakfast.",
     startDate: "2024-07-13 10:00:00",
     endDate: "2024-07-13 11:00:00",
+    previewImage: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpvHg_pAnkG0ESpTDuRSSgq4eaMAJoSY69T7n26L_IOqgMajQTlUPIIM9Ac4SbVhf0RSGuU9K2LcXe6Urr-3XQKrHFtRO6dUb-OxDbvbpOyqkBEe0zpGNxYm7wx6-cw_qTDBr6FMtibxBV6XF2RxR5s3ivIzcknLX0pm-It8OOC1DuLNzFTmQR2X9y/s16000/full-english-breakfast.jpg'
   },
   {
     name: "Walk into Mordor",
@@ -71,6 +73,7 @@ const events = [
     description: "Virtual event! Hop on roblox and tour through a 1:24 recreation of Mount Doom!",
     startDate: "2099-10-09 08:30:00",
     endDate: "2099-11-21 13:45:00",
+    previewImage: 'https://sportshub.cbsistatic.com/i/2022/09/08/02810c20-8d3e-4ffe-a5c6-1f09e9bc32f2/rings-of-mordor-secret.jpg'
   }
 ]
 

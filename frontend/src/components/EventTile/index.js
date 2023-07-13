@@ -16,7 +16,7 @@ function EventTile({event}) {
                     <div className="e-tile-info">
                         <div className="e-date-time">
                             <span>{startString?.slice(0, 3)}, {startString?.slice(4, 10)}, {startString?.slice(10, 15)}</span>
-                            <i class="fa-solid fa-circle fa-2xs"></i>
+                            <i className="fa-solid fa-circle fa-2xs"></i>
                             <span>{startDate?.slice(11, 16)}</span>
                             {/* <p>{endDate.slice(0, 10)} {endDate.slice(11, 16)}</p> */}
                         </div>

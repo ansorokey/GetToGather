@@ -8,7 +8,6 @@ import './LoginFormPage.css';
 
 function LoginFormPage() {
     const curUser = useSelector(state => state.session.user);
-    console.log(curUser);
 
     const [errMessage, setErrMessage] = useState('');
     const [credential, setCredential] = useState('');

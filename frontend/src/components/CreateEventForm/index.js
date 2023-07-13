@@ -61,7 +61,6 @@ function CreateEventForm ({group, event, formType}) {
             setValErrs(res.errors);
             return;
         } else {
-            console.log(res);
             history.push(`/events/${res.id}`);
             closeModal();
         }

@@ -60,3 +60,9 @@
 .fa-date-time-dash {
     font-size: 2em;
 }
+
+.e-description {
+    color: whitesmoke;
+    font-size: 1.25em;
+    padding: 1em 16px 0;
+}

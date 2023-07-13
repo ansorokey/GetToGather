@@ -3,6 +3,7 @@ import EventTile from "../EventTile";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyEventsThunk } from "../../store/events";
 import { useModalContext } from "../../Context/ModalContext";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 function MyEvents() {
     const curUser = useSelector(state => state.session.user);
@@ -24,21 +25,11 @@ function MyEvents() {
         loadMyEvents();
     }, [curUser]);
 
+    // if(curUser === null) return <Redirect to="/" />;
+
     return <div className="list-ctn">
         {eventsArr.map(event => { return (
-            <>
-                <EventTile key={event.id} event={event} />
-                <div className="event-manage-btns">
-                    { +event.Group.organizerId === +curUser.id ?
-                        <>
-                            <button onClick={() => openModal('updateEvent', {type: 'update', event})}>Update</button>
-                            <button onClick={() => openModal('deleteEvent', event)}>Delete</button>
-                        </>
-                        :
-                        <button onClick={() => alert('feature coming soon~')}>Cancel Attendance</button>
-                    }
-                </div>
-            </>
+            <EventTile key={event.id} event={event} curUser={curUser} openModal={openModal} myEvents={true} />
         )})}
     </ div>;
 }

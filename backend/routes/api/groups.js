@@ -144,7 +144,6 @@ router.delete('/:groupId/images/:imageId', requireAuth, async (req, res, next) =
 // #Add an Image to a Group based on the Group's id
 router.post('/:groupId/images', requireAuth, async (req, res, next) => {
     const { groupId }  = req.params;
-    console.log(req.body);
     let { url, preview } = req.body;
     let hasPermission = false;
 
@@ -304,7 +303,7 @@ router.get('/:groupId/events', async (req, res, next) => {
                   }
             ],
             attributes: {
-                exclude: ['price', 'capacity', 'description', 'createdAt', 'updatedAt']
+                exclude: ['price', 'capacity', 'createdAt', 'updatedAt']
             },
             order: [['startDate']]
         });
@@ -326,7 +325,7 @@ router.get('/:groupId/events', async (req, res, next) => {
 // #Create an Event for a Group specified by its id
 router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, next) => {
     const { groupId } = req.params;
-    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
+    const { venueId, name, type, capacity, price, description, startDate, endDate, previewImage } = req.body;
     let hasPermission = false;
 
     try {
@@ -350,7 +349,7 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
 
         if(hasPermission){
             const newEvent = await group.createEvent({
-                venueId, name, type, capacity, price, description, startDate, endDate
+                venueId, name, type, capacity, price, description, startDate, endDate, previewImage
             });
 
             res.json({
@@ -363,7 +362,8 @@ router.post('/:groupId/events', requireAuth, validateEvent, async (req, res, nex
                 price,
                 description,
                 startDate,
-                endDate
+                endDate,
+                previewImage
             });
         } else {
             res.status(403);
@@ -610,7 +610,11 @@ router.get('/:groupId', async (req, res, next) => {
                 {
                     model: Venue,
                     attributes: ['id', 'groupId', 'address', 'city', 'state', 'lat', 'lng']
-                }
+                },
+                {
+                    association: 'Events',
+                    attributes: ['id']
+                  }
             ],
             attributes: {
                 include: [
@@ -618,7 +622,7 @@ router.get('/:groupId', async (req, res, next) => {
                 ]
             },
             group: [
-                ['Group.id'], ['GroupImages.id'], ['Venues.id'], ['Organizer.id']
+                ['Group.id'], ['GroupImages.id'], ['Venues.id'], ['Organizer.id'], ['Events.id']
             ]
         });
 
@@ -702,7 +706,7 @@ router.delete('/:groupId', requireAuth, async (req, res, next) => {
 router.get('/', async (_req, res, next) => {
 
     const allGroups = await Group.scope(null).findAll({
-        include: {
+        include: [{
             association: 'Members',
             attributes: [],
             through: {
@@ -712,19 +716,29 @@ router.get('/', async (_req, res, next) => {
               }
             }
           },
+          {
+            association: 'Events',
+            attributes: ['id']
+          }
+        ],
           attributes: {
             include: [
               [
                 sequelize.fn("COUNT", sequelize.col("Members.id")),
                 "numMembers"
+              ],
+              [
+                sequelize.fn("COUNT", sequelize.col("Events.id")),
+                "numEvents"
               ]
             ],
           },
-          group: [sequelize.col('Group.id')]
+          group: [[sequelize.col('Group.id')], [sequelize.col('Events.id')]]
     });
 
     for(let i = 0; i < allGroups.length; i++){
         allGroups[i].dataValues.numMembers = Number.parseInt(allGroups[i].dataValues.numMembers);
+        allGroups[i].dataValues.numEvents = Number.parseInt(allGroups[i].Events.length);
     }
 
     return res.json({ Groups: allGroups });

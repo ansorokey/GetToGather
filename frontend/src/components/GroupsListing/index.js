@@ -29,6 +29,7 @@ function GroupsListing() {
             <Route exact path='/groups'>
                 <div className='list-ctn'>
                     <Listings/>
+                    <h2>Groups in TeamUp</h2>
                     {groupsArr.map(g => {
                         return (<GroupTile key={g.id} group={g}/>);
                     })}

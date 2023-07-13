@@ -77,10 +77,10 @@ export const createEventThunk = (eventData) => async dispatch => {
 
         if(response.ok){
             const data = await response.json();
-            await csrfFetch(`/api/events/${data.id}/images`, {
-                method: 'POST',
-                body: JSON.stringify({url: eventData.imgUrl, preview: true})
-            });
+            // await csrfFetch(`/api/events/${data.id}/images`, {
+            //     method: 'POST',
+            //     body: JSON.stringify({url: eventData.imgUrl, preview: true})
+            // });
             dispatch(createEvent(data));
             dispatch(getEventDetails(data));
             return data;
@@ -140,7 +140,6 @@ export const updateEventThunk = (eventData, eventId) => async dispatch => {
         if(response.ok){
             const data = await response.json();
             dispatch(updateEvent(data));
-            console.log(data);
             return data;
         }
     } catch(e) {
@@ -161,7 +160,6 @@ export const getMyEventsThunk = (userId) => async dispatch => {
 
         if(response.ok){
             const data = await response.json();
-            // console.log(data.events);
             dispatch(getEvents(data.events));
             return data.events;
         }

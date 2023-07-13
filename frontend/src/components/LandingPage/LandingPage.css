@@ -71,6 +71,7 @@
     grid-area: s3;
     display: flex;
     justify-content: space-evenly;
+    text-align: center;
 }
 
 .s3-tile {

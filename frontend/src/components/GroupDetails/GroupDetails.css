@@ -48,7 +48,8 @@
 
 .group-management > button {
     border-radius: 1em;
-    height: 2em;
+    font-size: 1.5em;
+    padding: 10px 10px;
 }
 
 .group-management > button:hover {
@@ -61,12 +62,18 @@ background-color: #EBB45B;
     gap: 1em;
 }
 
-.g-info > p {
+.g-info > p, .group-num-events-private > span {
     font-size: 1.5em;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 600;
 }
 
 .g-about {
+    font-size: 1.5em;
+}
+
+.join-group {
+    background-color: red;
+    color: whitesmoke;
     font-size: 1.5em;
 }

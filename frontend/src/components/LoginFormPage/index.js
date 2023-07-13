@@ -8,7 +8,6 @@ import './LoginFormPage.css';
 
 function LoginFormPage() {
     const curUser = useSelector(state => state.session.user);
-    console.log(curUser);
 
     const [errMessage, setErrMessage] = useState('');
     const [credential, setCredential] = useState('');
@@ -57,7 +56,7 @@ function LoginFormPage() {
     return (
         <div className='LogInMod'>
             <h2 className='cred'>Log In</h2>
-            { errMessage ? <p>{errMessage}</p> : null}
+            { errMessage ? <p className='err'>{errMessage}</p> : null}
             <form className='login-form' onSubmit={onSubmit}>
                 <div className='entry'>
                         <input
@@ -83,7 +82,7 @@ function LoginFormPage() {
                     onClick={demoLogin}>Log in as Demo User</div>
 
                 <div className="login-btns">
-                    <button className="login-button" disabled={(!credential || !password)}>Login</button>
+                    <button className="login-button" disabled={(credential.length < 4 || password.length < 6)}>Login</button>
                 </div>
             </form>
         </div>

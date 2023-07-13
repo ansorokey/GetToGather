@@ -78,7 +78,7 @@ function SignUpFormPage() {
                         onChange={(e) => setFirstName(e.target.value)}
                         placeholder='   First Name'
                     />
-                    {errors.firstName && <span>{errors.firstName}</span>}
+                    {errors.firstName && <span className='err'>{errors.firstName}</span>}
                 </div>
 
                 <div className='signup-input-field'>
@@ -89,18 +89,18 @@ function SignUpFormPage() {
                         onChange={(e) => setLastName(e.target.value)}
                         placeholder='   Last Name'
                     />
-                    {errors.lastName && <span>{errors.lastName}</span>}
+                    {errors.lastName && <span className='err'>{errors.lastName}</span>}
                 </div>
 
                 <div className='signup-input-field'>
                     <input
                         id="email-input"
                         value={email}
-                        type="email"
+                        type="text"
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder='   Email...'
                     />
-                    {errors.email && <span>{errors.email}</span>}
+                    {errors.email && <span className='err'>{errors.email}</span>}
                 </div>
 
                 <div className='signup-input-field'>
@@ -111,7 +111,7 @@ function SignUpFormPage() {
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder='   Username...'
                     />
-                    {errors.username && <span>{errors.username}</span>}
+                    {errors.username && <span className='err'>{errors.username}</span>}
                 </div>
 
                 <div className='signup-input-field'>
@@ -123,7 +123,7 @@ function SignUpFormPage() {
                         placeholder='   Password...'
                     />
                     <span className='show-pass-btn' onClick={() => setShowPassword(!showPassword)}>👁️‍🗨️</span>
-                    {errors.password && <span>{errors.password}</span>}
+                    {errors.password && <span className='err'>{errors.password}</span>}
                 </div>
 
                 <div className='signup-input-field'>
@@ -134,7 +134,7 @@ function SignUpFormPage() {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder='   Confirm Password...'
                     />
-                    {errors.password && <span>{errors.password}</span>}
+                    {errors.password && <span className='err'>{errors.password}</span>}
                 </div>
 
 

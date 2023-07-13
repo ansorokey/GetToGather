@@ -54,10 +54,7 @@ function CreateGroupForm({options}) {
 
         setValidations(err);
 
-        if(Object.values(err).length) {
-            console.log(this);
-            return;
-        }
+        if(Object.values(err).length) return;
 
         const payload = {
             city,
@@ -73,10 +70,7 @@ function CreateGroupForm({options}) {
         if(options.type === 'create') {
             response = await dispatch(createGroupThunk(payload));
         } else {
-            console.log('payload', payload);
-            console.log('groupId', options.group.id);
             response = await dispatch(updateGroupThunk(payload, options.group.id));
-            console.log('response', response);
         }
 
         if(response && response.errors){
@@ -95,7 +89,7 @@ function CreateGroupForm({options}) {
                 <div className='sec'>
                     {options.type === 'update' ?
                         <>
-                            <h3>update</h3>
+                            <h3>Update your group</h3>
                             <h2>We'll walk you throught a few steps to update your group</h2>
                         </>
                         :
@@ -147,7 +141,7 @@ Feel free to get creative! You can edit this later if you change your mind.</p>
                 <hr className='line-break'/>
 
                 <div className='sec'>
-                    <h2>Now describe what your group wil be about</h2>
+                    <h2>Now describe what your group will be about</h2>
                     <p>People will see this when we promote your group, but you'll be able to add to it later, too.</p>
 
                     <div>
@@ -159,7 +153,7 @@ Feel free to get creative! You can edit this later if you change your mind.</p>
                     <textarea
                         className='textarea'
                         placeholder='Please enter at least 50 characters'
-                        maxLength='256'
+                        maxLength='255'
                         value={about}
                         onChange={(e) => {removeErr('about'); setAbout(e.target.value)}}
                         rows="10"

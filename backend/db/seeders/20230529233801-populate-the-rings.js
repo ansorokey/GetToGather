@@ -63,7 +63,7 @@ const events = [
     description: "Yes, we may have already had one, but what about second breakfast? Surely you know of second breakfast.",
     startDate: "2024-07-13 10:00:00",
     endDate: "2024-07-13 11:00:00",
-    previewImage: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpvHg_pAnkG0ESpTDuRSSgq4eaMAJoSY69T7n26L_IOqgMajQTlUPIIM9Ac4SbVhf0RSGuU9K2LcXe6Urr-3XQKrHFtRO6dUb-OxDbvbpOyqkBEe0zpGNxYm7wx6-cw_qTDBr6FMtibxBV6XF2RxR5s3ivIzcknLX0pm-It8OOC1DuLNzFTmQR2X9y/s16000/full-english-breakfast.jpg'
+    previewImage: 'https://i.pinimg.com/originals/00/69/68/0069685a38008fcc695377c331dc0223.jpg'
   },
   {
     name: "Walk into Mordor",

@@ -16,7 +16,7 @@ function GroupTile({group, curUser, openModal, myGroup}) {
                         <h3>{group.city}, {group.state}</h3>
                         <p>{group.about}</p>
                         <div className='members-type'>
-                            <span>{group.numEvents} events</span>
+                            <span>{group?.Events?.length} events</span>
                             <i className="fa-solid fa-circle fa-2xs"></i>
                             <span>{group.private === true ? 'Private' : 'Public'}</span>
                         </div>

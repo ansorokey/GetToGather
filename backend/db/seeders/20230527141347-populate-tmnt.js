@@ -80,11 +80,11 @@ const events = [
 const groupImages = [
   {
     url: 'www.The-Group-Preview-Image.com',
-    preview: true
+    preview: false
   },
   {
     url: 'www.The-Group-Backup-Preview.com',
-    preview: true
+    preview: false
   },
   {
     url: 'www.Picture-Of-An-Image.com/group',
@@ -103,11 +103,11 @@ const groupImages = [
 const eventImages = [
   {
     url: 'www.The-Event-Preview-Image.com',
-    preview: true
+    preview: false
   },
   {
     url: 'www.The-Event-Backup-Preview.com',
-    preview: true
+    preview: false
   },
   {
     url: 'www.Picture-Of-An-Image.com/event',

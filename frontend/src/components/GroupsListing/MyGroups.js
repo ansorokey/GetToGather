@@ -28,7 +28,8 @@ function MyGroups() {
     // if(curUser === null) return <Redirect to="/" />;
 
     return <div className="list-ctn">
-        {groupsArr.map(g => { return (
+        {groupsArr.map(g => {
+            return (
                 <GroupTile key={g.id} group={g} curUser={curUser} openModal={openModal} myGroup={true}/>
         )})}
     </div>;

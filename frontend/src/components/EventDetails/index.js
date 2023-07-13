@@ -36,7 +36,7 @@ function EventDetails() {
             <Link className='back-to-events' to="/events">{back}</Link>
             <div className='event-details-s1'>
                 <h1>{event?.name}</h1>
-                <h2>Organized by {group?.Organizer?.firstName} {group?.Organizer?.lastName}</h2>
+                <h2>Hosted by {group?.Organizer?.firstName} {group?.Organizer?.lastName}</h2>
             </div>
             <div className='event-details-s2'>
                 <div className='event-img-ctn'>
@@ -47,7 +47,7 @@ function EventDetails() {
                         <div className='group-link'>
                             <img src={group?.previewImage}/>
                             <div>
-                                <div className='e-text'>Hosted by {group?.name}</div>
+                                <div className='e-text'>{group?.name}</div>
                                 <div className='e-text'>{group?.type}</div>
                             </div>
                         </div>
@@ -59,11 +59,13 @@ function EventDetails() {
                                 <div className='event-time'>
                                     <span className='et'>START</span>
                                     <span>{event?.startDate.slice(0, 10)}</span>
+                                    <i class="fa-solid fa-circle fa-2xs"></i>
                                     <span>{event?.startDate.slice(11, 16)}</span>
                                 </div>
                                 <div className='event-time'>
                                     <span className='et'>END</span>
                                     <span>{event?.endDate.slice(0, 10)}</span>
+                                    <i class="fa-solid fa-circle fa-2xs"></i>
                                     <span>{event?.endDate.slice(11, 16)}</span>
                                 </div>
                             </div>
@@ -73,7 +75,7 @@ function EventDetails() {
                             <div>{event?.price === 0 ? 'FREE' : '$' +event?.price?.toFixed(2)}</div>
                         </div>
                         <div className='deet'>
-                            <i className="fa-solid fa-location-arrow fa-deet"></i>
+                        <i class="fa-solid fa-map-pin fa-deet"></i>
                             <div>{event?.type}</div>
                         </div>
                         <div className='event-btns'>

@@ -610,7 +610,7 @@ router.get('/', validateQuery, async (req, res, next) => {
 
     const allEvents = await Event.scope('allMembers').findAll({
         attributes: {
-            exclude: ['capacity', 'price', 'description']
+            exclude: ['capacity', 'price']
         },
         group: [['Event.id'], ['Group.id'], ['Venue.id']],
         order: [['startDate']],

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import './EventTile.css';
 
 function EventTile({event}) {
-    const {startDate, endDate, numAttending, Group} = event;
+    const {startDate, numAttending, Group} = event;
     const startString = new Date(startDate).toString();
 
     return (
@@ -16,7 +16,7 @@ function EventTile({event}) {
                     <div className="e-tile-info">
                         <div className="e-date-time">
                             <span>{startString?.slice(0, 3)}, {startString?.slice(4, 10)}, {startString?.slice(10, 15)}</span>
-                            <i className="fa-solid fa-minus fa-date-time-dash"></i>
+                            <i class="fa-solid fa-circle fa-2xs"></i>
                             <span>{startDate?.slice(11, 16)}</span>
                             {/* <p>{endDate.slice(0, 10)} {endDate.slice(11, 16)}</p> */}
                         </div>
@@ -27,6 +27,7 @@ function EventTile({event}) {
                         <div> {numAttending >= 0 ? numAttending : event?.Attendance?.length} Attending</div>
                     </div>
                 </div>
+                <div className="e-description">{event?.description}</div>
             </Link>
         </>
     );

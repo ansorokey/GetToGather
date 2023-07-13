@@ -26,7 +26,7 @@ function Navigation({ firstLoad }){
           </NavLink>
 
           <div className='session'>
-            {sessionUser && <span className='create-group-prof' onClick={() => openModal('createGroup')}>Create a new Group</span>}
+            {sessionUser && <span className='create-group-prof' onClick={() => openModal('createGroup')}>Start a new Group</span>}
             { sessionUser ? <ProfileButton user={sessionUser} /> : <LogInSignUp/>}
           </div>
       </nav>

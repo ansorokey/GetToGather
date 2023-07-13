@@ -32,7 +32,7 @@ function GroupDetails() {
 
     const guestButtons = (
         <>
-            <button onClick={() => alert('Feature coming soon...')}>Join this group</button>
+            <button className='join-group' onClick={() => alert('Feature coming soon...')}>Join this group</button>
         </>
     );
 
@@ -73,12 +73,16 @@ function GroupDetails() {
                     <div className="g-info">
                         <h1>{group?.name}</h1>
                         <p>{group?.city}, {group?.state}</p>
-                        <p>{group?.type}</p>
+                        <div className='members-type group-num-events-private'>
+                            <span>{group?.Events?.length} events</span>
+                            <i class="fa-solid fa-circle fa-2xs"></i>
+                            <span>{group?.private === true ? 'Private' : 'Public'}</span>
+                        </div>
                         <p>Organized by {group?.Organizer?.firstName} {group?.Organizer?.lastName}</p>
                     </div>
 
                     <div className='group-management'>
-                        { +curUser?.id === +group?.organizerId ? ownerButtons : guestButtons}
+                        { +curUser?.id === +group?.organizerId ? ownerButtons : curUser !== null ? guestButtons : null}
                     </div>
                 </div>
 

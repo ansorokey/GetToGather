@@ -16,8 +16,9 @@ function GroupTile({group, buttons = false}) {
                         <h3>{group.city}, {group.state}</h3>
                         <p>{group.about}</p>
                         <div className='members-type'>
-                            <span>{group.numMembers} members</span>
-                            <span>{group.type}</span>
+                            <span>{group.numEvents} events</span>
+                            <i class="fa-solid fa-circle fa-2xs"></i>
+                            <span>{group.private === true ? 'Private' : 'Public'}</span>
                         </div>
                     </div>
                 </div>

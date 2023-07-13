@@ -42,12 +42,12 @@ function LandingPage() {
                         </h3>
                     </Link>
                     {/* <h3 className='s3-tile-header-text'><Link to="/groups">See all groups</Link></h3> */}
-                    <p className="p-text">Lorem Ipsum</p>
+                    <p className="p-text">Find your flock and soar</p>
                 </div>
                 <div className='s3-tile'>
                     <img src='https://thumbs.gfycat.com/DimDopeyCygnet-max-1mb.gif' />
                     <Link className="s3-link" to="/events"><h3 className='s3-tile-header-text'>Find an event</h3></Link>
-                    <p className="p-text">Lorem Ipsum</p>
+                    <p className="p-text">Something is happening all the time. Be a part of it!</p>
                 </div>
                 <div className='s3-tile'>
                     <img src='https://media1.giphy.com/media/l0MYSPhERfzfCPnPy/giphy.gif' />
@@ -55,7 +55,7 @@ function LandingPage() {
                         className={curUser ? 's3-tile-header-text' : 'disabled-landing-link'}
                         onClick={curUser ? () => openModal('createGroup') : null}
                     >Start a new Group</h3>
-                    <p className="p-text">Lorem Ipsum</p>
+                    <p className="p-text">Lead your own pack into adventure</p>
                 </div>
             </div>
 

@@ -11,16 +11,7 @@ options.tableName = 'Groups';
 const data = [
   {
     name: 'Power Rangers Dino Thunder',
-    about: `Power Rangers' roar! There's a light in the distance
-    See them coming closer!
-    With the force of ages
-    Centuries gone by!
-    Protectors of the right,
-    Defenders sworn to fight!
-    Dino Rangers' roar!
-    Power Rangers' score!
-    Save us from these evil forces, win!
-    ...`,
+    about: `Power Rangers' roar! There's a light in the distance - See them coming closer! - With the force of ages - Centuries gone by! - Protectors of the right, - Defenders sworn to fight! - Dino Rangers' roar! - Power Rangers' score! - Save us from these evil...`,
     type: 'In person',
     private: true,
     city: 'Reefside',
@@ -30,16 +21,7 @@ const data = [
   },
   {
     name: 'Power Rangers Lightspeed Rescue',
-    about: `Power Rangers Lightspeed!
-    Lightspeed Rescue!
-    The signal is calling,
-    Our planet is falling;
-    The danger will test you,
-    Better make it a Lightspeed Rescue!
-    Rangers, Go! Power Rangers!
-    Power Rangers Lightspeed Rescue!
-    Power Rangers Lightspeed Rescue!
-    Po...`,
+    about: `Power Rangers Lightspeed! - Lightspeed Rescue! - The signal is calling, - Our planet is falling; - The danger will test you, - Better make it a Lightspeed Rescue! - Rangers, Go! Power Rangers! - Power Rangers Lightspeed Rescue! - Power Rangers Ligh...`,
     type: 'In person',
     private: true,
     city: 'Mariner Bay',
@@ -50,15 +32,7 @@ const data = [
   },
   {
     name: 'Power Rangers Ninja Storm',
-    about: `Deep in the mountains, secret ninja academies trains our future protectors.
-    Ancient scrolls told of three, who would be chosen above the others.
-    Three who will become...
-    Go!
-    Power Rangers Go
-    Ninja Storm!
-    Let's Go!
-    The call is on!
-    Their force is gett...`,
+    about: `Deep in the mountains, secret ninja academies trains our future protectors. - Ancient scrolls told of three, who would be chosen above the others. - Three who will become... Go! Power Rangers Go Ninja Storm! Let's Go! The call is on! Their force is get...`,
     type: 'In person',
     private: true,
     city: 'Blue Bay Harbor',
@@ -69,13 +43,7 @@ const data = [
   },
   {
     name: 'Power Rangers RPM',
-    about: `A computer virus has built armies of robotic soldiers
-    and taken control of our world.
-    But there is still one place where we can be safe:
-    The domed city of Corinth.
-    And the only hope we have left is...
-    Power Rangers RPM! Get in gear!
-    Power Rangers RP...`,
+    about: `A computer virus has built armies of robotic soldiers - and taken control of our world. But there is still one place where we can be safe: The domed city of Corinth. And the only hope we have left is... Power Rangers RPM! Get in gear! Power Rangers RP...`,
     type: 'In person',
     private: true,
     city: 'Corinth',
@@ -86,18 +54,7 @@ const data = [
   },
   {
     name: 'Power Rangers SPD',
-    about: `S.P.D. Emergency!
-    Power Rangers S.P.D.
-    Power Rangers to the rescue!
-    (Go Go Go Go)
-    Power Rangers S.P.D.
-    Power Rangers to the rescue!
-    (Go Go Go Go)
-    Heroes on your side,
-    Heroes for all time,
-    Out to save the universe!
-    No matter where you are,
-    If it's ne...`,
+    about: `S.P.D. Emergency! Power Rangers S.P.D. Power Rangers to the rescue! (Go Go Go Go) Power Rangers S.P.D. Power Rangers to the rescue! (Go Go Go Go) Heroes on your side, Heroes for all time, Out to save the universe! No matter where you are, If it's ne...`,
     type: 'In person',
     private: true,
     city: 'Chicago',
@@ -107,17 +64,7 @@ const data = [
   },
   {
     name: 'Power Rangers Time Force',
-    about: `Time Force!
-    Time Force!
-    Power Rangers!
-    Racing to another time
-    Chrono Morphers are online
-    Timeless wonders
-    Fire and thunder
-    Off to save the world!
-    Go Go Time Force!
-    Time, Time, Time for Power Rangers Time Force!
-    Time, Time, Time for Power Rangers Tim...`,
+    about: `Time Force! Time Force! Power Rangers! Racing to another time Chrono Morphers are online Timeless wonders Fire and thunder Off to save the world! Go Go Time Force! Time, Time, Time for Power Rangers Time Force! Time, Time, Time for Power Rangers Tim...`,
     type: 'In person',
     private: true,
     city: 'Millenium City',
@@ -128,16 +75,7 @@ const data = [
   },
   {
     name: 'Power Rangers Wild Force',
-    about: `(Wild! Wild Force!)
-    (Wild Force Access!)
-    Wild Force Power Rangers!
-    We'll defend what's right forever
-    Wild Force Power Rangers!
-    We'll protect this world together
-    (Wild Force)
-    (Wild Force, Wild Force!)
-    Power Rangers flying higher (Go!)
-    Wild Force run...`,
+    about: `(Wild! Wild Force!) - (Wild Force Access!) - Wild Force Power Rangers! - We'll defend what's right forever - Wild Force Power Rangers! - We'll protect this world together - (Wild Force) - (Wild Force, Wild Force!) - Power Rangers flying higher (Go!)...`,
     type: 'In person',
     private: true,
     city: 'Turtle Cove',
@@ -169,7 +107,7 @@ module.exports = {
 
     await user.createOwnedGroup({
       name: pr.name,
-      about: pr.about.slice(0, 256),
+      about: pr.about.slice(0, 255),
       type: pr.type,
       private: pr.private,
       city: pr.city,

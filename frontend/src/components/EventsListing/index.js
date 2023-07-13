@@ -11,7 +11,9 @@ import MyEvents from './MyEvents';
 function EventsListing() {
     const dispatch = useDispatch();
     const eventState = useSelector(state => state.events);
-    const eventsArr = Object.values(eventState);
+    const eventsArr = Object.values(eventState).sort((a, b) => {
+        return new Date(a?.startDate) - new Date(b?.startDate);
+    });
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -27,7 +29,11 @@ function EventsListing() {
                 <Route exact path="/events">
                     <div className="list-ctn">
                         <Listings/>
-                        {eventsArr.map(e => {
+                        <h2>Events in TeamUp</h2>
+                        {eventsArr?.filter(e => new Date(e.startDate) > new Date()).map(e => {
+                            return <EventTile key={e.id} event={e}/>
+                        })}
+                        {eventsArr?.filter(e => new Date(e.startDate) <= new Date()).map(e => {
                             return <EventTile key={e.id} event={e}/>
                         })}
                     </div>

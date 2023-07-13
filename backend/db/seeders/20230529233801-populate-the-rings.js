@@ -80,11 +80,11 @@ const events = [
 const groupImages = [
   {
     url: 'www.The-Group-Preview-Image.com',
-    preview: true
+    preview: false
   },
   {
     url: 'www.The-Group-Backup-Preview.com',
-    preview: true
+    preview: false
   },
   {
     url: 'www.Picture-Of-An-Image.com/group',
@@ -103,11 +103,11 @@ const groupImages = [
 const eventImages = [
   {
     url: 'www.The-Event-Preview-Image.com',
-    preview: true
+    preview: false
   },
   {
     url: 'www.The-Event-Backup-Preview.com',
-    preview: true
+    preview: false
   },
   {
     url: 'www.Picture-Of-An-Image.com/event',
@@ -204,10 +204,10 @@ module.exports = {
     // Group Images
     for(let i = 0; i < groupImages.length; i++){
       await curGroup.createGroupImage(groupImages[i]);
-      if(groupImages[i].preview) {
-        curGroup.previewImage = groupImages[i].url;
-        await curGroup.save();
-      }
+      // if(groupImages[i].preview) {
+      //   curGroup.previewImage = groupImages[i].url;
+      //   await curGroup.save();
+      // }
     }
 
     // Event Images
@@ -216,10 +216,10 @@ module.exports = {
     });
     for(let i = 0; i < eventImages.length; i++){
       await event.createEventImage(eventImages[i]);
-      if(eventImages[i].preview) {
-        event.previewImage = eventImages[i].url;
-        await event.save();
-      }
+      // if(eventImages[i].preview) {
+      //   event.previewImage = eventImages[i].url;
+      //   await event.save();
+      // }
     }
 
   },

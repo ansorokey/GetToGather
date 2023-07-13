@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 
 const { Op } = require('sequelize');
 const { check } = require('express-validator');
-const { User, Group, GroupMember } = require('../../db/models');
+const { User, Group, GroupMember, Event } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation.js');
 const { setTokenCookie, requireAuth } = require('../../utils/auth.js');
 
@@ -99,9 +99,13 @@ router.get('/current/groups', requireAuth, async (req, res, next) => {
     const groupArr = joinedGroups.map(el => el.groupId);
 
     //get all groups they organized and are a member of
-    const groups = await Group.scope('memberScope').findAll({
+    // CHANGED SCOPE FROM MEMBERS TO NULL TO GET NUM EVENTS
+    const groups = await Group.scope(null).findAll({
         where: {
             [Op.or]: [ { organizerId: req.user.id }, { id: groupArr } ]
+        },
+        include: {
+            model: Event
         }
     });
 

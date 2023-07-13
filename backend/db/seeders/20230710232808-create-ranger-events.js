@@ -167,7 +167,7 @@ const data = [
         description: "Are you a fan of the future? Of Spider-people? Of vampires? We've got the meeting of a lifetime for you! *Not responsible for any glitching out of reality*",
         startDate: "2099-10-31 10:00:00",
         endDate: "2099-10-31 13:00:00",
-        previewImage: ''
+        previewImage: 'https://i1.sndcdn.com/artworks-YIUNRqvlWn9iQSC2-tNHg5Q-t500x500.jpg'
       },
       {
         name: "Time Machine Hot Tub",
@@ -177,7 +177,7 @@ const data = [
         description: "Not to be confused with Hot Tub Time Machine. Catering provided by the 4th Dimension.",
         startDate: "3421-01-21 19:00:00",
         endDate: "3421-01-21 21:00:00",
-        previewImage: ''
+        previewImage: 'https://images.tbs.com/tbs/$dyna_params/https%3A%2F%2Fi.cdn.tbs.com%2Fassets%2Fimages%2F2020%2F07%2FHot-Tub-Time-Machine-2-1600x900.jpg'
       },
       {
         name: "Rob Your Future Self",
@@ -187,7 +187,7 @@ const data = [
         description: "Going back in time and changing the future is questionably wrong. Luckily, laws don't apply going forward. The success of tomorrow: TODAY!",
         startDate: "2043-07-11 10:00:00",
         endDate: "2043-07-11 11:00:00",
-        previewImage: ''
+        previewImage: 'https://i0.wp.com/www.alittlebithuman.com/wp-content/uploads/2021/07/hamburglar.png'
       }
     ]
   },
@@ -202,7 +202,7 @@ const data = [
         description: "Don't just find your spirit animal: pet it. Feed it snacks. Watch it urinate on your neighbors flowers.",
         startDate: "2023-08-08 12:30:00",
         endDate: "2023-08-08 13:30:00",
-        previewImage: ''
+        previewImage: 'https://www.sagegoddess.com/wp-content/uploads/2018/03/Wolf-Spirit-Animal-Screensaver.jpg'
       },
       {
         name: "Lie around with Lions",
@@ -212,7 +212,7 @@ const data = [
         description: "The king of the jungle is often king of couch potatoes. Curl up into a ball and enjoy some Zebra Jerky with zero responsibility.",
         startDate: "2023-09-19 14:00:00",
         endDate: "2023-09-19 15:45:00",
-        previewImage: ''
+        previewImage: 'https://i.pinimg.com/474x/7f/d0/87/7fd0876d9e0290c1ec6a3b57f336e675.jpg'
       }
     ]
   }

@@ -190,7 +190,7 @@ function eventsReducer(state = {}, action) {
 
         case CREATE_EVENT:
             newState = {...state};
-            newState[action.event.groupId] = action.event;
+            newState[action.event.id] = action.event;
             return newState;
 
         case DELETE_EVENTS:

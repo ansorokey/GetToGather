@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import './GroupTile.css';
 
-function GroupTile({group, buttons = false}) {
+function GroupTile({group, curUser, openModal, myGroup}) {
 
     return (
         <>
@@ -23,6 +23,16 @@ function GroupTile({group, buttons = false}) {
                     </div>
                 </div>
             </Link>
+            {myGroup && <div className="group-manage-btns">
+                    { +group.organizerId === +curUser.id ?
+                        <>
+                            <button onClick={() => openModal('updateGroup', {type: 'update', group})}>Update</button>
+                            <button onClick={() => openModal('deleteGroup', group)}>Delete</button>
+                        </>
+                        :
+                        <button onClick={() => alert('feature coming soon~')}>Leave Group</button>
+                    }
+            </div>}
         </>
     );
 }

@@ -26,19 +26,7 @@ function MyGroups() {
 
     return <div className="list-ctn">
         {groupsArr.map(g => { return (
-            <>
-                <GroupTile key={g.id} group={g} buttons={true} />
-                <div className="group-manage-btns">
-                    { +g.organizerId === +curUser.id ?
-                        <>
-                            <button onClick={() => openModal('updateGroup', {type: 'update', group: g})}>Update</button>
-                            <button onClick={() => openModal('deleteGroup', g)}>Delete</button>
-                        </>
-                        :
-                        <button onClick={() => alert('feature coming soon~')}>Leave Group</button>
-                    }
-                </div>
-            </>
+                <GroupTile key={g.id} group={g} curUser={curUser} openModal={openModal} myGroup={true}/>
         )})}
     </div>;
 }

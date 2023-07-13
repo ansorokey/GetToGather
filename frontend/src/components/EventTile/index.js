@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import './EventTile.css';
 
-function EventTile({event}) {
+function EventTile({event, curUser, openModal, myEvents = false}) {
     const {startDate, numAttending, Group} = event;
     const startString = new Date(startDate).toString();
 
@@ -29,6 +29,16 @@ function EventTile({event}) {
                 </div>
                 <div className="e-description">{event?.description}</div>
             </Link>
+            {myEvents && <div className="event-manage-btns">
+                { +event.Group.organizerId === +curUser.id ?
+                    <>
+                        <button onClick={() => openModal('updateEvent', {type: 'update', event})}>Update</button>
+                        <button onClick={() => openModal('deleteEvent', event)}>Delete</button>
+                    </>
+                    :
+                    <button onClick={() => alert('feature coming soon~')}>Cancel Attendance</button>
+                }
+            </div>}
         </>
     );
 }

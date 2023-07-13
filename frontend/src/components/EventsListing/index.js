@@ -1,6 +1,6 @@
 import Listings from '../Listings';
 import EventTile from '../EventTile';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEventsThunk } from '../../store/events';
@@ -9,7 +9,6 @@ import EventDetails from '../EventDetails';
 import MyEvents from './MyEvents';
 
 function EventsListing() {
-    const curUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const eventState = useSelector(state => state.events);
     const eventsArr = Object.values(eventState).sort((a, b) => {
@@ -41,7 +40,7 @@ function EventsListing() {
                 </Route>
 
                 <Route exact path="/events/current">
-                { curUser !== null ? <MyEvents/> : <Redirect path="/" /> }
+                        <MyEvents/>
                 </Route>
 
                 <Route exact path="/events/:eventId">

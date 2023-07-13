@@ -7,7 +7,6 @@ import './styles.css';
 import { Route, Switch, useParams } from 'react-router-dom';
 import GroupDetails from '../GroupDetails';
 import MyGroups from './MyGroups';
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 function GroupsListing() {
     const {groupId} = useParams();
@@ -38,7 +37,7 @@ function GroupsListing() {
             </Route>
 
         <Route exact path="/groups/current">
-            { curUser !== null ? <MyGroups/> : <Redirect path="/" /> }
+            <MyGroups/>
         </Route>
 
             <Route path="/groups/:groupId">

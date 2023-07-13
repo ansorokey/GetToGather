@@ -3,6 +3,7 @@ import GroupTile from "../GroupTile";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyGroupsThunk } from "../../store/groups";
 import { useModalContext } from "../../Context/ModalContext";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 function MyGroups() {
     const curUser = useSelector(state => state.session.user);
@@ -23,6 +24,8 @@ function MyGroups() {
     useEffect(() => {
         loadMyGroups();
     }, [curUser]);
+
+    // if(curUser === null) return <Redirect to="/" />;
 
     return <div className="list-ctn">
         {groupsArr.map(g => { return (

@@ -1,19 +1,20 @@
+import './EventsListing.css';
+
+import MyEvents from './MyEvents';
 import Listings from '../Listings';
 import EventTile from '../EventTile';
-import { Switch, Route } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getEventsThunk } from '../../store/events';
-import './EventsListing.css';
 import EventDetails from '../EventDetails';
-import MyEvents from './MyEvents';
+
+import { useEffect } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import { getEventsThunk } from '../../store/events';
+import { useDispatch, useSelector } from 'react-redux';
 
 function EventsListing() {
     const dispatch = useDispatch();
+
     const eventState = useSelector(state => state.events);
-    const eventsArr = Object.values(eventState).sort((a, b) => {
-        return new Date(a?.startDate) - new Date(b?.startDate);
-    });
+    const eventsArr = Object.values(eventState).sort((a, b) => new Date(a?.startDate) - new Date(b?.startDate));
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -30,12 +31,8 @@ function EventsListing() {
                     <div className="list-ctn">
                         <Listings/>
                         <h2>Events in TeamUp</h2>
-                        {eventsArr?.filter(e => new Date(e.startDate) > new Date()).map(e => {
-                            return <EventTile key={e.id} event={e}/>
-                        })}
-                        {eventsArr?.filter(e => new Date(e.startDate) <= new Date()).map(e => {
-                            return <EventTile key={e.id} event={e}/>
-                        })}
+                        {eventsArr?.filter(e => new Date(e.startDate) > new Date()).map(e => <EventTile key={e.id} event={e}/> )}
+                        {eventsArr?.filter(e => new Date(e.startDate) <= new Date()).map(e => <EventTile key={e.id} event={e}/> )}
                     </div>
                 </Route>
 

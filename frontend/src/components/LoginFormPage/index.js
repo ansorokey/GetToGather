@@ -7,16 +7,16 @@ import { useModalContext } from '../../Context/ModalContext';
 import './LoginFormPage.css';
 
 function LoginFormPage() {
+    const dispatch = useDispatch();
     const curUser = useSelector(state => state.session.user);
 
+    const {closeModal} = useModalContext();
     const [errMessage, setErrMessage] = useState('');
     const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [submitted, setSubmitted] = useState(false);
 
-    const dispatch = useDispatch();
-    const {closeModal} = useModalContext();
 
     useEffect(() => {
         setSubmitted(false);

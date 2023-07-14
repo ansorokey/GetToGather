@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
 import GroupTile from "../GroupTile";
-import { useDispatch, useSelector } from "react-redux";
-import { getMyGroupsThunk } from "../../store/groups";
+
 import { useModalContext } from "../../Context/ModalContext";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import { getMyGroupsThunk } from "../../store/groups";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function MyGroups() {
-    const curUser = useSelector(state => state.session.user);
-    const {openModal} = useModalContext();
     const dispatch = useDispatch();
+    const curUser = useSelector(state => state.session.user);
 
+    const {openModal} = useModalContext();
     const [groupsArr, setGroupsArr] = useState([]);
 
     async function loadMyGroups() {
@@ -25,14 +25,11 @@ function MyGroups() {
         loadMyGroups();
     }, [curUser]);
 
-    // if(curUser === null) return <Redirect to="/" />;
-
-    return <div className="list-ctn">
-        {groupsArr.map(g => {
-            return (
-                <GroupTile key={g.id} group={g} curUser={curUser} openModal={openModal} myGroup={true}/>
-        )})}
-    </div>;
+    return (
+        <div className="list-ctn">
+            {groupsArr.map(g => <GroupTile key={g.id} group={g} curUser={curUser} openModal={openModal} myGroup={true}/> )}
+        </div>
+    );
 }
 
 export default MyGroups;

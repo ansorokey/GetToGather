@@ -1,5 +1,6 @@
-import { useModalContext } from "../../Context/ModalContext";
 import './styles.css';
+
+import { useModalContext } from "../../Context/ModalContext";
 
 function LogInSignUp() {
     const {openModal} = useModalContext();

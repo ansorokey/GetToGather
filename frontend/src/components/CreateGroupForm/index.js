@@ -1,11 +1,17 @@
 import './CreateGroupForm.css';
-import {useEffect, useState} from 'react';
-import { createGroupThunk, getGroupDetails, updateGroupThunk } from '../../store/groups';
+
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useModalContext } from '../../Context/ModalContext';
-import {useHistory} from 'react-router-dom';
+import { useEffect, useState} from 'react';
+import { createGroupThunk, getGroupDetails, updateGroupThunk } from '../../store/groups';
 
 function CreateGroupForm({options}) {
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const { closeModal } = useModalContext();
+
     const [ validations, setValidations ] = useState({});
     const [ city, setCity ] = useState('');
     const [ state, setState ] = useState('');
@@ -15,9 +21,6 @@ function CreateGroupForm({options}) {
     const [ isPrivate, setIsPrivate ] = useState('default');
     const [ imgUrl, setImgUrl ] = useState('');
 
-    const dispatch = useDispatch();
-    const { closeModal } = useModalContext();
-    const history = useHistory();
 
     useEffect(() => {
         if(options?.type === 'update'){

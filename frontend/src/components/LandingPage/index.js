@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
 import './LandingPage.css';
 
 import { Link } from 'react-router-dom';
-import { useModalContext } from '../../Context/ModalContext';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useModalContext } from '../../Context/ModalContext';
 
 function LandingPage() {
     const curUser = useSelector(state => state.session.user);

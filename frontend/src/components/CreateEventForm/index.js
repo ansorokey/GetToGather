@@ -1,14 +1,17 @@
 import './styles.css';
+
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useDispatch } from 'react-redux';
+import { useModalContext } from '../../Context/ModalContext';
 import { useEffect, useState } from 'react';
 import { createEventThunk, updateEventThunk } from '../../store/events';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { useModalContext } from '../../Context/ModalContext';
 
 function CreateEventForm ({group, event, formType}) {
     const dispatch = useDispatch();
     const history = useHistory();
+
     const {closeModal} = useModalContext();
+
     const [valErrs, setValErrs] = useState({});
     const [name, setName] = useState('');
     const [type, setType] = useState('default');
@@ -38,7 +41,6 @@ function CreateEventForm ({group, event, formType}) {
         }
 
         const payload = {
-            //a ternary operator in an object does not need brackets
             groupId: formType === 'update' ? event.groupId : group.id,
             name,
             type,

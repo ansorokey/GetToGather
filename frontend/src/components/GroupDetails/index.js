@@ -1,20 +1,23 @@
+import './GroupDetails.css';
+
+import { getGroupEvents } from '../../store/events';
+import { getGroupDetails } from "../../store/groups";
+import { useModalContext } from '../../Context/ModalContext';
 import { useParams, Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getGroupDetails } from "../../store/groups";
-import { getGroupEvents } from '../../store/events';
-import { useModalContext } from '../../Context/ModalContext';
-import './GroupDetails.css';
 
 import EventTile from "../EventTile";
 
 
 function GroupDetails() {
     const dispatch = useDispatch();
+
     const {groupId} = useParams();
+    const {openModal} = useModalContext();
+
     const curUser = useSelector(state => state?.session?.user);
     const group = useSelector(state => state?.groups)[groupId];
-    const {openModal} = useModalContext();
 
     const [groupEvents, setGroupEvents] = useState([]);
     const [upcomingEvents, setUpcomingEvents] = useState([]);

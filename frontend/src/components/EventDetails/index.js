@@ -1,22 +1,24 @@
-import { useDispatch, useSelector } from 'react-redux';
 import './EventDetails.css';
+
+import { getGroupDetails } from '../../store/groups';
+import { useModalContext } from '../../Context/ModalContext';
 import { useParams, Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect, useState } from 'react';
 import { getEventDetailsThunk } from '../../store/events';
-import { getGroupDetails } from '../../store/groups';
-import { useModalContext } from '../../Context/ModalContext';
+import { useDispatch, useSelector } from 'react-redux';
 
 function EventDetails() {
+    const { eventId } = useParams();
     const { openModal } = useModalContext();
-    const curUser = useSelector(state => state.session.user)
-    const {eventId} = useParams();
+
     const dispatch = useDispatch();
+
+    const curUser = useSelector(state => state.session.user)
     const eventState = useSelector(state => state.events);
     const event = eventState[eventId];
     const groupState = useSelector(state => state.groups);
     let group;
     if(event) group = groupState[event.groupId];
-    const [loadedEvent, setLoadedEvent] = useState(false);
 
     const loadStuff = async () => {
         const res = await dispatch(getEventDetailsThunk(eventId));

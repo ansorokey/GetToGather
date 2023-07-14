@@ -1,16 +1,18 @@
-import { useModalContext } from '../../Context/ModalContext';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { removeSingleEventThunk } from '../../store/events';
 import './DeleteEvent.css';
+
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useDispatch } from 'react-redux';
+import { useModalContext } from '../../Context/ModalContext';
+import { removeSingleEventThunk } from '../../store/events';
 
 function DeleteEvent({event}) {
     const dispatch = useDispatch();
     const history = useHistory();
+
     const { closeModal } = useModalContext();
 
     async function handleDelete() {
-        const response = await dispatch(removeSingleEventThunk(+event.id));
+        await dispatch(removeSingleEventThunk(+event.id));
         history.push(`/groups/${event.groupId}`);
         closeModal();
     }

@@ -1,13 +1,15 @@
 import './DeleteGroup.css';
-import { useModalContext } from '../../Context/ModalContext';
-import { useDispatch } from 'react-redux';
-import {deleteGroupThunk} from '../../store/groups';
-import {deleteEventsThunk} from '../../store/events';
+
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useDispatch } from 'react-redux';
+import { useModalContext } from '../../Context/ModalContext';
+import { deleteGroupThunk } from '../../store/groups';
+import { deleteEventsThunk } from '../../store/events';
 
 function DeleteGroup({group}) {
     const history = useHistory();
     const dispatch = useDispatch();
+
     const {closeModal} = useModalContext();
 
     async function handleDelete() {

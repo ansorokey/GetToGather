@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
 import './EventTile.css';
+
+import { Link } from "react-router-dom";
 
 function EventTile({event, curUser, openModal, myEvents = false}) {
     const {startDate, numAttending, Group} = event;
+
     const startString = new Date(startDate).toString();
 
     return (
@@ -18,7 +20,6 @@ function EventTile({event, curUser, openModal, myEvents = false}) {
                             <span>{startString?.slice(0, 3)}, {startString?.slice(4, 10)}, {startString?.slice(10, 15)}</span>
                             <i className="fa-solid fa-circle fa-2xs"></i>
                             <span>{startDate?.slice(11, 16)}</span>
-                            {/* <p>{endDate.slice(0, 10)} {endDate.slice(11, 16)}</p> */}
                         </div>
                         <div className="e-name-hosted">
                             <div className="e-tile-event-name">{event.name}</div>

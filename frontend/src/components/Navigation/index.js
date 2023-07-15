@@ -1,23 +1,17 @@
-import React, { useEffect } from 'react';
+import './styles.css';
+
+import React from 'react';
+import LogInSignUp from './LogInSignUp.js';
+import ProfileButton from './ProfileButton.js';
+
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import ProfileButton from './ProfileButton.js';
-import LogInSignUp from './LogInSignUp.js';
-import logo from '../../images/get-to-gather-logo.png';
-import './styles.css';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min.js';
 import { useModalContext } from '../../Context/ModalContext.js';
 
 function Navigation({ firstLoad }){
-    const { openModal } = useModalContext();
-    const sessionUser = useSelector(state => state.session.user);
-    const history = useHistory();
+  const { openModal } = useModalContext();
 
-    //Intended to redirect user to home after logging in
-    //prevents sit wide page refresh instead
-    // useEffect(() => {
-    //   if(sessionUser) history.push('/');
-    // }, [sessionUser])
+  const sessionUser = useSelector(state => state.session.user);
 
     return (
       <nav className="nav-bar">
@@ -26,7 +20,7 @@ function Navigation({ firstLoad }){
           </NavLink>
 
           <div className='session'>
-            {sessionUser && <span className='create-group-prof' onClick={() => openModal('createGroup')}>Start a new Group</span>}
+            { sessionUser && <span className='create-group-prof' onClick={() => openModal('createGroup')}>Start a new Group</span>}
             { sessionUser ? <ProfileButton user={sessionUser} /> : <LogInSignUp/>}
           </div>
       </nav>

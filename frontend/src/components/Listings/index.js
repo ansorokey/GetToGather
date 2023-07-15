@@ -1,5 +1,6 @@
-import { NavLink } from 'react-router-dom';
 import './Listings.css';
+
+import { NavLink } from 'react-router-dom';
 
 function Listings() {
 

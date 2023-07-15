@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
 import './GroupTile.css';
+
+import { Link } from "react-router-dom";
 
 function GroupTile({group, curUser, openModal, myGroup}) {
 

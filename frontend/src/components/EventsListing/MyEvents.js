@@ -3,12 +3,12 @@ import EventTile from "../EventTile";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyEventsThunk } from "../../store/events";
 import { useModalContext } from "../../Context/ModalContext";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 function MyEvents() {
-    const curUser = useSelector(state => state.session.user);
-    const {openModal} = useModalContext();
     const dispatch = useDispatch();
+    const curUser = useSelector(state => state.session.user);
+
+    const {openModal} = useModalContext();
 
     const [eventsArr, setEventsArr] = useState([]);
 
@@ -24,8 +24,6 @@ function MyEvents() {
     useEffect(() => {
         loadMyEvents();
     }, [curUser]);
-
-    // if(curUser === null) return <Redirect to="/" />;
 
     return <div className="list-ctn">
         {eventsArr.map(event => { return (

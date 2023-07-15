@@ -1,25 +1,24 @@
 import * as sessionActions from './store/session';
-import LoginFormPage from "./components/LoginFormPage";
-import SignUpFormPage from "./components/SignUpFormPage";
-import LandingPage from './components/LandingPage';
-import Navigation from './components/Navigation';
-import Modal from './components/Modal';
-import Favicon from 'react-favicon';
 
 import { Switch, Route, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useModalContext } from './Context/ModalContext';
+
+import Modal from './components/Modal';
+import Navigation from './components/Navigation';
+import LandingPage from './components/LandingPage';
+import LoginFormPage from "./components/LoginFormPage";
 import GroupsListing from './components/GroupsListing';
 import EventsListing from './components/EventsListing';
-import { UseSelector, useSelector } from 'react-redux/es/hooks/useSelector';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import SignUpFormPage from "./components/SignUpFormPage";
 
 
 function App() {
   const dispatch = useDispatch();
-  const [firstLoad, setFirstLoad] = useState(false);
+
   const {showModal} = useModalContext();
+  const [firstLoad, setFirstLoad] = useState(false);
 
   useEffect(() => {
     dispatch(sessionActions.restoreUserThunk());

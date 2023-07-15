@@ -1,16 +1,17 @@
-import App from './App';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import configureStore from './store';
+import './index.css';
+
 import * as sessionActions from './store/session';
 
-import { Provider, useDispatch }  from 'react-redux';
+import App from './App';
+import React from 'react';
+import Favicon from 'react-favicon';
+import ReactDOM from 'react-dom';
+import ModalProvider from './Context/ModalContext.js';
+import configureStore from './store';
+
+import { Provider }  from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { restoreCSRF, csrfFetch } from './store/csrf';
-import ModalProvider from './Context/ModalContext.js';
-
-import './index.css';
-import Favicon from 'react-favicon';
 
 const store = configureStore();
 

@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
-import { useModalContext } from "../../Context/ModalContext";
+import './Modal.css';
 
+import DeleteGroup from "../DeleteGroup";
+import GroupDetails from "../GroupDetails";
 import LoginFormPage from "../LoginFormPage";
 import SignUpFormPage from '../SignUpFormPage';
-import GroupDetails from "../GroupDetails";
-import CreateGroupForm from "../CreateGroupForm";
-import DeleteGroup from "../DeleteGroup";
 import DeleteEvent from "../DeleteEvent";
-
-import './Modal.css';
 import CreateEventForm from "../CreateEventForm";
+import CreateGroupForm from "../CreateGroupForm";
+
+import { useModalContext } from "../../Context/ModalContext";
+import { useEffect, useState } from "react";
+
+
 
 function Modal() {
 

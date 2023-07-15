@@ -1,6 +1,12 @@
 * {
     font-family: 'Ubuntu', sans-serif;
-    /* color: whitesmoke; */
+    color: whitesmoke;
+}
+
+button, input, select, textarea, option,
+.menu > *,
+.profile-ctn > *{
+    color: black;
 }
 
 html, body {

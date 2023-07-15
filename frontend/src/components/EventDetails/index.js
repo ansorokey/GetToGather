@@ -48,8 +48,8 @@ function EventDetails() {
                     <Link to={`/groups/${group?.id}`}>
                         <div className='group-link'>
                             <img src={group?.previewImage}/>
-                            <div>
-                                <div className='e-text'>{group?.name}</div>
+                            <div className='g-name-g-privacy'>
+                                <div className='e-text-header'>{group?.name}</div>
                                 <div className='e-text'>{group?.type}</div>
                             </div>
                         </div>

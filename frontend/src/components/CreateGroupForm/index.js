@@ -114,7 +114,6 @@ function CreateGroupForm({options}) {
                         className='input'
                         type='text'
                         placeholder='City, State'
-                        // value={city + '' + state}
                         value={cityState}
                         onChange={(e) => {
                             const str = e.target.value;
@@ -130,7 +129,6 @@ function CreateGroupForm({options}) {
                             });
                         }}
                     />
-                    <span>{city} --- {state}</span>
                     {validations.city && <div className='err'>{validations.city}</div>}
                     {validations.state && <div className='err'>{validations.state}</div>}
                     {/* <input type='text'

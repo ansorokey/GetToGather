@@ -15,6 +15,7 @@ function CreateGroupForm({options}) {
     const [ validations, setValidations ] = useState({});
     const [ city, setCity ] = useState('');
     const [ state, setState ] = useState('');
+    const [ cityState, setCityState ] = useState('');
     const [ name, setName ] = useState('');
     const [ about, setAbout ] = useState('');
     const [ meetType, setMeetType ] = useState('');
@@ -27,6 +28,7 @@ function CreateGroupForm({options}) {
             const {group} = options;
             setCity(group.city);
             setState(group.state);
+            setCityState(group.city + ', ' + group.state)
             setName(group.name);
             setAbout(group.about);
             setMeetType(group.type);
@@ -97,7 +99,7 @@ function CreateGroupForm({options}) {
                         </>
                         :
                         <>
-                            <h3>Become an Organizer</h3>
+                            <h1>Become an Organizer</h1>
                             <h2>We'll walk you throught a few steps to build your local community</h2>
                         </>
                         }
@@ -111,18 +113,32 @@ function CreateGroupForm({options}) {
                     <input
                         className='input'
                         type='text'
-                        placeholder='City'
-                        value={city}
-                        onChange={(e) => { removeErr('city'); setCity(e.target.value)}}
+                        placeholder='City, State'
+                        // value={city + '' + state}
+                        value={cityState}
+                        onChange={(e) => {
+                            const str = e.target.value;
+                            removeErr('city'); removeErr('state');
+                            setCityState(str);
+                            setCity(() => {
+                                if(str.indexOf(',') !== -1) return str.slice(0, (str.indexOf(','))).trim();
+                                return str;
+                            });
+                            setState(() => {
+                                if(str.indexOf(',') !== -1) return str.slice(str.indexOf(',') + 1).trim();
+                                return '';
+                            });
+                        }}
                     />
+                    <span>{city} --- {state}</span>
                     {validations.city && <div className='err'>{validations.city}</div>}
-                    <input type='text'
+                    {validations.state && <div className='err'>{validations.state}</div>}
+                    {/* <input type='text'
                         className='input'
                         placeholder='State'
                         value={state}
-                        onChange={(e) => {removeErr('state'); setState(e.target.value)}}
-                    />
-                    {validations.state && <div className='err'>{validations.state}</div>}
+                        onChange={(e) => {}}
+                    /> */}
                 </div>
 
                 <hr className='line-break'/>

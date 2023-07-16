@@ -52,4 +52,15 @@
 
 .submit-signup:hover {
     background-color: #EBB45B;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 640px){
+    .signup-ctn {
+        width: 100%;
+    }
+
+    .form-question {
+        width: 100%;
+    }
 }

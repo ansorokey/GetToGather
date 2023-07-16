@@ -21,3 +21,12 @@
 .event-manage-btns > button:hover {
     background-color: #EBB45B;
 }
+
+@media screen and (max-width: 640px) {
+    .list-ctn {
+        width: 100%;
+        padding: 0 1.5em;
+        box-sizing: border-box;
+        margin: 0;
+    }
+}

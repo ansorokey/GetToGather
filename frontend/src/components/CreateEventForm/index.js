@@ -100,6 +100,7 @@ function CreateEventForm ({group, event, formType}) {
                         type='text'
                         placeholder='  Event name...'
                         value={name}
+                        maxLength={255}
                         onChange={(e) => {removeErr('name'); setName(e.target.value)}}
 
                     />
@@ -159,6 +160,7 @@ function CreateEventForm ({group, event, formType}) {
                         type='text'
                         placeholder='   Image URL...'
                         value={imgUrl}
+                        maxLength={255}
                         onChange={e => {removeErr('imgUrl'); setImgUrl(e.target.value)}}
                     />
                     {valErrs.imgUrl && <span className='err'>{valErrs.imgUrl}</span>}

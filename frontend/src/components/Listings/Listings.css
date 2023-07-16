@@ -9,7 +9,8 @@
     top: 10vh;
     background-color: #494646;
     padding: 1em 0;
-    z-index: 0;
+    z-index: 1;
+    box-sizing: border-box;
 }
 
 .eg-text {
@@ -32,4 +33,11 @@
     border: 1px solid whitesmoke;
     width: 90%;
     margin: 2em 5%;
+}
+
+@media screen and (max-width: 640px) {
+    .events-groups {
+        width: 100%;
+
+    }
 }

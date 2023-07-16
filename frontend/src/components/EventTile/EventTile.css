@@ -1,6 +1,6 @@
-.tile-img {
-    width: 20vw;
-    height: 100%;
+.e-tile-img {
+    width: 250px;
+    height: 250px;
 }
 
 .e-date-time {
@@ -21,6 +21,8 @@
     border: none;
     height: fit-content;
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 1em;
     color: whitesmoke;
     box-sizing: border-box;
@@ -65,4 +67,34 @@
     color: whitesmoke;
     font-size: 1.25em;
     padding: 1em 16px 0;
+    overflow-wrap: break-word;
+}
+
+@media screen and (max-width: 640px) {
+    .tile-ctn {
+        flex-direction: column;
+    }
+
+    .e-tile-img-ctn {
+        width: 100%;
+        height: fit-content;
+        border-radius: 1em;
+        /* display: flex;
+        justify-content: center; */
+    }
+
+    .e-tile-img {
+        /* width: 100%;
+        height: 250px;
+        max-width: 100%;
+        max-height: 100%; */
+        /* object-position: center; */
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .e-date-time > span {
+        font-size: 1.5em;
+    }
 }

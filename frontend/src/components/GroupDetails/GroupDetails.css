@@ -78,6 +78,7 @@ background-color: #EBB45B;
 
 .g-about {
     font-size: 1.5em;
+    word-wrap: break-word;
 }
 
 .join-group {

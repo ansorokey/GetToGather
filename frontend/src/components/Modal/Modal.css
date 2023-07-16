@@ -23,6 +23,7 @@
     border-radius: 1em;
     background-color:rgba(0, 0, 0, 0.75);
     overflow-y: scroll;
+    scrollbar-width: thin;
 }
 
 .close-modal {
@@ -40,4 +41,17 @@
     position: fixed;
     top: 14vh;
     right: 16vw;
+    z-index: 1;
+
+    filter: drop-shadow(5px 5px 5px darkred);
+}
+
+@media screen and (max-width: 640px) {
+    .modal-content{
+        width: 90vw;
+    }
+
+    /* .close-modal {
+
+    } */
 }

@@ -3,7 +3,7 @@ import './EventTile.css';
 import { Link } from "react-router-dom";
 
 function EventTile({event, curUser, openModal, myEvents = false}) {
-    const {startDate, numAttending, Group} = event;
+    const {startDate, type, Group} = event;
 
     const startString = new Date(startDate).toString();
 
@@ -12,8 +12,8 @@ function EventTile({event, curUser, openModal, myEvents = false}) {
             <hr className="tile-split"/>
             <Link className="tile-link" to={`/events/${event.id}`} onClick={() => window.scrollTo(0, 0)}>
                 <div className="tile-ctn">
-                    <div className="tile-img-ctn">
-                        <img className="tile-img" src={event?.previewImage}/>
+                    <div className="e-tile-img-ctn">
+                        <img className="e-tile-img" src={event?.previewImage}/>
                     </div>
                     <div className="e-tile-info">
                         <div className="e-date-time">
@@ -25,7 +25,7 @@ function EventTile({event, curUser, openModal, myEvents = false}) {
                             <div className="e-tile-event-name">{event.name}</div>
                             <div>Hosted by <span className="e-group-name">{Group.name}</span></div>
                         </div>
-                        <div> {numAttending >= 0 ? numAttending : event?.Attendance?.length} Attending</div>
+                        <div>{type}</div>
                     </div>
                 </div>
                 <div className="e-description">{event?.description}</div>

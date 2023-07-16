@@ -1,31 +1,31 @@
 .landing-page-container {
     display: grid;
     grid-template:
-                ". s1 s1 s1 s1 ."
-                ". s2 s2 s2 s2 ."
-                ". s3 s3 s3 s3 ."
+    ". s1 s1 s1 s1 ."
+    ". s2 s2 s2 s2 ."
+    ". s3 s3 s3 s3 ."
                 ". s4 s4 s4 s4 ."
                 ". s5 s5 s5 s5 .";
-    row-gap: 3em;
+                row-gap: 3em;
 
-    font-family: "Ubuntu", sans-serif;
+                font-family: "Ubuntu", sans-serif;
 
-    background-color: #494646;
-    color: whitesmoke;
-    padding: 10vh 10vw 5vh;
-}
+                background-color: #494646;
+                color: whitesmoke;
+                padding: 10vh 10vw 5vh;
+            }
 
-.p-text {
-    font-size: 1.5em;
-}
+            .p-text {
+                font-size: 1.5em;
+            }
 
-/* SECTION 1 */
-#section-1 {
-    grid-area: s1;
-    display: flex;
-    justify-items: center;
-    gap: 3em;
-}
+            /* SECTION 1 */
+            #section-1 {
+                grid-area: s1;
+                display: flex;
+                justify-items: center;
+                gap: 3em;
+            }
 
 .s1-header-text {
     display: flex;
@@ -134,4 +134,51 @@
 
 .s4-join-btn:hover {
     background-color: #EBB45B;
+}
+
+@media screen and (max-width: 640px) {
+
+    .landing-page-container {
+        padding: 0 0 10vh;
+        width: 90vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #section-1 {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #section-1 > div {
+        width: 100%;
+    }
+
+    .s1-header-text {
+        width: 100%;
+        margin: 0;
+        gap: 3em;
+    }
+
+    .s1-header-text > * {
+        width: 100%;
+        margin: 0;
+    }
+
+    #section-3 {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .s3-tile {
+        width: 80%;
+        filter: drop-shadow(5px 5px 5px darkred);
+    }
+
+    .s3-tile > img {
+        width: 80vw;
+        height: 80vw;
+    }
 }

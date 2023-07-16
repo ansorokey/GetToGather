@@ -60,3 +60,17 @@
 .e-create-update:hover {
     background-color: #EBB45B;
 }
+
+@media screen and (max-width: 640px){
+
+    .sec {
+        width: 100%;
+    }
+    .form-question {
+        width: 100%;
+    }
+
+    .form-question + select {
+        width: 30%;
+    }
+}

@@ -63,3 +63,26 @@ input, textarea, select {
 .create-update-group-btn:hover {
     background-color: #EBB45B;
 }
+
+@media screen and (max-width: 640px){
+
+    .sec {
+        width: 100%;
+    }
+
+    .form-question {
+        width: 100%;
+    }
+
+    .select > select {
+        width: 30%;
+    }
+
+    .textarea {
+        width: 100%;
+    }
+
+    .input {
+        width: 100%;
+    }
+}

@@ -71,6 +71,6 @@
     }
 
     .form-question + select {
-        width: 30%;
+        width: 50%;
     }
 }

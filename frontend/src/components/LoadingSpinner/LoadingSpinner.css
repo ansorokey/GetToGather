@@ -1,0 +1,27 @@
+.spin-ctn {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes spin-load {
+    from {
+        transform: rotate(0);
+    }
+
+    /* 50% {
+        transform: rotate(180deg);
+    } */
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+/* Loading spinner */
+.fa-spinner {
+    font-size: 10em;
+    animation: 1.5s spin-load linear infinite
+}

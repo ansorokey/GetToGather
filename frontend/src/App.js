@@ -51,6 +51,11 @@ function App() {
         <Route exact path="/">
           <LandingPage/>
         </Route>
+
+        <Route>
+          <h1>Sorry</h1>
+          <h2>The page you are looking for couldn't be found...</h2>
+        </Route>
       </Switch>
     </>
   );

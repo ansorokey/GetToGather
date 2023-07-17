@@ -75,7 +75,7 @@ input, textarea, select {
     }
 
     .select > select {
-        width: 30%;
+        width: 50%;
     }
 
     .textarea {
